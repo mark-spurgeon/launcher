@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Duck Launcher
+Comment=A launcher made with python
+Icon=duck
+Exec=python /usr/bin/duck-launcher/Main.py
