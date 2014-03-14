@@ -11,7 +11,7 @@ Browse your files
   [Work in progress]
   You will be able to access your files easily, without having to open the file manager each time.
 Star...? 
-========
+======
   "Star" is kind of an extension of the file browser and the app launcher: you can choose any application, file or folder   and add it. But these can be separated in blocks. Let's say you're a graphic artist, then you'll add a block named       "Graphics" and add a few apps, like blender and gimp, and a folder where you store your files, and perhaps a file your     working on right know.
 Customize Duck Launcher
 ========
