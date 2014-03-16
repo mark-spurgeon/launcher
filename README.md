@@ -20,6 +20,9 @@ Screenshots & how to install
 ========
  Check out http://the-duck.github.io/
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
