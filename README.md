@@ -19,10 +19,3 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
 Screenshots & how to install
 ========
  Check out http://the-duck.github.io/
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
