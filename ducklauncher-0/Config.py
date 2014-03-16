@@ -58,12 +58,45 @@ def create_default_config():
 	string = ET.tostring(e, encoding='utf8', method='xml')
 	r = etree.fromstring(string)
 	file_content = etree.tostring(r, pretty_print=True)
-	print file_content
 	the_file = open(filename, 'w')
 	the_file.write(file_content)
 def create_from_info(dict):
-	pass
-
+	HOME = os.path.expanduser("~")
+	dir =os.environ.get('XDG_CONFIG_HOME',os.path.join(HOME,'.config'))
+	filename=dir+"/duck.conf"
+	###generate xml file
+	e = ET.Element('duck')
+	##normal stuff
+	base = ET.SubElement(e, 'base')
+	color = ET.SubElement(base, 'color',attrib={'r':str(dict['r']),'g':str(dict['g']),'b':str(dict['b'])})
+	size = ET.SubElement(base,'size',attrib={'value':str(dict['size'])})
+	#dock apps
+	dock = ET.SubElement(e,'dock')
+	apps = dict['dock-apps']
+	for a in apps:
+		apps=ET.SubElement(dock,'app', attrib={'name':a})
+	#Apps settings
+	apps=ET.SubElement(e,'apps')
+	ico_size=ET.SubElement(apps,'icon-size',attrib={'value':str(dict['icon-size'])})
+	#Star settings
+	star = ET.SubElement(e,'star')
+	blocks = dict['blocks']
+	for block in blocks:
+		print block['name']
+		b = ET.SubElement(star,'block', attrib={'name': block['name']})
+		for app in block['apps']:
+			a = ET.SubElement(b,'app', attrib={'name': app})
+		for file in block['files']:
+			f = ET.SubElement(b,'file', attrib={'name': file})
+		for dir in block['directories']:
+			d = ET.SubElement(b,'directory', attrib={'name': dir})
+	
+	#create file
+	string = ET.tostring(e, encoding='utf8', method='xml')
+	r = etree.fromstring(string)
+	file_content = etree.tostring(r, pretty_print=True)
+	the_file = open(filename, 'w')
+	the_file.write(file_content)
 def get():
 	info={}
 	HOME = os.path.expanduser("~")
@@ -115,5 +148,24 @@ def get():
 				blocks.append(block)
 			info['blocks']=blocks
 	return info
+#Specialzz
+def get_from_block(block):
+	all=[]
+	for f in block['apps']:
+		data = {}
+		data['value']=f
+		data['type']='app'
+		all.append(data)
+	for f in block['directories']:
+		data = {}
+		data['value']=f
+		data['type']='directory'
+		all.append(data)
+	for f in block['files']:
+		data = {}
+		data['value']=f
+		data['type']='file'
+		all.append(data)
+	return all
 if __name__=='__main__':
 	print get()
