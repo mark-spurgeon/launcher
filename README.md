@@ -26,4 +26,8 @@ Screenshots & how to install
     -in this folder, run:     
       `debuild -S`     
     -then there'll be a .deb file in the parent folder, 'depackage' it the way you normaly do it.     
+    
+    
+  To install on ubuntu:     
+    http://the-duck.github.io/install
   
