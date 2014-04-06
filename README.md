@@ -16,7 +16,7 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
   -Customize Duck Launcher
 -------
   With the duck settings, you can customize a lot of things, like your dock apps, the launcher's color, etc...
-Screenshots & how to install
+ -Screenshots & how to install
 -------
  Check out http://the-duck.github.io/
  -Install:
