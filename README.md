@@ -21,9 +21,9 @@ Screenshots & how to install
  Check out http://the-duck.github.io/
  -Install:
 ========
-  To install, you must have a debian-based system:
-    -download the .zip file and uncompress it in a folder
-    -in this folder, run:
-      `debuild -S`
-    -then there'll be a .deb file in the parent folder, 'depackage' it the way you normaly do it.
+  To install, you must have a debian-based system:    
+    -download the .zip file and uncompress it in a folder     
+    -in this folder, run:     
+      `debuild -S`     
+    -then there'll be a .deb file in the parent folder, 'depackage' it the way you normaly do it.     
   
