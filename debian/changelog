@@ -1,0 +1,9 @@
+ducklauncher (0.6-trusty2) trusty; urgency=high
+
+  * -Changed config from xml to css
+  -Polished window control
+  -Open windows count are updated every 2 seconds
+  -Better system for minimizing and activating windows
+  -Star settings work
+
+ -- Mark Spurgeon <markspurgeon96@hotmail.com>  Sun, 06 Apr 2014 10:04:37 +0100

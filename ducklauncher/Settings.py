@@ -9,7 +9,7 @@ class AddApp(QtGui.QDialog):
 		vbox=QtGui.QVBoxLayout()
 		self.list=QtGui.QListView()
 		self.model = QtGui.QStandardItemModel()
-		for app in Apps.info():
+		for app in Apps.info(''):
 			a = QtGui.QStandardItem(app["name"])
 			a.setAccessibleText(app["name"])
 			self.model.appendRow(a)
@@ -205,7 +205,7 @@ class Window(QtGui.QDialog):
 		hbox.addWidget(dock_label)
 		list=QtGui.QListView()
 		model = QtGui.QStandardItemModel(list)
-		for app in Apps.info():
+		for app in Apps.info(''):
 			a = QtGui.QStandardItem(app["name"])
 			a.setAccessibleText(app["name"])
 			a.setCheckable(True)
@@ -220,7 +220,7 @@ class Window(QtGui.QDialog):
 		######################
 		tab3 = QtGui.QWidget()
 		hbox=QtGui.QVBoxLayout(tab3)
-		label=QtGui.QLabel('Star settings are still not done...')
+		label=QtGui.QLabel('Still not very stable')
 		hbox.addWidget(label)
 		self.tree=QtGui.QTreeView()
 		self.model = QtGui.QStandardItemModel()
@@ -331,6 +331,5 @@ class Window(QtGui.QDialog):
 	def update_settings(self):
 		#update current config
 		Config.create_from_info(self.conf)
-		self.conf=Config.get()
 		QtGui.QApplication.processEvents()
 		self.parent.update_all()

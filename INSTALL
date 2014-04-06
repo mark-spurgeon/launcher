@@ -1,7 +1,0 @@
-#This is a list of where the files and folders should be in your computer in order to run Duck Launcher 
-
-ducklauncher-0/*  /usr/bin/duck-launcher
-icons/*  /usr/share/duck-launcher/icons
-duck-launcher.desktop  /usr/share/applications
-duck-launcher.desktop  /etc/xdg/autostart
-duck.png /usr/share/pixmaps

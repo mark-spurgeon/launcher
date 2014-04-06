@@ -22,7 +22,7 @@ import gio as Gio
 import os
 import glob
 
-def info():
+def info(filter):
 	app_names=[]
 	Apps = []
 	for app in Gio.app_info_get_all():
@@ -54,7 +54,11 @@ def info():
 	for name in  sorted(app_names):
 		for a in Apps:
 			if a['name']==name:
-				sorted_apps.append(a)
+				if filter!='' and filter.lower() in a["name"].lower():
+					sorted_apps.append(a)
+				elif filter=='':
+					sorted_apps.append(a)
+				else:pass
 	return sorted_apps
 	#return Apps
 def ico_from_name(name):
@@ -79,14 +83,14 @@ def ico_from_name(name):
 			return QIcon("/usr/share/duck-launcher/icons/apps.svg")
 def ico_from_app(app_name):
 	from PySide.QtGui import QIcon
-	for a in info():
+	for a in info(''):
 		if app_name.upper() in a['name'].upper():
 			return ico_from_name(a['icon'])
 def find_info(apps):
 	a_list=[]
 	for a in apps:
 		a_dir={}
-		for app in info():
+		for app in info(''):
 			if a in app['name']:
 				a_dir = app
 		a_list.append(a_dir)

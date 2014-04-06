@@ -28,10 +28,24 @@ from PySide import QtGui,QtCore
 import Apps
 import Config 
 import Settings
-import window
+import Window as window
+import XlibStuff
+import Files
 #########
 #########
-			
+
+
+class AppObject(QtGui.QFrame):
+	def __init__(self, rect, parent=None):
+		super(AppObject, self).__init__(parent)
+		x,y,w,h=rect.getRect()
+		self.clicked = QtCore.Signal() # can be other types (list, dict, object...)
+		self.move(x,y)
+		self.resize(w,h)
+	def mousePressEvent(self, event):
+		print "ah"
+		self.clicked.emit()
+
 class Launch(QtCore.QThread):
 	def __init__(self,parent=None):
 		QtCore.QThread.__init__(self,parent)
@@ -40,16 +54,18 @@ class Launch(QtCore.QThread):
 	def run(self):
 		os.system(self.app)
 		QtGui.QApplication.processEvents()
-		
 class Launcher(QtGui.QMainWindow):
 	def __init__(self):
-		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.FramelessWindowHint|QtCore.Qt.X11BypassWindowManagerHint)
+		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.FramelessWindowHint)#| QtCore.Qt.X11BypassWindowManagerHint)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		r_display = Xlib.display.Display().screen().root
+		self.setWindowTitle("ducklauncher")
+		#screen size
+		d = QtGui.QDesktopWidget()
 		self.top_pos=0
-		self.s_width = r_display.get_geometry().width
-		self.s_height = r_display.get_geometry().height-self.top_pos
-		#
+		self.s_width = d.availableGeometry().width()
+		self.s_height =d.availableGeometry().height()
+		d.resized.connect(self.updateSize)
+		#Config
 		conf=Config.get()
 		self.conf=conf
 		self.HALF_OPEN_POS=int(conf['size'])
@@ -60,27 +76,41 @@ class Launcher(QtGui.QMainWindow):
 		self.G=int(conf['g'])
 		self.B=int(conf['b'])
 		self.ICON_SIZE=int(conf['icon-size'])
+		#Geometry
+		self.setGeometry(0,0,self.HALF_OPEN_POS+4,self.s_height)
+		#reserve wndow space
+		#self.activateWindow()
+		xwin = XlibStuff.fix_window(self.winId(),self.HALF_OPEN_POS+5,0,0,0)
 		#
-		self.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+4,self.s_height)
-		#
+		#Values
 		self.apps_per_row = math.trunc(((self.s_width/3)-30)/self.ICON_SIZE)
 		self.apps_per_col = math.trunc(((self.s_height)-30)/self.ICON_SIZE)
 		self.apps_per_page=self.apps_per_col*self.apps_per_row
 		self.app_page_state=0
+		self.files_page_state=0
+		self.Files = Files.getFiles()
 		self.pos_x=self.HALF_OPEN_POS
 		self.move=False
 		self.current_state="half_open"
 		self.activity="apps"
-		self.open_windows=window.get_open_windows()
 		self.dock_apps = Apps.find_info(self.conf['dock-apps'])
+		self.current_text=''
+		#Update open windows
+		self.timer=QtCore.QTimer()
+		self.timer.setInterval(2000)
+		self.timer.start()
+		self.timer.timeout.connect(self.updateOpenWindows)
 		#
-		self.open_win = window.open_windows(self.HALF_OPEN_POS,self.s_height,self.R,self.G,self.B)
+		self.open_windows=window.get_open_windows()
+		self.open_win = window.open_windows()
 		self.open_state=False
 		#
 		self.settings_win = Settings.Window(self)
+		
 	def paintEvent(self,e):
 		qp=QtGui.QPainter()
 		qp.begin(self)
+		qp.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
 		####DRAW
 		qp.setBrush(QtGui.QColor(40,40,40,200))
 		qp.drawRect(0,0,self.pos_x+self.SIZE/2,self.s_height)
@@ -140,7 +170,7 @@ class Launcher(QtGui.QMainWindow):
 			qp.setFont(QtGui.QFont('Hermeneus One',14))
 			qp.drawText(rect, QtCore.Qt.AlignCenter, str(len(self.open_windows)))
 			#Quit Button
-			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/quit.svg")
+			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/close.svg")
 			icon.paint(qp,10,self.s_height-ICO_TOP,ICO_TOP-10,ICO_TOP-10)	
 		##
 		##
@@ -148,7 +178,13 @@ class Launcher(QtGui.QMainWindow):
 			
 			if self.activity=="apps":
 				###page_buttons
-				max_apps=  math.trunc(len(Apps.info())/self.apps_per_page)+1
+				#Current Text
+				t_rect=QtCore.QRectF(10,10,self.s_width/8,30)
+				if self.current_text=='':
+					qp.drawText(t_rect, QtCore.Qt.AlignCenter, "Type to search..")
+				else:
+					qp.drawText(t_rect, QtCore.Qt.AlignCenter, "Searching: "+self.current_text)
+				max_apps=  math.trunc(len(Apps.info(self.current_text))/self.apps_per_page)+1
 				for i in range(0, max_apps):
 						btn_size = 20
 						x_pos = self.s_width/6-btn_size+(btn_size*i)
@@ -156,7 +192,7 @@ class Launcher(QtGui.QMainWindow):
 						qp.drawRect(rect)
 						qp.drawText(rect,QtCore.Qt.AlignCenter,str(i+1))
 				###app_buttons
-				for i, app in enumerate(Apps.info()):
+				for i, app in enumerate(Apps.info(self.current_text)):
 						app_page = math.trunc(i/self.apps_per_page)
 						if app_page==self.app_page_state:
 							qp.setBrush(QtGui.QColor(self.R,self.G,self.B))
@@ -164,23 +200,56 @@ class Launcher(QtGui.QMainWindow):
 							x_pos = self.ICON_SIZE*(i-(row_pos*self.apps_per_row))+30
 							y_pos = row_pos*self.ICON_SIZE+30-(app_page*(self.ICON_SIZE*self.apps_per_col))
 							try:		
-								string = str(app['icon']).replace('\n','')
-								da_icon=Apps.ico_from_name(string)
+								da_icon=Apps.ico_from_name(app["icon"])
 								if da_icon!=None:
+									da_icon.paint(qp,x_pos+10,y_pos+10,self.ICON_SIZE-30,self.ICON_SIZE-30)
+									r1 =QtCore.QRect(x_pos+10,y_pos+10,self.ICON_SIZE-30,self.ICON_SIZE-30)
+							except KeyError:
+								i = QtGui.QImage('images/apps.png')
+								rect= QtCore.QRectF(x_pos+10,y_pos+10,self.ICON_SIZE-30,self.ICON_SIZE-30)
+								qp.drawImage(rect,i)
+							qp.setPen(QtGui.QColor(250,250,250))
+							text_rect = QtCore.QRectF(x_pos-5,y_pos+self.ICON_SIZE-20,self.ICON_SIZE,30)
+							qp.setFont(QtGui.QFont('Hermeneus One',8))
+							qp.drawText(text_rect,QtCore.Qt.AlignCenter,str(app["name"]))
+				
+			###	
+			if self.activity=="files":
+				#Buttons
+				b1_rect=QtCore.QRectF(10,10,30,30)
+				qp.drawRect(b1_rect)#temporarily
+				ico = QtGui.QIcon("/usr/share/duck-launcher/icons/back.svg")
+				max_files=  math.trunc(len(self.Files.all())/self.apps_per_page)+1
+				for i in range(0, max_files):
+						btn_size = 20
+						x_pos = self.s_width/6-btn_size+(btn_size*i)
+						rect = QtCore.QRectF(x_pos,2,btn_size,btn_size)
+						qp.drawRect(rect)
+						qp.drawText(rect,QtCore.Qt.AlignCenter,str(i+1))
+				###app_buttons
+				for i, f in enumerate(self.Files.all()):
+						app_page = math.trunc(i/self.apps_per_page)
+						if app_page==self.files_page_state:
+							qp.setBrush(QtGui.QColor(self.R,self.G,self.B))
+							row_pos = math.trunc(i/self.apps_per_row)
+							x_pos = self.ICON_SIZE*(i-(row_pos*self.apps_per_row))+30
+							y_pos = row_pos*self.ICON_SIZE+30-(app_page*(self.ICON_SIZE*self.apps_per_col))
+							print Files.getFileIcon(f["whole_path"])
+							try:	
+								if f["type"]=="directory":
+									da_icon=QtGui.QIcon("/usr/share/duck-launcher/icons/folder.svg")
+									da_icon.paint(qp,x_pos+10,y_pos+10,self.ICON_SIZE-30,self.ICON_SIZE-30)	
+								if f["type"]=="file":
+									da_icon=QtGui.QIcon("/usr/share/duck-launcher/icons/file.svg")
 									da_icon.paint(qp,x_pos+10,y_pos+10,self.ICON_SIZE-30,self.ICON_SIZE-30)	
 							except KeyError:
 								i = QtGui.QImage('images/apps.png')
 								rect= QtCore.QRectF(x_pos+10,y_pos+10,self.ICON_SIZE-30,self.ICON_SIZE-30)
 								qp.drawImage(rect,i)
 							qp.setPen(QtGui.QColor(250,250,250))
-							text_rect = QtCore.QRectF(x_pos+5,y_pos+self.ICON_SIZE-20,self.ICON_SIZE+4,30)
+							text_rect = QtCore.QRectF(x_pos-5,y_pos+self.ICON_SIZE-20,self.ICON_SIZE,30)
 							qp.setFont(QtGui.QFont('Hermeneus One',8))
-							qp.drawText(text_rect,str(app["name"]))
-				
-			###	
-			if self.activity=="files":
-				qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 3, QtCore.Qt.SolidLine))
-				qp.drawText(QtCore.QRectF(10,10,self.s_width/3,200),"Files are not available yet.")
+							qp.drawText(text_rect,QtCore.Qt.AlignCenter,f["name"])
 			if self.activity=="star":
 				qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 3, QtCore.Qt.SolidLine))
 				all_rows=0
@@ -211,6 +280,8 @@ class Launcher(QtGui.QMainWindow):
 						icon.paint(qp, x_pos+15,y_pos+15, self.ICON_SIZE-50,self.ICON_SIZE-50)
 						rect = QtCore.QRectF(x_pos+10, y_pos+self.ICON_SIZE-30, self.ICON_SIZE, 30)
 						txt = qp.drawText(rect, to_write)
+	def launch(self, n):
+		print n
 	def mouseMoveEvent(self,e):
 		if self.current_state!='open':
 			self.current_state="nothing"
@@ -259,7 +330,7 @@ class Launcher(QtGui.QMainWindow):
 				self.close_it()
 			###app events
 			if self.activity == "apps":
-				max_apps=  math.trunc(len(Apps.info())/self.apps_per_page)+1
+				max_apps=  math.trunc(len(Apps.info(self.current_text))/self.apps_per_page)+1
 				##Change Page
 				for i in range(0,max_apps):
 						btn_size = 20
@@ -269,7 +340,7 @@ class Launcher(QtGui.QMainWindow):
 							self.update()
 							QtGui.QApplication.processEvents()	
 				## launch apps
-				for i, app in enumerate(Apps.info()):
+				for i, app in enumerate(Apps.info(self.current_text)):
 					app_page = math.trunc(i/self.apps_per_page)
 					if app_page==self.app_page_state:
 						row_pos = math.trunc(i/self.apps_per_row)
@@ -281,6 +352,40 @@ class Launcher(QtGui.QMainWindow):
 							thread.app=app["exec"]
 							thread.start()
 							self.close_it()
+			if self.activity == "files":
+				if 10<x_m<40 and 10<y_m<40:
+					l= self.Files.directory.split("/")[:-1][1:]
+					new_dir=''
+					for a in l:
+						new_dir+='/'
+						new_dir+=a
+					if new_dir=='':new_dir='/'
+					self.Files.directory=new_dir
+					self.update()
+				max_files=  math.trunc(len(self.Files.all())/self.apps_per_page)+1
+				##Change Page
+				for i in range(0,max_files):
+						btn_size = 20
+						x_pos = self.s_width/6-btn_size+(btn_size*i)
+						if x_pos<x_m<x_pos+btn_size and 2<y_m<2+btn_size:
+							self.files_page_state=i
+							self.update()
+							QtGui.QApplication.processEvents()	
+				## launch apps
+				for i, f in enumerate(self.Files.all()):
+					app_page = math.trunc(i/self.apps_per_page)
+					if app_page==self.files_page_state:
+						row_pos = math.trunc(i/self.apps_per_row)
+						x_pos = self.ICON_SIZE*(i-(row_pos*self.apps_per_row))+30
+						y_pos = row_pos*self.ICON_SIZE+30-(app_page*(self.ICON_SIZE*self.apps_per_col))
+						if x_pos<x_m<(x_pos+self.ICON_SIZE) and y_pos<y_m<(y_pos+self.ICON_SIZE):
+							if f["type"]=="file":
+								import webbrowser
+								webbrowser.open(f["whole_path"])
+							elif  f["type"]=="directory":
+								self.Files.directory=f["whole_path"]
+								self.update()
+								QtGui.QApplication.processEvents()	
 			if self.activity=="star":
 				blocks=self.conf['blocks']
 				all_rows=0
@@ -296,7 +401,7 @@ class Launcher(QtGui.QMainWindow):
 						if x_pos+15<x_m<x_pos+15+self.ICON_SIZE and y_pos+15<y_m<y_pos+15+self.ICON_SIZE:
 							if thing['type']=='app':
 								the_exec=""
-								for a in Apps.info():
+								for a in Apps.info(''):
 									if thing['value'] in a['name']:
 										print "a"
 										the_exec=a['exec']
@@ -312,9 +417,11 @@ class Launcher(QtGui.QMainWindow):
 			if 0<x_m<self.HALF_OPEN_POS:
 				if 0<y_m<self.ICO_TOP:
 					self.activity="apps"
+					self.current_text=''
 					self.open_it()
 				if self.ICO_TOP<y_m<self.ICO_TOP*2:
 					self.activity="files"
+					self.Files.directory=self.Files.default
 					self.open_it()
 				if self.ICO_TOP*2<y_m<self.ICO_TOP*3:
 					self.activity="settings"
@@ -352,13 +459,37 @@ class Launcher(QtGui.QMainWindow):
 	def wheelEvent(self,e):
 		if self.activity == 'apps':
 			value= int(e.delta()/120)
-			max_pages=math.trunc(len(Apps.info())/self.apps_per_page)
+			max_pages=math.trunc(len(Apps.info(self.current_text))/self.apps_per_page)
 			if value<0 and self.app_page_state>0:
 				self.app_page_state-=1
 			if value>0 and self.app_page_state<max_pages:
 				self.app_page_state+=1
 			self.update()
 			QtGui.QApplication.processEvents()
+		if self.activity == 'files':
+			value= int(e.delta()/120)
+			max_pages=math.trunc(len(self.Files.all())/self.apps_per_page)
+			if value<0 and self.app_page_state>0:
+				self.app_page_state-=1
+			if value>0 and self.app_page_state<max_pages:
+				self.files_page_state+=1
+			self.update()
+			QtGui.QApplication.processEvents()
+	def keyPressEvent(self, e):
+		if e.key()==QtCore.Qt.Key_Backspace:
+			self.current_text=self.current_text[:-1]
+		elif e.key()==QtCore.Qt.Key_Return:
+			pass
+		elif e.text()!='':
+			self.current_text+=e.text()
+		else:
+			if e.key()==16777250:
+				self.activity="apps"
+				self.open_it()
+			if e.key()==16777249:
+				print "a"
+			print e.key()
+		self.update()
 	###ANIMATIONS	
 	def update_pos(self,pos):
 		if pos>4:
@@ -384,6 +515,13 @@ class Launcher(QtGui.QMainWindow):
 			QtGui.QApplication.processEvents()
 		self.current_state="half_open"	
 		self.update()		
+	def updateSize(self,x,y,w, h ):
+		self.s_width=w
+		self.s_height=h
+		self.update()
+	def updateOpenWindows(self):
+		self.open_windows=window.get_open_windows()
+		self.update()
 	def update_all(self):
 		import Config
 		conf=Config.get()
