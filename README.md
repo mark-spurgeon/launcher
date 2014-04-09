@@ -21,11 +21,8 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
  Check out http://the-duck.github.io/
  -Install:
 -------
-  To install, you must have a debian-based system:    
-    -download the .zip file and uncompress it in a folder     
-    -in this folder, run:     
-      `debuild -b`     
-    -then there'll be a .deb file in the parent folder, 'depackage' it the way you normaly do it.     
+  To install, you must have a debian-based system.
+    -From the source, you can build a .deb file, and then install it. 
     
     
   To install on ubuntu:     
