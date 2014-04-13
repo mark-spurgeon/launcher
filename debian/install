@@ -1,5 +1,5 @@
-ducklauncher/* usr/bin/duck-launcher
+duck-launcher/* usr/bin/duck-launcher
 icons/* usr/share/duck-launcher/icons
 duck-launcher.desktop usr/share/applications
 duck-launcher.desktop etc/xdg/autostart
-duck.png usr/share/pixmaps
+duck-launcher.svg usr/share/icons/hicolor/scalable/apps

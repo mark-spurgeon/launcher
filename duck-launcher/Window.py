@@ -11,7 +11,7 @@ def close_window(title):
 	win = screen.get_windows()
 	for w in win:
 		if title in w.get_name():
-			pass#w.close(int(time.time()))
+			w.close(int(time.time()))
 	
 ########
 def change_window_state(window_info):

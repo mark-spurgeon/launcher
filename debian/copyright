@@ -4,7 +4,7 @@ Source: <url://example.com>
 
 Files: *
 Copyright: 2014 Mark Spurgeon <markspurgeon96@hotmail.com>
-License: GPL-3+
+License: GPL-2+
 
 # If you want to use GPL v2 or later for the /debian/* files use 
 # the following clauses, or change it to suit. Delete these two lines

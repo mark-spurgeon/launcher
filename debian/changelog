@@ -1,9 +1,7 @@
-ducklauncher (0.6-trusty2) trusty; urgency=high
+duck-launcher (0.62-saucy1) saucy; urgency=high
 
-  * -Changed config from xml to css
-  -Polished window control
-  -Open windows count are updated every 2 seconds
-  -Better system for minimizing and activating windows
-  -Star settings work
+  *-Improved animations
+   -Fixed search issue
+   -new icon
 
- -- Mark Spurgeon <markspurgeon96@hotmail.com>  Sun, 06 Apr 2014 10:04:37 +0100
+ -- Mark Spurgeon <markspurgeon96@hotmail.com>  Sat, 12 Apr 2014 10:04:37 +0100

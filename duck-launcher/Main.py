@@ -58,7 +58,7 @@ class Launcher(QtGui.QMainWindow):
 	def __init__(self):
 		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.FramelessWindowHint)#| QtCore.Qt.X11BypassWindowManagerHint)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-		self.setWindowTitle("ducklauncher")
+		self.setWindowTitle("ducklauncher")#recognisable by wnck
 		#screen size
 		d = QtGui.QDesktopWidget()
 		self.top_pos=0
@@ -211,7 +211,7 @@ class Launcher(QtGui.QMainWindow):
 							qp.setPen(QtGui.QColor(250,250,250))
 							text_rect = QtCore.QRectF(x_pos-5,y_pos+self.ICON_SIZE-20,self.ICON_SIZE,30)
 							qp.setFont(QtGui.QFont('Hermeneus One',8))
-							qp.drawText(text_rect,QtCore.Qt.AlignCenter,str(app["name"]))
+							qp.drawText(text_rect,QtCore.Qt.AlignCenter,self.tr(app["name"]).replace(u"Â", ""))
 				
 			###	
 			if self.activity=="files":
@@ -249,7 +249,7 @@ class Launcher(QtGui.QMainWindow):
 							qp.setPen(QtGui.QColor(250,250,250))
 							text_rect = QtCore.QRectF(x_pos-5,y_pos+self.ICON_SIZE-20,self.ICON_SIZE,30)
 							qp.setFont(QtGui.QFont('Hermeneus One',8))
-							qp.drawText(text_rect,QtCore.Qt.AlignCenter,f["name"])
+							qp.drawText(text_rect,QtCore.Qt.AlignCenter,f["name"].replace(u"Â", ""))
 			if self.activity=="star":
 				qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 3, QtCore.Qt.SolidLine))
 				all_rows=0
@@ -478,10 +478,14 @@ class Launcher(QtGui.QMainWindow):
 	def keyPressEvent(self, e):
 		if e.key()==QtCore.Qt.Key_Backspace:
 			self.current_text=self.current_text[:-1]
+			self.app_page_state=0
+			self.update()
 		elif e.key()==QtCore.Qt.Key_Return:
 			pass
 		elif e.text()!='':
 			self.current_text+=e.text()
+			self.app_page_state=0
+			self.update()
 		else:
 			if e.key()==16777250:
 				self.activity="apps"
@@ -492,7 +496,7 @@ class Launcher(QtGui.QMainWindow):
 		self.update()
 	###ANIMATIONS	
 	def update_pos(self,pos):
-		if pos>4:
+		if pos>4 and pos<self.s_width/3+100:
 			self.pos_x=pos
 			self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 			self.update()
@@ -500,15 +504,21 @@ class Launcher(QtGui.QMainWindow):
 	def open_it(self):
 		while self.pos_x<self.s_width/3:
 			self.current_state='nothing'
-			self.pos_x+=1.5
-			self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
+			if self.pos_x<self.s_width/7:
+				self.pos_x=self.s_width/7
+			else:
+				self.pos_x+=1.5
+			self.setGeometry(0,self.top_pos,self.s_width/3+5,self.s_height)
 			self.update()
 			QtGui.QApplication.processEvents()
-		self.current_state="open"	
+		self.current_state="open"
 		self.update()
 	def close_it(self):
 		while self.pos_x>self.HALF_OPEN_POS:
-			self.pos_x-=1
+			if self.pos_x<self.s_width/6:
+				self.pos_x-=1
+			else:
+				self.pos_x-=2
 			self.current_state="nothing"
 			self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 			self.update()
@@ -523,6 +533,7 @@ class Launcher(QtGui.QMainWindow):
 		self.open_windows=window.get_open_windows()
 		self.update()
 	def update_all(self):
+		#All values to update
 		import Config
 		conf=Config.get()
 		self.conf=conf

@@ -37,12 +37,11 @@ def info(filter):
 			if '%' in app_info["exec"]:
 				num = app_info["exec"].index("%")
 				stuff = app_info["exec"][num:]
-				
 				app_info["exec"] = app_info["exec"].replace(stuff,'')
 			##icon
 			desk_file = app.get_id()
 			desk_path = "/usr/share/applications/"+str(desk_file)
-			if os.path.exists(desk_path):
+			if os.path.isfile(desk_path):
 				f = open(desk_path,'r')
 				for line in f.readlines():
 					if 'Icon=' in line:
