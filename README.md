@@ -22,7 +22,7 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
  -Install:
 -------
   To install, you must have a debian-based system.
-    -From the source, you can build a .deb file, and then install it. 
+    -From gihtub, download and extract source, then cd to the launcher-master and run:`debuild -i -us -uc -b`. You'll get     a .deb file, and you can install from there...
     
     
   To install on ubuntu:     
