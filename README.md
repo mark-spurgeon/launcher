@@ -26,5 +26,5 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
       -From gihtub, download and extract source, then cd to the launcher-master and run:`debuild -i -us -uc -b`. You'll get a .deb file, and you can install from there...
     
   To install on ubuntu:     
-    http://the-duck.github.io/install
+    `sudo add-apt-repository ppa:the-duck/launcher     sudo apt-get update      sudo apt-get install ducklauncher`
   
