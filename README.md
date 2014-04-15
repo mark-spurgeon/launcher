@@ -18,7 +18,7 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
   With the duck settings, you can customize a lot of things, like your dock apps, the launcher's color, etc...
  -Screenshots
 -------
- Check out http://the-duck.github.io/screenshots
+ Check out http://the-duck.github.io/
  -Install:
 -------
   To install, you must have a debian-based system.      
