@@ -28,5 +28,5 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
   To install on ubuntu, run:     
     `sudo add-apt-repository ppa:the-duck/launcher`       
     `sudo apt-get update`       
-    `sudo apt-get install ducklauncher`
+    `sudo apt-get install duck-launcher`
   
