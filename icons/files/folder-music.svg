@@ -14,7 +14,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="folder.svg">
+   sodipodi:docname="folder-music.svg">
   <defs
      id="defs2987">
     <linearGradient
@@ -28,14 +28,6 @@
          offset="1"
          id="stop3769" />
     </linearGradient>
-    <filter
-       inkscape:collect="always"
-       id="filter3787">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3817081"
-         id="feGaussianBlur3789" />
-    </filter>
     <filter
        inkscape:collect="always"
        id="filter3814">
@@ -52,16 +44,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.7781746"
-     inkscape:cx="29.737482"
-     inkscape:cy="23.729394"
-     inkscape:current-layer="layer1"
+     inkscape:zoom="11"
+     inkscape:cx="29.936947"
+     inkscape:cy="35.35613"
+     inkscape:current-layer="layer2"
      showgrid="true"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
-     inkscape:window-width="1280"
+     inkscape:window-width="1236"
      inkscape:window-height="977"
-     inkscape:window-x="0"
+     inkscape:window-x="44"
      inkscape:window-y="22"
      inkscape:window-maximized="1" />
   <metadata
@@ -72,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -102,5 +94,15 @@
        id="path3760"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="top">
+    <path
+       style="fill:#b3b3b3;stroke:none"
+       d="m 31.485471,20.352227 0,25.712974 c 0,0 -0.241368,-0.880196 -2.057038,-1.928473 -1.81567,-1.048277 -6.556808,0.06428 -6.556808,4.564053 0,4.49977 5.913984,6.685373 8.870976,3.728381 2.956992,-2.956992 2.314167,-6.042549 2.314167,-8.806694 0,-2.764144 0,-20.056119 0,-20.056119 0,0 2.442733,5.078312 4.949748,5.27116 2.507015,0.192847 3.535534,-0.128565 3.535534,-0.128565 0,0 -3.921229,-0.385695 -6.235396,-4.885465 -2.314168,-4.499771 -2.442733,-3.599817 -2.442733,-3.599817 z"
+       id="path3015"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

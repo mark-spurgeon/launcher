@@ -1,3 +1,21 @@
+# -*- coding: utf-8 -*-
+#########
+#Copyright (C) 2014  Mark Spurgeon <markspurgeon96@hotmail.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#########
 from PySide import QtCore,QtGui
 import sys
 import Config
@@ -92,13 +110,13 @@ class AddToBlock(QtGui.QDialog):
 		for block in self.parent.conf['blocks']:
 			if self.block==block['name']:
 				if self.choice=='app' and self.App!='':
-					print 'Adding: ', self.App, 'to ', block['name']
+					print('Adding:{0} to {1}'.format(self.App, block['name']))
 					block['apps'].append(str(self.App))
 				if self.choice=='file' and self.File!='':
-					print 'Adding: ', self.File, 'to ', block['name']
+					print('Adding:{0} to {1}'.format(self.File, block['name']))
 					block['files'].append(str(self.File))
 				if self.choice=='folder' and self.Folder!='':
-					print 'Adding: ', self.Folder, 'to ', block['name']
+					print('Adding:{0} to {1}'.format(self.Folder, block['name']))
 					block['directories'].append(str(self.Folder))
 		self.parent.updateBlocks()
 		self.parent.update_settings()
@@ -110,7 +128,7 @@ class AddBlock(QtGui.QDialog):
 		self.parent=None
 		self.initUI()
 		self.conf=Config.get()
-	def initUI(self):      
+	def initUI(self):
 		self.btn = QtGui.QPushButton('Add', self)
 		self.btn.move(20, 50)
 		self.btn.clicked.connect(self.add)
@@ -149,11 +167,11 @@ class Window(QtGui.QDialog):
 		#####################
 		tab1 = QtGui.QWidget()
 		hbox=QtGui.QVBoxLayout(tab1)
-		
-		l1 = QtGui.QLabel('Color:') 
-		hbox.addWidget(l1)
+		l1 = QtGui.QLabel('Color:')
+		l1.move(10,10)
+		hbox.addWidget(l1)	
 		#Red
-		l_R = QtGui.QLabel('  red: ') 
+		l_R = QtGui.QLabel('  red: ')
 		hbox.addWidget(l_R)
 		value = int(self.conf['r'])
 		percent = value*100/255
@@ -162,7 +180,7 @@ class Window(QtGui.QDialog):
 		slider1.valueChanged[int].connect(self.change_red)
 		hbox.addWidget(slider1)
 		#Green
-		l_G = QtGui.QLabel('  green: ') 
+		l_G = QtGui.QLabel('  green: ')
 		hbox.addWidget(l_G)
 		value = int(self.conf['g'])
 		percent = value*100/255
@@ -171,7 +189,7 @@ class Window(QtGui.QDialog):
 		slider2.valueChanged[int].connect(self.change_green)
 		hbox.addWidget(slider2)
 		#Blue
-		l_B = QtGui.QLabel('  blue: ') 
+		l_B = QtGui.QLabel('  blue: ')
 		hbox.addWidget(l_B)
 		value = int(self.conf['b'])
 		percent = value*100/255
@@ -179,9 +197,50 @@ class Window(QtGui.QDialog):
 		slider3.setValue(percent)
 		slider3.valueChanged[int].connect(self.change_blue)
 		hbox.addWidget(slider3)
-		sep = QtGui.QLabel('__________________________') 
+		#Color2
+		l2 = QtGui.QLabel('Second Color:')
+
+		hbox.addWidget(l2)	
+		#Red2
+		l_R = QtGui.QLabel('  red: ')
+		hbox.addWidget(l_R)
+		value = int(self.conf['r2'])
+		percent = value*100/255
+		slider1=QtGui.QSlider(QtCore.Qt.Horizontal)
+		slider1.setValue(percent)
+		slider1.valueChanged[int].connect(self.change_red2)
+		hbox.addWidget(slider1)
+		#Green2
+		l_G = QtGui.QLabel('  green: ')
+		hbox.addWidget(l_G)
+		value = int(self.conf['g2'])
+		percent = value*100/255
+		slider2=QtGui.QSlider(QtCore.Qt.Horizontal)
+		slider2.setValue(percent)
+		slider2.valueChanged[int].connect(self.change_green2)
+		hbox.addWidget(slider2)
+		#Blue2
+		l_B = QtGui.QLabel('  blue: ')
+		hbox.addWidget(l_B)
+		value = int(self.conf['b2'])
+		percent = value*100/255
+		slider3=QtGui.QSlider(QtCore.Qt.Horizontal)
+		slider3.setValue(percent)
+		slider3.valueChanged[int].connect(self.change_blue2)
+		hbox.addWidget(slider3)
+		#Alpha
+		l_B = QtGui.QLabel('Transparency: ')
+		hbox.addWidget(l_B)
+		value = int(self.conf['alpha'])
+		percent = value*100/255
+		slider3=QtGui.QSlider(QtCore.Qt.Horizontal)
+		slider3.setValue(percent)
+		slider3.valueChanged[int].connect(self.change_alpha)
+		hbox.addWidget(slider3)
+		#Canvas
+		sep = QtGui.QLabel('__________________________')
 		hbox.addWidget(sep)
-		l_s = QtGui.QLabel('Canvas Width:') 
+		l_s = QtGui.QLabel('Canvas Width:')
 		hbox.addWidget(l_s)
 		value = int(self.conf['size'])
 		slider4=QtGui.QSlider(QtCore.Qt.Horizontal)
@@ -193,15 +252,15 @@ class Window(QtGui.QDialog):
 		####################
 		tab2 = QtGui.QWidget()
 		hbox=QtGui.QVBoxLayout(tab2)
-		ico_label=QtGui.QLabel('Icon size: ') 
+		ico_label=QtGui.QLabel('Icon size: ')
 		hbox.addWidget(ico_label)
 		slider=QtGui.QSlider(QtCore.Qt.Horizontal)
 		slider.setValue(int(self.conf["icon-size"])-50)
 		slider.valueChanged[int].connect(self.change_icon_size)
 		hbox.addWidget(slider)
-		sep = QtGui.QLabel('__________________________') 
+		sep = QtGui.QLabel('__________________________')
 		hbox.addWidget(sep)
-		dock_label=QtGui.QLabel('Dock apps: ') 
+		dock_label=QtGui.QLabel('Dock apps: ')
 		hbox.addWidget(dock_label)
 		list=QtGui.QListView()
 		model = QtGui.QStandardItemModel(list)
@@ -220,8 +279,7 @@ class Window(QtGui.QDialog):
 		######################
 		tab3 = QtGui.QWidget()
 		hbox=QtGui.QVBoxLayout(tab3)
-		label=QtGui.QLabel('Still not very stable')
-		hbox.addWidget(label)
+
 		self.tree=QtGui.QTreeView()
 		self.model = QtGui.QStandardItemModel()
 		self.updateBlocks()
@@ -246,6 +304,9 @@ class Window(QtGui.QDialog):
 		tabs.setStyleSheet("background-color: rgb(245, 245, 245);\n;")
 		tabs.show()
 		vbox.addWidget(tabs)
+		close = QtGui.QPushButton("Save settings and close")
+		close.clicked.connect(self.close)
+		vbox.addWidget(close)
 		self.setLayout(vbox)
 		
 	def change_red(self,value):
@@ -260,6 +321,22 @@ class Window(QtGui.QDialog):
 		color  = value*255/100
 		self.conf['b']=str(color)
 		self.update_settings()
+	def change_red2(self,value):
+		color  = value*255/100
+		self.conf['r2']=str(color)
+		self.update_settings()
+	def change_green2(self,value):
+		color  = value*255/100
+		self.conf['g2']=str(color)
+		self.update_settings()
+	def change_blue2(self,value):
+		color  = value*255/100
+		self.conf['b2']=str(color)
+		self.update_settings()
+	def change_alpha(self,value):
+		color  = value*255/100
+		self.conf['alpha']=str(color)
+		self.update_settings()
 	def change_size(self, value):
 		if value<10:
 			value=10
@@ -270,11 +347,11 @@ class Window(QtGui.QDialog):
 		self.update_settings()
 	def change_dock_apps(self, item):
 		if item.checkState():
-			print "adding: ", item.accessibleText(), "to dock apps"
+			print("adding: {} to dock apps ".format(item.accessibleText()))
 			self.conf["dock-apps"].append(str(item.accessibleText()))
 			self.update_settings()
 		else:
-			print "removing: ", item.accessibleText(), "from dock apps"
+			print("removing: {} from dock apps ".format(item.accessibleText()))
 			if item.accessibleText() in self.conf['dock-apps']:
 				self.conf["dock-apps"].remove(str(item.accessibleText()))
 				self.update_settings()
@@ -292,7 +369,7 @@ class Window(QtGui.QDialog):
 		self.block_win.show()
 	def deleteBlock(self):
 		if self.current_block !='' and self.current_selection=='block':
-			print "Deleting ",self.current_block
+			print("Deleting {}".format(self.current_block))
 			for b in self.conf['blocks']:
 				if b['name']==self.current_block:
 					self.conf['blocks'].remove(b)
@@ -304,7 +381,7 @@ class Window(QtGui.QDialog):
 		self.add_block_win.show()
 	def removeFromBlock(self):
 		if self.current_selection=='item' and self.current_item!= '':
-			print 'Removing ', self.current_item, ' from ', self.current_block
+			print('Removing: {0} from {1}'.format(self.current_item,self.current_block))
 			for b in self.conf['blocks']:
 				if self.current_item in b['apps']:
 					b['apps'].remove(self.current_item)

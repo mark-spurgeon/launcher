@@ -11,38 +11,19 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="64px"
    height="64px"
-   id="svg2985"
+   id="svg3854"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="folder.svg">
+   sodipodi:docname="New document 6">
   <defs
-     id="defs2987">
-    <linearGradient
-       id="linearGradient3765">
-      <stop
-         style="stop-color:#c8c8c8;stop-opacity:1;"
-         offset="0"
-         id="stop3767" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="1"
-         id="stop3769" />
-    </linearGradient>
+     id="defs3856">
     <filter
        inkscape:collect="always"
-       id="filter3787">
+       id="filter4422">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="1.3817081"
-         id="feGaussianBlur3789" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3814">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3844829"
-         id="feGaussianBlur3816" />
+         stdDeviation="1.2546875"
+         id="feGaussianBlur4424" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -52,9 +33,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.7781746"
-     inkscape:cx="29.737482"
-     inkscape:cy="23.729394"
+     inkscape:zoom="11"
+     inkscape:cx="15.150125"
+     inkscape:cy="33.283274"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
@@ -65,42 +46,34 @@
      inkscape:window-y="22"
      inkscape:window-maximized="1" />
   <metadata
-     id="metadata2990">
+     id="metadata3859">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:groupmode="layer"
-     inkscape:label="bg"
-     id="g3755">
+     id="layer3"
+     inkscape:label="bg">
     <path
-       style="fill:#000000;stroke:none;display:inline;filter:url(#filter3814);opacity:0.7"
-       d="m 3.0517923,8.4954709 0,52.3901841 57.5327797,0 0,-43.647773 -21.341768,0 -11.89225,-9.5780827 z"
-       id="path3758-0"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       style="fill:#000000;stroke:none;filter:url(#filter4422);opacity:0.5"
+       d="m 10.174716,6.8196023 0,3.6249997 0.4375,47.28125 34.09375,0 0,-18.375 -2.625,0 0,14.8125 -28.1875,0 0,-43.90625 27.375,0 0,19.65625 3.625,0 0,-23.0937497 -34.71875,0 z m 37.90625,21.3437497 0,4.28125 -20.28125,0 0.1875,4.65625 20.34375,0 0,4.28125 11.3125,-6.53125 -11.5625,-6.6875 z"
+       id="path3862-2" />
   </g>
   <g
      id="layer1"
      inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     style="display:inline">
+     inkscape:groupmode="layer">
     <path
        style="fill:#ffffff;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 3.1498393,8.7813886 0,52.3901844 57.5327787,0 0,-43.647773 -21.341768,0 L 27.4486,7.945717 z"
-       id="path3758"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#666666;stroke:none"
-       d="m 3.1648577,59.207833 -0.056818,2.082857 57.6131325,-0.04821 -0.06428,-3.262333 -0.144635,2.828427 -57.2435084,0.25713 z"
-       id="path3760"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
+       d="M 10.09375 7.1875 L 10.09375 10.8125 L 10.53125 58.09375 L 44.625 58.09375 L 44.625 39.71875 L 42 39.71875 L 42 54.53125 L 13.8125 54.53125 L 13.8125 10.625 L 41.1875 10.625 L 41.1875 30.28125 L 44.8125 30.28125 L 44.8125 7.1875 L 10.09375 7.1875 z M 48 28.53125 L 48 32.8125 L 27.71875 32.8125 L 27.90625 37.46875 L 48.25 37.46875 L 48.25 41.75 L 59.5625 35.21875 L 48 28.53125 z "
+       id="path3862" />
   </g>
 </svg>

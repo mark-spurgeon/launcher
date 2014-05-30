@@ -1,4 +1,5 @@
-duck-launcher/* usr/bin/duck-launcher
+duck_launcher/* usr/lib/python2.7/duck_launcher
+duck-launcher usr/bin
 icons/* usr/share/duck-launcher/icons
 duck-launcher.desktop usr/share/applications
 duck-launcher.desktop etc/xdg/autostart

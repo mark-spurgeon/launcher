@@ -14,7 +14,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="folder.svg">
+   sodipodi:docname="folder-pictures.svg">
   <defs
      id="defs2987">
     <linearGradient
@@ -28,14 +28,6 @@
          offset="1"
          id="stop3769" />
     </linearGradient>
-    <filter
-       inkscape:collect="always"
-       id="filter3787">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3817081"
-         id="feGaussianBlur3789" />
-    </filter>
     <filter
        inkscape:collect="always"
        id="filter3814">
@@ -53,15 +45,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7.7781746"
-     inkscape:cx="29.737482"
-     inkscape:cy="23.729394"
+     inkscape:cx="32.559845"
+     inkscape:cy="23.129705"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
-     inkscape:window-width="1280"
+     inkscape:window-width="1236"
      inkscape:window-height="977"
-     inkscape:window-x="0"
+     inkscape:window-x="44"
      inkscape:window-y="22"
      inkscape:window-maximized="1" />
   <metadata
@@ -72,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -102,5 +94,27 @@
        id="path3760"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="top">
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke:none"
+       d="m 25.954546,22.909092 1.272729,0 0,21.312751 -1.272729,-1.31779 z"
+       id="rect3852"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:#b3b3b3;stroke:none"
+       d="m 23.363636,41.545455 8.227273,8.227272 8.681818,-8.681818 0.935839,1.620921 -9.521095,9.521095 -9.596562,-9.596561 z"
+       id="path3854"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#b3b3b3;fill-opacity:1;stroke:none"
+       d="m 36.818184,22.636364 1.272729,0 0,19.818184 -1.272729,1.333861 z"
+       id="rect3856"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

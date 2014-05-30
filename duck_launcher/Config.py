@@ -18,30 +18,64 @@
 #
 #########
 
-import cssutils
 import os
+try:
+    import simplejson as json
+except ImportError:
+    import json
+
 defaultDict={
-	"r":85,
-	"g":170,
-	"b":60,
+	"r":255,
+	"g":92,
+	"b":36,
 	"r2":40,
 	"g2":40,
 	"b2":40,
+	"alpha":200,
+	"font":"Hermeneus One",
 	"size":40,
-	"dock-apps":["Firefox"],
+	"dock-apps":["Firefox Web Browser"],
 	"icon-size":95,
-	"blocks":[{"name":"Test","apps":["Firefox"], "files":[], "directories":[]}]
+	"blocks":[{"name":"Example","apps":["Firefox Web Browser"], "files":[], "directories":[]}]
 }
-
-
+def check_dict(d):
+	if "r" not in d:
+		d["r"]=defaultDict["r"]
+	if "g" not in d:
+		d["g"]=defaultDict["g"]
+	if "b" not in d:
+		d["b"]=defaultDict["b"]
+	if "r2" not in d:
+		d["r2"]=defaultDict["r2"]
+	if "g2" not in d:
+		d["g2"]=defaultDict["g2"]
+	if "b2" not in d:
+		d["b2"]=defaultDict["b2"]
+	if "alpha" not in d:
+		d["alpha"]=defaultDict["alpha"]
+	if "size" not in d:
+		d["r"]=defaultDict["r"]
+	if "dock-apps" not in d:
+		d["dock-apps"]=defaultDict["dock-apps"]
+	if "icon-size" not in d:
+		d["icon-size"]=defaultDict["icon-size"]
+	if "blocks" not in d:
+		d["blocks"]=defaultDict["blocks"]
+	if "font" not in d:
+		d["font"]=defaultDict["font"]
+	create_from_info(d)
+	return d
 def create_from_info(dict):
+	'''
 	sheet = cssutils.css.CSSStyleSheet()
 	#base
 	r1=cssutils.css.CSSStyleRule(selectorText="Base")
 	mcolor="main-color:{0},{1},{2} ; ".format(dict["r"], dict["g"],dict["b"])
 	scolor="second-color:{0},{1},{2} ; ".format(dict["r2"], dict["g2"],dict["b2"])
-	size= "size:{}".format(dict["size"])
-	base=mcolor+scolor+size
+	size= "size:{};".format(dict["size"])
+	alpha= "alpha:{};".format(dict["alpha"])
+	font="font:{};".format(dict["font"])
+	base=mcolor+scolor+size+alpha+font
 	r1.style=base
 	sheet.add(r1)
 	#dock
@@ -50,6 +84,7 @@ def create_from_info(dict):
 	for i,a in enumerate(dict["dock-apps"]):
 		str = "app{0}:{1};".format(i,a)
 		all+=str
+
 	r2.style=all
 	sheet.add(r2)
 	#Apps
@@ -73,20 +108,23 @@ def create_from_info(dict):
 			str+=t
 		r.style=str
 		sheet.add(r)
+	TEXT=sheet.cssText
 	#etc..
+	'''
+	TEXT=json.dumps(dict,indent=2)
 	HOME = os.path.expanduser("~")
 	dir =os.environ.get('XDG_CONFIG_HOME',os.path.join(HOME,'.config'))
-	cfg= dir+'/ducklauncher.config.css'
+	cfg= dir+'/duck-launcher.config'
 	file=open(cfg,"w")
-	file.write(sheet.cssText)
+	file.write(TEXT)
 	file.close()
 def get():
 	HOME = os.path.expanduser("~")
 	dir =os.environ.get('XDG_CONFIG_HOME',os.path.join(HOME,'.config'))
-	cfg= dir+'/ducklauncher.config.css'
-	if not "ducklauncher.config.css" in os.listdir(dir):
+	cfg= dir+'/duck-launcher.config'
+	if "duck-launcher.config" not in os.listdir(dir):
 		create_from_info(defaultDict)
-	STRING=open(cfg).read()
+	'''
 	#disable warnings
 	import logging
 	cssutils.log.setLevel(logging.CRITICAL)
@@ -109,14 +147,18 @@ def get():
 					dict["r2"] = v.split(',')[0]
 					dict["g2"] = v.split(',')[1]
 					dict["b2"] = v.split(',')[2]
+				if a.name=="alpha":
+					has_alpha="yes"
+					dict["alpha"]=a.value
+				if a.name=="font":
+					dict["font"]=a.value
 				if a.name=="size":
 					dict["size"]=a.value
-					
 		if r.selectorText == "Dock":
 			for b in r.style:
 				if "app" in b.name:
 					dict["dock-apps"].append(str(b.value))
-		if r.selectorText == "Apps": 
+		if r.selectorText == "Apps":
 			for a in r.style:
 				if a.name=="icon-size":
 					dict["icon-size"]=a.value
@@ -140,9 +182,14 @@ def get():
 			b["directories"]=dirs
 			blocks.append(b)
 	dict["blocks"]=blocks
-	return dict
-		
-#Specialzz
+	return check_dict(dict)
+	'''
+	try:
+		theDict=json.loads(open(cfg).read())
+	except ValueError:
+		theDict=defaultDict
+	return check_dict(theDict)
+
 def get_from_block(block):
 	all=[]
 	for f in block['apps']:
@@ -161,5 +208,11 @@ def get_from_block(block):
 		data['type']='file'
 		all.append(data)
 	return all
-if __name__=='__main__':
-	print get()
+def removeFromDockApps(a):
+	conf = get()
+	dlist = conf["dock-apps"]
+	if a in dlist:
+		dlist = dlist.remove(a)
+	conf["dock-apps"]=dlist
+	lastDict = check_dict(conf)
+	

@@ -14,7 +14,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="folder.svg">
+   sodipodi:docname="folder-music.svg">
   <defs
      id="defs2987">
     <linearGradient
@@ -28,14 +28,6 @@
          offset="1"
          id="stop3769" />
     </linearGradient>
-    <filter
-       inkscape:collect="always"
-       id="filter3787">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3817081"
-         id="feGaussianBlur3789" />
-    </filter>
     <filter
        inkscape:collect="always"
        id="filter3814">
@@ -53,15 +45,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7.7781746"
-     inkscape:cx="29.737482"
-     inkscape:cy="23.729394"
-     inkscape:current-layer="layer1"
+     inkscape:cx="29.235781"
+     inkscape:cy="39.532432"
+     inkscape:current-layer="layer2"
      showgrid="true"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
-     inkscape:window-width="1280"
+     inkscape:window-width="1236"
      inkscape:window-height="977"
-     inkscape:window-x="0"
+     inkscape:window-x="44"
      inkscape:window-y="22"
      inkscape:window-maximized="1" />
   <metadata
@@ -72,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -102,5 +94,15 @@
        id="path3760"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="top">
+    <path
+       style="fill:#b3b3b3;stroke:none"
+       d="m 23.636363,27.785607 0,21.246967 19.985081,-11.538391 z"
+       id="path3787"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
