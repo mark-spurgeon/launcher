@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Duck Launcher
+Name=Duckï¿½Launcher
 Comment=An application launcher
 Icon=duck-launcher
-Exec=python /usr/bin/duck-launcher/Main.py
+Exec=duck-launcher
