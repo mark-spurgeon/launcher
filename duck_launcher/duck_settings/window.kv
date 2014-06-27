@@ -1,0 +1,315 @@
+<Slider>:
+	padding:10
+	min:0
+	max:100
+	canvas:
+		Color:
+			rgb: (.55,.55,.6)
+		Rectangle:
+			pos:self.x,self.center_y-5
+			size:self.width,4
+		Color:
+			rgb:(.96,96,.96,1)
+		Rectangle:
+			pos:self.value_pos[0]-16,self.center_y-17
+			size:32,32
+		Color:
+			rgb:(.86,.56,.26)
+		Ellipse:
+			pos:self.value_pos[0]-10,self.center_y-12
+			size:20,20
+<ColorPicker_Input@TextInput>
+	multiline: False	
+	mroot: None
+	padding: sp(5)
+	border: 1, 1,1,1
+	font_size:12
+<ColorPickerCustom>:
+	foreground_color: (0.2, 0.2, 0.2, 1)
+    wheel: wheel
+    BoxLayout:
+        orientation: 'vertical' if root.width < root.height else 'horizontal'
+        spacing: '10sp'
+        StackLayout:
+			orientation: 'tb-lr'
+			padding:5
+			size_hint_y: None if root.width < root.height else 1
+			height: sp(33) * 4 if root.width < root.height else self.height
+            canvas:
+                Color:
+                    rgba: (.95,.95,.95,1)
+                Rectangle:
+                    size:(self.size[0]+10,self.size[1])
+                    pos: self.pos
+
+			ColorPicker_Selector:
+				padding:2
+				mroot: root
+				text: 'R'
+				clr_idx: 0
+				color: wheel.r
+				foreground_color: (0.2,.2,.2,1)
+				size_hint_y: None if root.width < root.height else 0.3
+				size_hint_x: .5 if root.width < root.height else 1
+				height: '55sp' if root.width < root.height else self.height
+
+			ColorPicker_Selector:
+				padding:2
+				mroot: root
+				text: 'G'
+				clr_idx: 1
+				color: wheel.g
+				foreground_color: (0.2,.2,.2,1)
+				size_hint_y: None if root.width < root.height else 0.2
+				size_hint_x: .5 if root.width < root.height else 1
+				height: '55sp' if root.width < root.height else self.height
+
+			ColorPicker_Selector:
+				padding:2
+				mroot: root
+				text: 'B'
+				clr_idx: 2
+				color: wheel.b
+				foreground_color: (0.2,.2,.2,1)
+				size_hint_y: None if root.width < root.height else 0.2
+				size_hint_x: .5 if root.width < root.height else 1
+				height: '55sp' if root.width < root.height else self.height
+
+			ColorPicker_Selector:
+				padding:2
+				mroot: root
+				mode: 'hsv'
+				text: 'V'
+				clr_idx: 2
+				color: root.hsv[2]
+				foreground_color: (0.2,.2,.2,1)
+				size_hint_y: None if root.width < root.height else 0.2
+				size_hint_x: .5 if root.width < root.height else 1
+				height: '55sp' if root.width < root.height else self.height
+
+
+        ColorWheel:
+            id: wheel
+            _origin: (self.center_x, self.center_y)
+            _radius: 0.45 * min(self.size)
+            color: root.color
+            on_color: root.color[:3] = args[1][:3]
+
+<FirstScreen>:
+	name:'first'
+	canvas:
+		Color:
+			rgb:(.96,.96,.96)
+		Rectangle:
+			size:self.size
+	BoxLayout:
+		orientation:'vertical'
+		GridLayout:
+			cols:3
+			size_hint_y:None
+			height:42
+			Button: 
+				id:first
+				color:[.86,.46,.26,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Appearance"
+				on_release:root.manager.current='first'
+			Button: 
+				id:second
+				color:[.2,.2,.2,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Dock Apps"
+				on_release:root.manager.current='second'
+			Button:	
+				id: third
+				color:[.2,.2,.2,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Star Stuff"
+				on_release:root.manager.current='third'
+						
+		BoxLayout:
+			padding:20
+			size_hint_y:None
+			height:380
+			BoxLayout:
+				padding:10
+				orientation:"vertical"
+				Label:
+					text:"Foreground Color:"
+					size_hint_y:None
+					height:40
+					color:[.4,.4,.4,1]
+				ColorPickerCustom:
+					id:first_color
+					color:[app.red,app.green,app.blue,1]
+					on_color:app.changeForegroundColor(self.color)
+			BoxLayout:
+				padding:10
+				orientation:"vertical"
+				Label:
+					text:"Background Color:"
+					size_hint_y:None
+					height:40
+					color:[.4,.4,.4,1]
+				ColorPickerCustom:
+					id:second__color
+					color:[app.red2,app.green2,app.blue2,app.alpha]
+					on_color:app.changeBackgroundColor(self.color)
+				Label:	
+					text:"Transparency:"
+					size_hint_y:None
+					height:30
+					color:[.4,.4,.4,1]
+				Slider:
+					size_hint_y:None
+					height:20
+					min:0
+					max:1
+					value:app.alpha
+					on_value:app.changeBackgroundAlpha(self.value)
+		BoxLayout:
+			padding:20
+			BoxLayout:
+				padding:10
+				orientation:"vertical"
+				Label:	
+					text:"Launcher Width:"
+					size_hint_y:None
+					height:30
+					color:[.4,.4,.4,1]
+				Slider:
+					value:app.launcher_size
+					min:20
+					max:100
+					on_value:app.changeLauncherWidth(self.value)
+				Label:
+					text:"Animation Speed:"
+					size_hint_y:None
+					height:30
+					color:[.4,.4,.4,1]
+				Slider:
+				Label:
+					text:"Won't change anything"
+					color:[.95,.3,.3,1]
+			BoxLayout:
+				padding:10
+				orientation:"vertical"
+				Label:	
+					text:"Icon Size:"
+					size_hint_y:None
+					height:30
+					color:[.4,.4,.4,1]
+				Slider:	
+					min:40
+					max:200	
+					value:app.icon_size
+					on_value:app.changeIconSize(self.value)		
+				Label:
+					text:"Font:"
+					size_hint_y:None
+					height:30
+					color:[.4,.4,.4,1]
+				Label:
+					text:"Not Implemented Yet"
+					color:[.9,.1,.1,1]
+<SecondScreen>:
+	name:'second'
+	canvas:
+		Color:
+			rgb:(.96,.96,.96)
+		Rectangle:
+			size:self.size
+	BoxLayout:
+		orientation:'vertical'
+		GridLayout:
+			cols:3
+			size_hint_y:None
+			height:42
+			Button: 
+				id:first
+				color:[.2,.2,.2,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Appearance"
+				on_release:root.manager.current='first'
+			Button: 
+				id:second
+				color:[.86,.46,.26,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Dock Apps"
+				on_release:root.manager.current='second'
+			Button:	
+				id: third
+				color:[.2,.2,.2,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Star Stuff"
+				on_release:root.manager.current='third'
+		DockAppsLayout:
+			orientation:"horizontal"
+			size_hint_y:None
+			height:200
+			canvas.before:
+				Color:
+					rgba:(1,0,0,.8)
+				Rectangle:
+					size:self.size
+					
+		BoxLayout:
+			
+<ThirdScreen>:
+	name:'third'
+
+	canvas:
+		Color:
+			rgb:(.96,.96,.96)
+		Rectangle:
+			size:self.size
+	BoxLayout:
+		orientation:'vertical'
+		GridLayout:
+			cols:3
+			size_hint_y:None
+			height:42
+			Button: 
+				id:first
+				color:[.2,.2,.2,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Appearance"
+				on_release:root.manager.current='first'
+			Button: 
+				id:second
+				color:[.2,.2,.2,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Dock Apps"
+				on_release:root.manager.current='second'
+			Button:	
+				id: third
+				color:[.86,.46,.26,1]
+				background_color: [0,0,0,0]
+				size_hint_y:None
+				height:40
+				text:"Star Stuff"
+				on_release:root.manager.current='third'
+		BoxLayout:
+			padding:10
+			orientation:"vertical"
+			BlocksTree:
+				id:blocksview
+				text:"view"
+			Label:
+				text:"hello"
