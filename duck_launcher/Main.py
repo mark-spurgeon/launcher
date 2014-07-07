@@ -27,14 +27,19 @@ import Xlib.display
 from PySide import QtGui,QtCore
 import Apps
 import Config
-import Settings
+#import Settings
 import Window
 import XlibStuff
 import Files
 import System
 #########
 #########
-
+class Settings(QtCore.QThread):
+	def __init__(self,parent=None):
+		QtCore.QThread.__init__(self,parent)
+		self.parent=parent
+	def run(self):	
+		os.system("python /usr/lib/python2.7/duck_launcher/duck_settings/main.py")
 class Launch(QtCore.QThread):
 	def __init__(self,parent=None):
 		QtCore.QThread.__init__(self,parent)
@@ -77,6 +82,8 @@ class Launcher(QtGui.QMainWindow):
 		self.apps_per_col = math.trunc(((self.s_height)-30)/self.ICON_SIZE)
 		self.apps_per_page=self.apps_per_col*self.apps_per_row
 		self.app_page_state=0
+		self.appRect=None		
+		self.drawAppRect=False
 		self.files_page_state=0
 		self.Files = Files.getFiles()
 		self.pos_x=self.HALF_OPEN_POS
@@ -87,21 +94,24 @@ class Launcher(QtGui.QMainWindow):
 		self.current_text=''
 		self.allApps=Apps.info(self.current_text)
 		#Update open windows
+		'''
 		self.timer=QtCore.QTimer()
-		self.timer.setInterval(2000)
+		self.timer.setInterval(1000)
 		self.timer.start()
 		self.timer.timeout.connect(self.updateOpenWindows)
+		'''
 		#Open windows window
 		self.open_windows=Window.get_open_windows()
 		self.open_win = Window.open_windows()
 		#Settings window
-		self.settings_win = Settings.Window(self)
+		#self.settings_win = Settings.Window(self)
 		#System window
 		self.sys_win=System.Window()
 		#Fake window
 		self.fakewin = Fakewin(self.HALF_OPEN_POS,self.s_height, self)
 		self.fakewin.show()
-		xwin = XlibStuff.fix_window(self.fakewin.winId(),self.HALF_OPEN_POS+5,0,0,0)
+		XlibStuff.fix_window(self.fakewin.winId(),self.HALF_OPEN_POS+5,0,0,0)
+		#
 	def paintEvent(self,e):
 		qp=QtGui.QPainter()
 		qp.begin(self)
@@ -125,15 +135,17 @@ class Launcher(QtGui.QMainWindow):
 		r = QtCore.QRectF(self.pos_x-self.SIZE/2,self.s_height/2+r_s*3,r_s,r_s)
 		qp.drawEllipse(r)
 		##
+		#Draw rect under clicked app
+		if self.drawAppRect==True and self.appRect!=None:
+			qp.setPen(QtGui.QColor(0,0,0,0))
+			qp.setBrush(QtGui.QColor(249,249,251,80))
+			qp.drawRect(self.appRect)
 		###
 		if self.current_state == "half_open":
 			qp.setBrush(QtGui.QColor(self.R,self.G,self.B))
 			qp.drawRect(0,0,self.pos_x+self.SIZE/2,self.OPEN_STATE_TOP)
 			rect = QtCore.QRectF(50,0,150,50)
-			qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 3, QtCore.Qt.SolidLine))
 			####DRAW BUTTONS
-			qp.setBrush(QtGui.QColor(250,250,250,100))
-			qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 2, QtCore.Qt.SolidLine))
 			###Apps
 			ICO_TOP=self.ICO_TOP
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/apps.svg")
@@ -160,6 +172,7 @@ class Launcher(QtGui.QMainWindow):
 					print("Error: Some apps could not be found ")
 			
 			#Open Windows Button
+			qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 2, QtCore.Qt.SolidLine))
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/open-apps.svg")
 			icon.paint(qp,10,self.s_height-ICO_TOP*2-10,ICO_TOP-10,ICO_TOP-10)
 			rect = QtCore.QRectF(10,self.s_height-ICO_TOP*2-10,ICO_TOP-10,ICO_TOP-10)
@@ -171,7 +184,8 @@ class Launcher(QtGui.QMainWindow):
 		##
 		##
 		if self.current_state=="open":
-			
+			close=QtGui.QIcon("/usr/share/duck-launcher/icons/close.svg")
+			close.paint(qp,self.pos_x-13,self.s_height-13,13,13)
 			if self.activity=="apps":
 				###page_buttons
 				#Current Text
@@ -182,7 +196,7 @@ class Launcher(QtGui.QMainWindow):
 					qp.drawText(t_rect, QtCore.Qt.AlignCenter, "Type to search..")
 				else:
 					qp.drawText(t_rect, QtCore.Qt.AlignCenter, "Searching: "+self.current_text)
-				max_apps=  math.trunc(len(Apps.info(self.current_text))/self.apps_per_page)+1
+				max_apps=  math.trunc((len(self.allApps)-1)/self.apps_per_page)+1
 				#Page
 				for i in range(0, max_apps):
 						btn_size = 20
@@ -241,6 +255,7 @@ class Launcher(QtGui.QMainWindow):
 						qp.setPen(QtGui.QPen(QtGui.QColor(self.R,self.G,self.B,100), 2, QtCore.Qt.SolidLine))
 						qp.drawRect(rect)
 						qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 2, QtCore.Qt.SolidLine))
+						qp.setFont(QtGui.QFont(self.conf["font"],10))
 						qp.drawText(rect,QtCore.Qt.TextWordWrap |QtCore.Qt.AlignHCenter,str(i+1))
 				#Text
 				t_rect=QtCore.QRectF(10,10,self.s_width/8,30)
@@ -296,9 +311,10 @@ class Launcher(QtGui.QMainWindow):
 							icon = QtGui.QIcon('/usr/share/duck-launcher/icons/file.svg')
 							splitted = thing['value'].split('/')
 							to_write =  splitted[-1]
-						icon.paint(qp, x_pos+15,y_pos+15, self.ICON_SIZE-50,self.ICON_SIZE-50)
-						rect = QtCore.QRectF(x_pos-10, y_pos+self.ICON_SIZE-30, self.ICON_SIZE, 30)
-						txt = qp.drawText(rect,QtCore.Qt.TextWordWrap |QtCore.Qt.AlignHCenter,to_write)
+						if icon!=None:
+							icon.paint(qp, x_pos+15,y_pos+15, self.ICON_SIZE-50,self.ICON_SIZE-50)
+							rect = QtCore.QRectF(x_pos-10, y_pos+self.ICON_SIZE-30, self.ICON_SIZE, 30)
+							txt = qp.drawText(rect,QtCore.Qt.TextWordWrap |QtCore.Qt.AlignHCenter,to_write)
 					#Title
 					qp.setPen(QtGui.QColor(0,0,0,0))
 					qp.setBrush(QtGui.QColor(self.R,self.G,self.B))
@@ -307,13 +323,31 @@ class Launcher(QtGui.QMainWindow):
 					qp.setFont(QtGui.QFont(self.conf["font"],16))
 					qp.drawText(QtCore.QRectF(20, h+10,self.s_width/3,200),b['name'])
 	def mouseMoveEvent(self,e):
+		self.mousePressEvent(e)
 		if e.x()>(self.pos_x-self.SIZE):
-			self.move=True
+			if self.current_state=="half_open" and self.s_height/2-20<e.y()<self.s_height/2+20 :
+				self.move=True
+			if self.current_state=="open":
+				self.move=True
 		if self.move==True:
 			self.current_state="nothing"
 			self.update_pos(e.x())
+		#repeat same as press event
+	def mousePressEvent(self,e):
+		x_m,y_m = e.x(),e.y()
+		if self.current_state=="half_open":
+			try:
+				for i,a in enumerate(self.dock_apps):
+					if self.OPEN_STATE_TOP+self.ICO_TOP*i+10<y_m<self.OPEN_STATE_TOP+self.ICO_TOP*(i+1)+10:
+						self.appRect=QtCore.QRectF(0, self.OPEN_STATE_TOP+self.ICO_TOP*i+8, self.HALF_OPEN_POS+1,self.ICO_TOP)
+						self.drawAppRect=True
+			except KeyError:
+				pass
+		self.update()
 	def mouseReleaseEvent(self,e):
 		x_m,y_m = e.x(),e.y()
+		self.drawAppRect=False
+		Window.activateFakewin(self.fakewin.winId())
 		#While moving
 		if self.current_state=="nothing":
 			self.move=False
@@ -341,6 +375,7 @@ class Launcher(QtGui.QMainWindow):
 			##set the current state
 			if self.pos_x==self.HALF_OPEN_POS:
 				self.current_state="half_open"
+				self.update_all()
 			elif self.pos_x==self.s_width/3:
 				self.current_state="open"
 			else: self.current_state="nothing"
@@ -349,9 +384,12 @@ class Launcher(QtGui.QMainWindow):
 		elif self.current_state=="open":
 			if self.pos_x-self.SIZE<x_m<self.pos_x and self.move==False and e.button()==QtCore.Qt.LeftButton:
 				self.close_it()
+				if y_m>self.s_height-13:
+					print("Quiting")
+					sys.exit()
 			###app events
 			if self.activity == "apps":
-				max_apps=  math.trunc(len(Apps.info(self.current_text))/self.apps_per_page)+1
+				max_apps=  math.trunc((len(self.allApps)-1)/self.apps_per_page)+1
 				##Change Page
 				for i in range(0,max_apps):
 						btn_size = 20
@@ -446,7 +484,7 @@ class Launcher(QtGui.QMainWindow):
 		elif self.current_state=="half_open":
 			##buttons
 			if self.pos_x-self.SIZE<x_m<self.pos_x and self.move==False and self.s_height/2-20<y_m<self.s_height/2+20:
-				self.current_state="apps"
+				self.activity="apps"
 				self.open_it()
 			if 0<x_m<self.HALF_OPEN_POS:
 				if e.button()==QtCore.Qt.LeftButton:
@@ -461,7 +499,7 @@ class Launcher(QtGui.QMainWindow):
 						self.open_it()
 					if self.ICO_TOP*2<y_m<self.ICO_TOP*3:
 						self.activity="settings"
-						self.settings_win.show()
+						Settings(parent=self).start()
 					if self.ICO_TOP*3<y_m<self.ICO_TOP*4:
 						self.activity="star"
 						self.open_it()
@@ -492,11 +530,12 @@ class Launcher(QtGui.QMainWindow):
 						self.sys_win.show()
 					elif self.sys_win.isHidden()==False:
 						self.sys_win.close()
-						
+		self.update()	
 	def wheelEvent(self,e):
+		Window.activateFakewin(self.fakewin.winId())
 		if self.activity == 'apps':
 			value= int(e.delta()/120)
-			max_pages=math.trunc(len(self.allApps)/self.apps_per_page)
+			max_pages=math.trunc((len(self.allApps)-1)/self.apps_per_page)
 			if value>0 and self.app_page_state>0:
 				self.app_page_state-=1
 			if value<0 and self.app_page_state<max_pages:
@@ -552,45 +591,52 @@ class Launcher(QtGui.QMainWindow):
 		self.current_state="half_open"
 		self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 		self.update()
-	def updateSize(self,x,y,w, h ):
-		self.s_width=w
-		self.s_height=h
-		self.update()
 	def updateOpenWindows(self):
 		self.open_windows=Window.get_open_windows()
-		self.update()
+		self.update_all()
 	def update_all(self):
 		#All values to update
 		import Config
 		conf=Config.get()
 		self.conf=conf
-		self.HALF_OPEN_POS=int(conf['size'])
-		self.ICO_TOP=self.HALF_OPEN_POS-5
-		self.OPEN_STATE_TOP=self.ICO_TOP*4+5
-		self.SIZE = 15
-		self.R=int(conf['r'])
-		self.G=int(conf['g'])
-		self.B=int(conf['b'])
-		self.ICON_SIZE=int(conf['icon-size'])
-		self.apps_per_row = math.trunc(((self.s_width/3)-30)/self.ICON_SIZE)
-		self.apps_per_col = math.trunc(((self.s_height)-30)/self.ICON_SIZE)
-		self.apps_per_page=self.apps_per_col*self.apps_per_row
+		if self.HALF_OPEN_POS!=int(conf["size"]):
+			self.HALF_OPEN_POS=int(conf['size'])
+			self.current_state="half_open"
+			self.pos_x=int(conf["size"])
+			self.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+4,self.s_height)
+			self.fakewin.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+4,self.s_height)
+			XlibStuff.fix_window(self.fakewin.winId(),self.HALF_OPEN_POS+5,0,0,0)
+			self.ICO_TOP=self.HALF_OPEN_POS-5
+			self.OPEN_STATE_TOP=self.ICO_TOP*4+5
+		elif self.R!=int(conf['r']) or self.G!=int(conf['g']) or self.B!=int(conf['b']):
+			self.R=int(conf['r'])
+			self.G=int(conf['g'])
+			self.B=int(conf['b'])
+		elif self.ICON_SIZE!=int(conf['icon-size']):
+			self.ICON_SIZE=int(conf['icon-size'])
+			self.apps_per_row = math.trunc(((self.s_width/3)-30)/self.ICON_SIZE)
+			self.apps_per_col = math.trunc(((self.s_height)-30)/self.ICON_SIZE)
+			self.apps_per_page=self.apps_per_col*self.apps_per_row
+
+		
 		self.dock_apps = Apps.find_info(conf['dock-apps'])
-		self.pos_x=self.HALF_OPEN_POS
-		self.current_state='half_open'
-		self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 		self.open_win.update_all()
 		self.sys_win.update_all()
 		self.update()
 		QtGui.QApplication.processEvents()
 class Fakewin(QtGui.QMainWindow):
 	def __init__(self,width,height,parent):
-		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.FramelessWindowHint)
+		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnBottomHint|QtCore.Qt.FramelessWindowHint)
 		
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 		self.setWindowTitle("ducklauncher!!!")
 		self.setGeometry(0,0,width,height)
 		self.parent=parent
+		##
+		self.timer=QtCore.QTimer()
+		self.timer.setInterval(1000)
+		self.timer.start()
+		self.timer.timeout.connect(self.parent.updateOpenWindows)
 	def keyPressEvent(self, e):
 		if e.key()==QtCore.Qt.Key_Backspace:
 			self.parent.current_text=self.parent.current_text[:-1]
@@ -602,10 +648,18 @@ class Fakewin(QtGui.QMainWindow):
 				thread = Launch(parent=self.parent)
 				thread.app=a["exec"]
 				thread.start()
-				self.parent.close_it()			
+				self.parent.close_it()
+				self.parent.current_text=''
+				self.parent.allApps=Apps.find_info('')			
 		elif e.key()==16777216:
 			self.parent.current_text=""
 			self.parent.app_page_state=0
+		elif e.key() == QtGui.QKeySequence.Quit:
+			print("Quit")
+		elif e.key()==16777249:
+			if e.text()=='q':
+				print("Quiting")
+				sys.exit()
 		elif e.text()!='':
 			self.parent.current_text+=e.text()
 			self.parent.app_page_state=0
@@ -617,8 +671,6 @@ class Fakewin(QtGui.QMainWindow):
 					self.parent.open_it()
 				elif self.parent.current_state=="open":
 					self.parent.close_it()
-			elif e.key()==16777249:
-				print("a")
 			elif e.key()==16777236:
 				if self.parent.activity=="apps":
 					max_pages=math.trunc(len(self.parent.allApps)/self.parent.apps_per_page)
@@ -639,6 +691,8 @@ class Fakewin(QtGui.QMainWindow):
 						self.parent.files_page_state-=1
 		self.parent.allApps=Apps.info(self.parent.current_text)
 		self.parent.update()
+	def quitApp(self):
+		print "quit"
 if __name__ == "__main__":
 	app = QtGui.QApplication(sys.argv)
 	win = Launcher()

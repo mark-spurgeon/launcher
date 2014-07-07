@@ -4,12 +4,17 @@
 	max:100
 	canvas:
 		Color:
+			rgb:(.96,96,.96)
+		Rectangle:
+			pos:self.pos
+			size:self.size
+		Color:
 			rgb: (.55,.55,.6)
 		Rectangle:
 			pos:self.x,self.center_y-5
 			size:self.width,4
 		Color:
-			rgb:(.96,96,.96,1)
+			rgb:(.96,96,.96)
 		Rectangle:
 			pos:self.value_pos[0]-16,self.center_y-17
 			size:32,32
@@ -255,18 +260,35 @@
 				height:40
 				text:"Star Stuff"
 				on_release:root.manager.current='third'
-		DockAppsLayout:
-			orientation:"horizontal"
-			size_hint_y:None
-			height:200
-			canvas.before:
-				Color:
-					rgba:(1,0,0,.8)
-				Rectangle:
-					size:self.size
 					
 		BoxLayout:
-			
+			padding:5
+			BoxLayout:
+				padding:5
+				orientation:"vertical"
+				size_hint_x:None
+				width:300
+				Label:
+					canvas.before:
+						Color:
+							rgb:(.96,.96,.96)
+						Rectangle:
+							pos:self.pos
+							size:self.size
+						Color:	
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos[0]+20,self.pos[1]
+							size:(self.size[0]-40,2)
+					text:"Your Apps Selection"
+					color:[.3,.3,.3,1]	
+					size_hint_y:None
+					height:40
+				ScrollView:
+					padding:(20,20)
+					DockAppsList:
+			Button:	
+				text:"WARNING: THIS ZONE IS UNDER CONSTRUCTION."
 <ThirdScreen>:
 	name:'third'
 
@@ -306,10 +328,31 @@
 				text:"Star Stuff"
 				on_release:root.manager.current='third'
 		BoxLayout:
-			padding:10
-			orientation:"vertical"
-			BlocksTree:
-				id:blocksview
-				text:"view"
-			Label:
-				text:"hello"
+			padding:5
+			orientation:"horizontal"
+			BoxLayout:
+				padding:5
+				orientation:"vertical"
+				Label:
+					canvas.before:
+						Color:
+							rgb:(.96,.96,.96)
+						Rectangle:
+							pos:self.pos
+							size:self.size
+						Color:	
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos[0]+20,self.pos[1]
+							size:(self.size[0]-40,2)
+					text:"Your Blocks"
+					color:[.3,.3,.3,1]	
+					size_hint_y:None
+					height:40
+				BlocksTree:
+					id:blocksview
+					text:"view"
+			Button:
+				text:"THIS ZONE IS ALSO UNDER CONSTRUCTION..."
+				size_hint_x:None
+				width:500

@@ -22,27 +22,22 @@ import wnck
 import Xlib
 #from gi.repository import Gtk
 #from gi.repository import Wnck as wnck
+import os
 import sys
 import time
+import Image
 #
 import Apps
 import Config
 #
 def activateFakewin(id_):
-	screen = wnck.screen_get_default()
-	screen.force_update()
-	win = screen.get_windows()
-	for w in win:
-		if id_ ==w.get_xid():
-			w.activate(int(time.time()))
+	w = wnck.window_get(id_)
+	print("activate!")
+	w.activate(gtk.get_current_event_time())
 	
 def close_window(title):
-	screen = wnck.screen_get_default()
-	screen.force_update()
-	win = screen.get_windows()
-	for w in win:
-		if title==w.get_xid():
-			w.close(int(time.time()))
+	w=wnck.window_get(title)
+	w.close(gtk.get_current_event_time())
 	
 ########
 class changeWindowState(QtCore.QThread):
@@ -56,18 +51,16 @@ class changeWindowState(QtCore.QThread):
 		active= screen.get_active_window()
 		if active.get_name()=="ducklauncher!!!":
 			active= screen.get_previously_active_window()
-		win = screen.get_windows()
-		for w in win:
-			if self.win_info['id'] == w.get_xid():
-				try:
-					if w.is_minimized():
-						w.activate(int(time.time()))
-					elif w.get_xid()==active.get_xid():
-						w.minimize()
-					else:
-						w.activate(int(time.time()))
-				except AttributeError:
-					w.activate(int(time.time()))
+		w=wnck.window_get(self.win_info ['id'])
+		try:
+			if w.is_minimized():
+				w.activate(gtk.get_current_event_time())
+			elif w.get_xid()==active.get_xid():
+				w.minimize()
+			else:
+				w.activate(gtk.get_current_event_time())
+		except AttributeError:
+			w.activate(gtk.get_current_event_time())
 ########
 def get_open_windows():
 	gtk.main_iteration()
@@ -84,6 +77,17 @@ def get_open_windows():
 					window['id']=w.get_xid()
 					window['title'] =w.get_name()
 					window['app']=w.get_application().get_name()
+					window['icon']=w.get_application().get_icon_name()
+					pix=w.get_icon()
+					pix= pix.scale_simple(128,128,gtk.gdk.INTERP_HYPER)
+					ico_data=  pix.get_pixels_array()
+					img = Image.fromarray(ico_data, 'RGBA')
+					home = os.path.expanduser("~")+"/.duck"
+					try:
+    						os.stat(home)
+					except:
+    						os.mkdir(home)
+					img.save("{0}/{1}.png".format(home,window["icon"]))
 					windows.append(window)
 	return windows
 	
@@ -102,49 +106,61 @@ class open_windows(QtGui.QMainWindow):
 		self.windows = get_open_windows()
 		self.win_len=len(self.windows)
 		self.move(self.size+10,self.height-self.size*2.4)
-		self.resize(self.size*self.win_len*1.3+20,self.size*1.5)
+		self.resize(self.size*self.win_len*1.3+20,self.size*1.6)
+		##
+		self.timer=QtCore.QTimer()
+		self.timer.setInterval(1000)
+		self.timer.start()
+		self.timer.timeout.connect(self.updateApps)
 	def paintEvent(self,e):
 		qp=	QtGui.QPainter()
 		qp.begin(self)
 		qp.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
 		qp.setPen(QtGui.QColor(int(self.r),int(self.g),int(self.b)))
 		qp.setBrush(QtGui.QColor(int(self.r),int(self.g),int(self.b)))
-		qp.drawRect(10,0,self.size*self.win_len*1.3+10,self.size*1.8)
+		qp.drawRoundedRect(QtCore.QRectF(10,0,self.size*self.win_len*1.3+10,self.size*1.6),4,4)
 		qp.setPen(QtGui.QColor(250,250,250))
 		qp.setBrush(QtGui.QColor(250,250,250))
-		qp.drawRect(9,0,5,self.size*1.8)
+		qp.drawRect(9,0,5,self.size*1.6)
 		half_height=self.size*0.9
 		icon=QtGui.QIcon("/usr/share/duck-launcher/icons/win.svg")
 		icon.paint(qp, -10,half_height-10, 20,20)
 		for i,w in enumerate(self.windows):
-			ico = Apps.ico_from_app(w['app'])
+			ico = Apps.ico_from_app(w['icon'])
 			if ico==None:
 				ico = Apps.ico_from_app(w["title"])
 				if ico==None:
-					ico=QtGui.QIcon("/usr/share/duck-launcher/icons/apps.svg")
+					home = os.path.expanduser("~")+"/.duck"
+					try:
+    						os.stat(home)
+					except:
+    						os.mkdir(home)
+					if os.path.isfile("{0}/{1}.png".format(home,w["icon"])):
+						ico = QtGui.QIcon("{0}/{1}.png".format(home,w["icon"]))
+					else:
+						ico = QtGui.QIcon("/usr/share/duck-launcher/apps.svg")
 			ico.paint(qp,20+self.size*i*1.3, 10, self.size*1.1, self.size*1.1)
-		
 	def mousePressEvent(self,e):
 		x_m,y_m=e.x(),e.y()
 		for i,w in enumerate(self.windows):
-			if 20+self.size*i*1.3<x_m<20+self.size*(i+1)*1.1 and 10<y_m<10+self.size*1.1:
+			if 20+self.size*i*1.3<x_m<20+self.size*i*1.3+self.size*1.1 and 10<y_m<10+self.size*1.1:
 				c = changeWindowState()
 				c.parent=self
 				c.win_info=w
 				c.start()
 		self.updateApps()
 	def updateApps(self):
-		self.icon_size=Config.get()['size']
 		self.windows = get_open_windows()
 		self.win_len=len(self.windows)
-		self.resize(self.size*self.win_len*1.3+20,self.size*1.1+20)
+		self.resize(self.size*self.win_len*1.3+20,self.size*1.6)
 		self.update()
 		QtGui.QApplication.processEvents()
 	def update_all(self):
 		import Config 
 		self.size=int(Config.get()['size'])
 		self.move(self.size+10,self.height-self.size*2.4)
-		self.resize(self.size*self.win_len*1.3+20,self.size*2.4)
-		self.r=Config.get()['r']
-		self.g=Config.get()['g']
-		self.b=Config.get()['b']
+		self.resize(self.size*self.win_len*1.3+20,self.size*1.6)
+		self.r=int(Config.get()["r"])
+		self.g=int(Config.get()["g"])
+		self.b=int(Config.get()["b"])
+		self.update()

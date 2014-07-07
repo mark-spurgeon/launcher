@@ -38,7 +38,9 @@ def info(filter_):
 			dType = _d.DesktopEntry(unicode(f)).getType()
 			if dNoDisplay==False and dHidden==False and dType=="Application" and show==True:  
 				app={}
-				if len(_d.DesktopEntry(unicode(f)).getOnlyShowIn())==0:
+				OnlyShowIn =  _d.DesktopEntry(unicode(f)).getOnlyShowIn()
+				current_desk=os.environ.get('XDG_CURRENT_DESKTOP')
+				if len(OnlyShowIn)==0 or current_desk in OnlyShowIn:
 					app["name"]=str(_d.DesktopEntry(unicode(f)).getName())
 					e = str(_d.DesktopEntry(unicode(f)).getExec())
 					try:
@@ -105,12 +107,14 @@ def ico_from_name(name):
 		else:
 			return QIcon("/usr/share/duck-launcher/icons/apps.svg")
 def ico_from_app(app_name):
+	global APPS
 	if APPS==None:
 		APPS=info('')
 	for a in APPS:
 		if app_name.lower() in a['name'].lower():
 			return ico_from_name(a['icon'])
 def find_info(apps):
+	global APPS
 	a_list=[]
 	if apps!=None:
 		for a in apps:

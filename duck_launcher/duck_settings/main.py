@@ -3,10 +3,13 @@ import sys
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.listview import ListView, ListItemButton, ListItemLabel
+from kivy.adapters.listadapter import ListAdapter
+from kivy.adapters.models import SelectableDataItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
 from kivy.uix.treeview import TreeView,TreeViewLabel,TreeViewNode
 from kivy.uix.colorpicker import ColorPicker
 from kivy.properties import (NumericProperty, BoundedNumericProperty,
@@ -25,6 +28,7 @@ from kivy.config import Config
 #########
 try:
 	from duck_launcher import Config as d_cfg
+	from duck_launcher import Apps as APPS
 except ImportError:
 	print("[Duck Settings Error/Bug]: Module 'duck_launcher' is not present, this module should be installed.")
 	sys.exit()
@@ -55,7 +59,7 @@ def updateConfig(*args):
 		elif arg.has_key("font"):
 			conf["font"]=str(arg["font"])
 		elif arg.has_key("dock-apps"):
-			conf["dock-apps"]=str(arg["dock-apps"])
+			conf["dock-apps"]=arg["dock-apps"]
 		elif arg.has_key("blocks"):
 			conf["blocks"]=str(arg["blocks"])
 	d_cfg.check_dict(conf) # Checks and creates a new configuration file
@@ -119,28 +123,39 @@ class ColorPickerCustom(RelativeLayout):
     def __init__(self, **kwargs):
         self._updating_clr = False
         super(ColorPickerCustom, self).__init__(**kwargs)
-class DockAppWidget(BoxLayout):
+class DataItem(SelectableDataItem):
+    def __init__(self, text='', is_selected=False):
+        self.text =str(text)
+	if self.text in d_cfg.get()["dock-apps"]:
+        	self.is_selected = True
+	else:
+		self.is_selected=False
+class DockAppsList(ListView):
 	def __init__(self, *args, **kwargs):
-		super(DockAppWidget, self).__init__(*args, **kwargs)
-		self.text=""
-		l = Label(text=self.text, color=[.2,.2,.2,1],background_color=[.3,.3,.3,1],size_hint_y=None, height=20)
-		btns =BoxLayout()
-		b_left=Button(size_hint_y=None, height=50,background_normal="left.png")
-		b_right=Button(size_hint_y=None, height=50,background_normal="right.png")
-		b_remove=Button(size_hint_y=None, height=50,background_normal="remove.png")
-		btns.add_widget(b_left)
-		btns.add_widget(b_right)
-		btns.add_widget(b_remove)
-		
-		self.add_widget(l)
-		self.add_widget(btns)
-class DockAppsLayout(RelativeLayout):
-	def __init__(self, *args, **kwargs):
-		super(DockAppsLayout, self).__init__(*args, **kwargs)	
-		for a in d_cfg.get()["dock-apps"]:
-			d =DockAppWidget(size_hint=(None,None),width=150,height=200)
-			d.text=a
-			self.add_widget(d)
+		super(DockAppsList, self).__init__(*args, **kwargs)	
+		the_apps = [DataItem(text=a["name"]) for a in APPS.info('')]
+		args_converter = lambda row_index, obj: {'text': obj.text,
+							'is_selected':obj.is_selected,
+							'size_hint_y': None,
+							'height': 20,
+							'font_size':14,
+							'deselected_color':[0,0,0,0],
+							'selected_color':[.96,.56,.36,1],
+							'background_normal':"images/button.png",
+							'background_down':"images/buton.png",
+							'color':[.2,.2,.2,1]}
+		self.adapter=ListAdapter(data = the_apps, 
+					selection_mode = 'multiple',
+					args_converter=args_converter,
+					allow_empty_selection = True,
+					propagate_selection_to_data=True,
+					cls = ListItemButton,
+					sorted_keys=[])
+		#self.adapter.select_list(self.adapter.data,extend=False)
+		self.adapter.bind(on_selection_change=self.on_select)
+	def on_select(self, *args, **kwargs):
+		l = [a.text for a in args[0].selection]
+		updateConfig({'dock-apps':l})
 class TreeViewButton(Button, TreeViewNode):
 	pass	
 class BlocksTree(TreeView):
@@ -148,13 +163,13 @@ class BlocksTree(TreeView):
 		super(BlocksTree, self).__init__(*args, **kwargs)
 		self.hide_root=True
 		for b in d_cfg.get()["blocks"]:
-			n = self.add_node(TreeViewLabel(text=b["name"], color=[.2,0.2,0.2,1],color_selected=[.95,.45,.25,.8],is_open=True))
+			n = self.add_node(TreeViewLabel(text=b["name"], color=[.2,0.2,0.2,1],color_selected=[.95,.45,.25,.9],is_open=True))
 			for a in b["apps"]:
-				self.add_node(TreeViewLabel(text=a, color=[0.2,0.2,0.2,1],color_selected=[.9,.5,.3,.5] ) ,n)
+				self.add_node(TreeViewLabel(text=a, color=[0.2,0.2,0.2,1],color_selected=[.9,.5,.3,.5]) ,n)
 			for a in b["directories"]:
-				self.add_node(TreeViewLabel(text="a", color=[0.2,0.2,0.2,1],color_selected=[.9,.5,.3,.5] ) ,n)
+				self.add_node(TreeViewLabel(text="a", color=[0.2,0.2,0.2,1],color_selected=[.9,.5,.3,.5]) ,n)
 			for a in b["files"]:
-				self.add_node(TreeViewLabel(text="a", color=[0.2,0.2,0.2,1],color_selected=[.9,.5,.3,.5] ) ,n)
+				self.add_node(TreeViewLabel(text="a", color=[0.2,0.2,0.2,1],color_selected=[.9,.5,.3,.5], background_normal="images/button.png" ) ,n)
 	def on_node_expand(self,node):
 		print node.text
 	def on_node_touchdown(self,touch):
@@ -184,7 +199,7 @@ class Window(App):
 		
 	####
 	def build(self):
-		screen = ScreenManager()
+		screen = ScreenManager(transition=SwapTransition())
 		screen.add_widget(FirstScreen())
 		screen.add_widget(SecondScreen())
 		screen.add_widget(ThirdScreen())
