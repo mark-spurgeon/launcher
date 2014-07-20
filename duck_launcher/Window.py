@@ -23,9 +23,8 @@ import Xlib
 #from gi.repository import Gtk
 #from gi.repository import Wnck as wnck
 import os
-import sys
-import time
 import Image
+import binascii
 #
 import Apps
 import Config
@@ -87,7 +86,7 @@ def get_open_windows():
     						os.stat(home)
 					except:
     						os.mkdir(home)
-					img.save("{0}/{1}.png".format(home,window["icon"]))
+					img.save("{0}/{1}.png".format(home,binascii.hexlify(window["icon"])))
 					windows.append(window)
 	return windows
 	
@@ -135,8 +134,8 @@ class open_windows(QtGui.QMainWindow):
     						os.stat(home)
 					except:
     						os.mkdir(home)
-					if os.path.isfile("{0}/{1}.png".format(home,w["icon"])):
-						ico = QtGui.QIcon("{0}/{1}.png".format(home,w["icon"]))
+					if os.path.isfile("{0}/{1}.png".format(home,binascii.hexlify(window["icon"]))):
+						ico = QtGui.QIcon("{0}/{1}.png".format(home,binascii.hexlify(window["icon"])))
 					else:
 						ico = QtGui.QIcon("/usr/share/duck-launcher/apps.svg")
 			ico.paint(qp,20+self.size*i*1.3, 10, self.size*1.1, self.size*1.1)

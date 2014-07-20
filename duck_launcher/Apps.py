@@ -26,7 +26,12 @@ APPS=None
 def info(filter_):
 	appList=[]
 	a=False
-	for f in glob.glob("/usr/share/applications/*.desktop"):
+	all_apps=glob.glob("/usr/share/applications/*.desktop")
+	for a in glob.glob("/usr/share/applications/kde4/*.desktop"):
+	      all_apps.append(a)
+	for a in glob.glob("{}/.local/share/applications/*.desktop".format(os.environ.get('~'))):
+	      all_apps.append(a)
+	for f in all_apps:
 		try:
 			if filter_ !="" and filter_.lower() in str(_d.DesktopEntry(unicode(f)).getName()).lower():
 				show=True
@@ -55,39 +60,6 @@ def info(filter_):
 			pass
 	return sorted(appList,key=lambda x:x["name"])
 	APPS=sorted(appList,key=lambda x:x["name"])
-	'''
-	Apps = []
-	for app in Gio.app_info_get_all():
-		show=True
-		if filter=='':
-			show=True
-		else:
-			show=False
-		#
-		if app.should_show()==False:
-			show=False
-			
-		if show==True:
-			app_info = {}
-			app_info["name"] = app.get_name()
-			app_info["exec"] = str(app.get_commandline())
-			if '%' in app_info["exec"]:
-				num = app_info["exec"].index("%")
-				stuff = app_info["exec"][num:]
-				app_info["exec"] = app_info["exec"].replace(stuff,'')
-			##icon
-			desk_file = app.get_id()
-			desk_path = "/usr/share/applications/"+str(desk_file)
-			if os.path.isfile(desk_path):
-				f = open(desk_path,'r')
-				for line in f.readlines():
-					if 'Icon=' in line:
-						icon_name = line.replace('Icon=','').replace('\n','')
-						app_info["icon"]=str(icon_name)
-			Apps.append(app_info)
-	##set sorted
-	return sorted(Apps,key=lambda x:x["name"])
-	'''
 def ico_from_name(name):
 	icon=QIcon.fromTheme(name)
 	if not name:

@@ -19,6 +19,7 @@
 #########
 import os
 import sys
+sys.dont_write_bytecode = True
 import math
 import time
 import getpass
@@ -39,7 +40,7 @@ class Settings(QtCore.QThread):
 		QtCore.QThread.__init__(self,parent)
 		self.parent=parent
 	def run(self):	
-		os.system("python /usr/lib/python2.7/duck_launcher/duck_settings/main.py")
+		os.system("python /usr/lib/duck_settings/main.py")
 class Launch(QtCore.QThread):
 	def __init__(self,parent=None):
 		QtCore.QThread.__init__(self,parent)
@@ -571,6 +572,8 @@ class Launcher(QtGui.QMainWindow):
 			self.setGeometry(0,self.top_pos,self.s_width/3+5,self.s_height)
 			self.update()
 			QtGui.QApplication.processEvents()
+		if self.pos_x!=self.s_width/3:
+			self.pos_x=self.s_width/3
 		self.current_state="open"
 		if self.activity=="apps":
 			self.allApps=Apps.info(self.current_text)
@@ -588,6 +591,8 @@ class Launcher(QtGui.QMainWindow):
 			self.current_state="nothing"
 			self.update()
 			QtGui.QApplication.processEvents()
+		if self.pos_x!=self.HALF_OPEN_POS:
+			self.pos_x=self.HALF_OPEN_POS
 		self.current_state="half_open"
 		self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 		self.update()
@@ -654,12 +659,6 @@ class Fakewin(QtGui.QMainWindow):
 		elif e.key()==16777216:
 			self.parent.current_text=""
 			self.parent.app_page_state=0
-		elif e.key() == QtGui.QKeySequence.Quit:
-			print("Quit")
-		elif e.key()==16777249:
-			if e.text()=='q':
-				print("Quiting")
-				sys.exit()
 		elif e.text()!='':
 			self.parent.current_text+=e.text()
 			self.parent.app_page_state=0

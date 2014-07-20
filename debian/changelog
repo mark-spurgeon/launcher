@@ -1,11 +1,7 @@
-duck-launcher (0.65.5-trusty1) trusty; urgency=high
+duck-launcher (0.66.5-trusty1) trusty; urgency=high
 
-  *Too many improvements:
-   -New options to close,sleep,logout,etc..
-   -Config file changed to json: quicker and easier
-   -Change the font in the config file
-   -File browser: different icons for music,videos,etc.. and you can see images
-   -Ui for apps a bit improved
-   -If there's only one app in search, press enter and it launches it.
-   -Bug fixes...I guess
- -- Mark Spurgeon <markspurgeon96@hotmail.com>  Wed, 21 May 2014 10:04:37 +0100
+  *Many, many improvements:
+    - ui improvement
+    - new settings
+    - icons do show on the open-windows thing
+ -- Mark Spurgeon <markspurgeon96@hotmail.com>  Mon, 14 July 2014 10:06:37 +0100

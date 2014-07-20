@@ -4,7 +4,7 @@
 	max:100
 	canvas:
 		Color:
-			rgb:(.96,96,.96)
+			rgb:(1,1,1)
 		Rectangle:
 			pos:self.pos
 			size:self.size
@@ -14,7 +14,7 @@
 			pos:self.x,self.center_y-5
 			size:self.width,4
 		Color:
-			rgb:(.96,96,.96)
+			rgb:(1,1,1)
 		Rectangle:
 			pos:self.value_pos[0]-16,self.center_y-17
 			size:32,32
@@ -42,7 +42,7 @@
 			height: sp(33) * 4 if root.width < root.height else self.height
             canvas:
                 Color:
-                    rgba: (.95,.95,.95,1)
+                    rgb: (1,1,1)
                 Rectangle:
                     size:(self.size[0]+10,self.size[1])
                     pos: self.pos
@@ -104,7 +104,7 @@
 	name:'first'
 	canvas:
 		Color:
-			rgb:(.96,.96,.96)
+			rgb:(1,1,1)
 		Rectangle:
 			size:self.size
 	BoxLayout:
@@ -162,15 +162,28 @@
 					size_hint_y:None
 					height:40
 					color:[.4,.4,.4,1]
+
 				ColorPickerCustom:
 					id:second__color
 					color:[app.red2,app.green2,app.blue2,app.alpha]
 					on_color:app.changeBackgroundColor(self.color)
+					canvas.after:
+						Color:
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos[0]-15,self.pos[1]
+							size:(2,self.size[1])
 				Label:	
 					text:"Transparency:"
 					size_hint_y:None
 					height:30
 					color:[.4,.4,.4,1]
+					canvas.after:
+						Color:
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos[0]-15,self.pos[1]-30
+							size:(2,self.size[1]+30)
 				Slider:
 					size_hint_y:None
 					height:20
@@ -188,6 +201,12 @@
 					size_hint_y:None
 					height:30
 					color:[.4,.4,.4,1]
+					canvas.after:
+						Color:
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos[0],self.pos[1]+self.size[1]+20
+							size:(self.size[0],2)
 				Slider:
 					value:app.launcher_size
 					min:20
@@ -210,6 +229,12 @@
 					size_hint_y:None
 					height:30
 					color:[.4,.4,.4,1]
+					canvas.after:
+						Color:
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos[0]-20,self.pos[1]+self.size[1]+20
+							size:(self.size[0]+20,2)
 				Slider:	
 					min:40
 					max:200	
@@ -227,7 +252,7 @@
 	name:'second'
 	canvas:
 		Color:
-			rgb:(.96,.96,.96)
+			rgb:(1,1,1)
 		Rectangle:
 			size:self.size
 	BoxLayout:
@@ -271,7 +296,7 @@
 				Label:
 					canvas.before:
 						Color:
-							rgb:(.96,.96,.96)
+							rgb:(1,1,1)
 						Rectangle:
 							pos:self.pos
 							size:self.size
@@ -294,7 +319,7 @@
 
 	canvas:
 		Color:
-			rgb:(.96,.96,.96)
+			rgb:(1,1,1)
 		Rectangle:
 			size:self.size
 	BoxLayout:
@@ -336,7 +361,7 @@
 				Label:
 					canvas.before:
 						Color:
-							rgb:(.96,.96,.96)
+							rgb:(1,1,1)
 						Rectangle:
 							pos:self.pos
 							size:self.size
@@ -349,10 +374,45 @@
 					color:[.3,.3,.3,1]	
 					size_hint_y:None
 					height:40
-				BlocksTree:
-					id:blocksview
-					text:"view"
-			Button:
-				text:"THIS ZONE IS ALSO UNDER CONSTRUCTION..."
+				ScrollView:
+					BlocksTree:
+						id:blockstree
+						text:"view"
+						load_func:self.callback
+			BoxLayout:
+				orientation:"vertical"
 				size_hint_x:None
-				width:500
+				width:200
+				padding:25
+				AddBlockButton:
+					parentLayout:root
+					size_hint:(None,None)
+					width:150
+					height:150	
+					background_normal:"images/add.png"
+					background_down:"images/add_down.png"
+					background_color:[.96,.56,.26,1]
+					canvas.before:
+						Color:
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos
+							size:(2,self.size[1])
+				Label:
+					size_hint_y:None
+					height:40	
+					text:"Add Block"
+					color:[.3,.3,.3,1]
+					canvas.before:
+						Color:
+							rgb:(.96,.36,.26)
+						Rectangle:
+							pos:self.pos
+							size:(2,self.size[1])
+				Label:
+					canvas.before:
+						Color:
+							rgb:(.96,.56,.26)
+						Rectangle:
+							pos:self.pos
+							size:(2,self.size[1])

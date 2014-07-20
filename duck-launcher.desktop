@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Duck Launcher
+Name=Duck Launcher
 Comment=An application launcher
 Icon=duck-launcher
 Exec=duck-launcher

@@ -36,7 +36,8 @@ defaultDict={
 	"size":40,
 	"dock-apps":["Firefox Web Browser"],
 	"icon-size":95,
-	"blocks":[{"name":"Example","apps":["Firefox Web Browser"], "files":[], "directories":[]}]
+	"blocks":[{"name":"Example","apps":["Firefox Web Browser"], "files":[], "directories":[]}],
+	"init-manager":"systemd"
 }
 def check_dict(d):
 	if "r" not in d:
@@ -63,6 +64,10 @@ def check_dict(d):
 		d["blocks"]=defaultDict["blocks"]
 	if "font" not in d:
 		d["font"]=defaultDict["font"]
+	#Add speed	
+	
+	if "init-manager" not in d:
+		d["init-manager"]=defaultDict["init-manager"]
 	#
 	create_from_info(d)
 	return d

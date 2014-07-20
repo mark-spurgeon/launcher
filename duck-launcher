@@ -4,6 +4,7 @@ do=True
 try:
 	import os 
 	import sys
+	sys.dont_write_bytecode = True
 	import platform
 	from PySide import QtGui
 except ImportError:

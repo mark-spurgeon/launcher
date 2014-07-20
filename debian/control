@@ -10,6 +10,6 @@ Homepage: <insert the upstream URL, if relevant>
 
 Package: duck-launcher
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},python, python-pyside, python-xlib, python-wnck, python-gtk2,python-simplejson
+Depends: ${shlibs:Depends}, ${misc:Depends},python, python-pyside, python-xlib, python-wnck, python-gtk2,python-simplejson, python-xdg, python-numpy, python-kivy
 Description: Duck App Launcher
  The App Launcher made for you ;)

@@ -21,7 +21,7 @@ import Xlib
 import sys
 import Config
 def sysAction(what):
-	platform="systemd"
+	platform=Config.get()["init-manager"]
 	import dbus 
 	bus = dbus.SystemBus()
 	if platform=="systemd":
