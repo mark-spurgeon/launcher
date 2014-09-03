@@ -19,26 +19,77 @@
 #########
 
 import os
-try:
-    import simplejson as json
-except ImportError:
-    import json
+import defaultConfig
 
-defaultDict={
-	"r":255,
-	"g":92,
-	"b":36,
-	"r2":40,
-	"g2":40,
-	"b2":40,
-	"alpha":200,
-	"font":"Hermeneus One",
-	"size":40,
-	"dock-apps":["Firefox Web Browser"],
-	"icon-size":95,
-	"blocks":[{"name":"Example","apps":["Firefox Web Browser"], "files":[], "directories":[]}]
-}
+import dbus
+try:
+	import cPickle as pickle
+except:
+	print("Using python version of pickle")	
+	import pickle
+CONFIG={}
+defaultDict=defaultConfig.Dict
 def check_dict(d):
+	new_d={}
+	if d.has_key("r"):
+		new_d["r"]=int(d["r"])
+	else:
+		new_d["r"]=int(defaultDict["r"])
+	if d.has_key("g"):
+		new_d["g"]=int(d["g"])
+	else:
+		new_d["g"]=int(defaultDict["g"])
+	if d.has_key("b"):
+		new_d["b"]=int(d["b"])
+	else:
+		new_d["b"]=int(defaultDict["b"])
+	if d.has_key("r2"):
+		new_d["r2"]=int(d["r2"])
+	else:
+		new_d["r2"]=int(defaultDict["r2"])
+	if d.has_key("g2"):
+		new_d["g2"]=int(d["g2"])
+	else:
+		new_d["g2"]=int(defaultDict["g2"])
+	if d.has_key("b2"):
+		new_d["b2"]=int(d["b2"])
+	else:
+		new_d["b2"]=int(defaultDict["b2"])
+	if d.has_key("icon-size"):
+		new_d["icon-size"]=int(d["icon-size"])
+	else:
+		new_d["icon-size"]=int(defaultDict["icon-size"])
+	if d.has_key("size"):
+		new_d["size"]=int(d["size"])
+	else:
+		new_d["size"]=int(defaultDict["size"])
+	if d.has_key("alpha"):
+		new_d["alpha"]=int(d["alpha"])
+	else:
+		new_d["alpha"]=int(defaultDict["alpha"])
+	if d.has_key("animation-speed"):
+		new_d["animation-speed"]=float(d["animation-speed"])
+	else:
+		new_d["animation-speed"]=float(defaultDict["animation-speed"])
+	if d.has_key("dock-apps"):
+		new_d["dock-apps"]=[]
+		for n in d["dock-apps"]:
+			new_d["dock-apps"].append(str(n))
+	else:
+		new_d["dock-apps"]=list(defaultDict["dock-apps"])
+	if d.has_key("blocks"):
+		new_d["blocks"]=str(d["blocks"])
+	else:
+		new_d["blocks"]=list(defaultDict["blocks"])
+	if d.has_key("font"):
+		new_d["font"]=str(d["font"])
+	else:
+		new_d["font"]=str(defaultDict["font"])
+	if d.has_key("init-manager"):
+		new_d["init-manager"]=str(d["init-manager"])
+	else:
+		new_d["init-manager"]=str(defaultDict["init-manager"])
+	'''
 	if "r" not in d:
 		d["r"]=defaultDict["r"]
 	if "g" not in d:
@@ -63,156 +114,66 @@ def check_dict(d):
 		d["blocks"]=defaultDict["blocks"]
 	if "font" not in d:
 		d["font"]=defaultDict["font"]
-	create_from_info(d)
+	#Add speed	
+	if "animation-speed" not in d:
+		d["animation-speed"]=defaultDict["animation-speed"]
+	
+	if "init-manager" not in d:
+		d["init-manager"]=defaultDict["init-manager"]
+	#
+	'''
+	create_from_info(new_d)
 	return d
 def create_from_info(dict):
-	'''
-	sheet = cssutils.css.CSSStyleSheet()
-	#base
-	r1=cssutils.css.CSSStyleRule(selectorText="Base")
-	mcolor="main-color:{0},{1},{2} ; ".format(dict["r"], dict["g"],dict["b"])
-	scolor="second-color:{0},{1},{2} ; ".format(dict["r2"], dict["g2"],dict["b2"])
-	size= "size:{};".format(dict["size"])
-	alpha= "alpha:{};".format(dict["alpha"])
-	font="font:{};".format(dict["font"])
-	base=mcolor+scolor+size+alpha+font
-	r1.style=base
-	sheet.add(r1)
-	#dock
-	r2=cssutils.css.CSSStyleRule(selectorText="Dock")
-	all=""
-	for i,a in enumerate(dict["dock-apps"]):
-		str = "app{0}:{1};".format(i,a)
-		all+=str
-
-	r2.style=all
-	sheet.add(r2)
-	#Apps
-	r3=cssutils.css.CSSStyleRule(selectorText="Apps")
-	isize="icon-size:{}".format(dict["icon-size"])
-	r3.style=isize
-	sheet.add(r3)
-	 #Blocks
-	for i, b in enumerate(dict["blocks"]):
-		name =  "Block{0} .{1}".format(i,b["name"])
-		r = cssutils.css.CSSStyleRule(selectorText=name)
-		str=''
-		for i, a in enumerate(b["apps"]):
-			t="app{0}:{1};".format(i,a)
-			str+=t
-		for i,f in enumerate(b["files"]):
-			t="file{0}:url({1});".format(i,f)
-			str+=t
-		for i,d in enumerate(b["directories"]):
-			t="directory{0}:url({1});".format(i,d)
-			str+=t
-		r.style=str
-		sheet.add(r)
-	TEXT=sheet.cssText
-	#etc..
-	'''
-	TEXT=json.dumps(dict,indent=2)
 	HOME = os.path.expanduser("~")
 	dir =os.environ.get('XDG_CONFIG_HOME',os.path.join(HOME,'.config'))
 	cfg= dir+'/duck-launcher.config'
-	file=open(cfg,"w")
-	file.write(TEXT)
-	file.close()
+	the_file=open(cfg,"wb")
+	pickle.dump(dict,the_file)
+	the_file.close()
 def get():
 	HOME = os.path.expanduser("~")
 	dir =os.environ.get('XDG_CONFIG_HOME',os.path.join(HOME,'.config'))
 	cfg= dir+'/duck-launcher.config'
 	if "duck-launcher.config" not in os.listdir(dir):
 		create_from_info(defaultDict)
-	'''
-	#disable warnings
-	import logging
-	cssutils.log.setLevel(logging.CRITICAL)
-	#parse
-	sheet = cssutils.parseString(STRING)
-	dict={}
-	blocks=[]
-	dict["dock-apps"]=[]
-	for r in sheet:
-		if r.selectorText == "Base":
-			#main-color
-			for a in  r.style:
-				if a.name == "main-color":
-					v= a.value
-					dict["r"] = v.split(',')[0]
-					dict["g"] = v.split(',')[1]
-					dict["b"] = v.split(',')[2]
-				if a.name=="second-color":
-					v= a.value
-					dict["r2"] = v.split(',')[0]
-					dict["g2"] = v.split(',')[1]
-					dict["b2"] = v.split(',')[2]
-				if a.name=="alpha":
-					has_alpha="yes"
-					dict["alpha"]=a.value
-				if a.name=="font":
-					dict["font"]=a.value
-				if a.name=="size":
-					dict["size"]=a.value
-		if r.selectorText == "Dock":
-			for b in r.style:
-				if "app" in b.name:
-					dict["dock-apps"].append(str(b.value))
-		if r.selectorText == "Apps":
-			for a in r.style:
-				if a.name=="icon-size":
-					dict["icon-size"]=a.value
-		if "Block" in r.selectorText:
-			b={}
-			b['name'] = r.selectorText.split('.')[1]
-			apps=[]
-			files=[]
-			dirs=[]
-			for a in r.style:
-				if "app" in a.name:
-					apps.append(a.value)
-				if "file" in  a.name:
-					value=a.value.replace("url(","").replace(")","")
-					files.append(value)
-				if "directory" in a.name:
-					value=a.value.replace("url(","").replace(")","")
-					dirs.append(value)
-			b["apps"]=apps
-			b["files"]=files
-			b["directories"]=dirs
-			blocks.append(b)
-	dict["blocks"]=blocks
-	return check_dict(dict)
-	'''
+	the_file=open(cfg,"rb")
 	try:
-		theDict=json.loads(open(cfg).read())
-	except ValueError:
-		theDict=defaultDict
+		theDict=pickle.load(the_file)
+		global CONFIG
+		CONFIG=theDict
+	except:
+		if CONFIG!={}:
+			theDict=CONFIG
+		else:
+			theDict=defaultDict
+	the_file.close()
 	return check_dict(theDict)
-
 def get_from_block(block):
 	all=[]
-	for f in block['apps']:
-		data = {}
-		data['value']=f
-		data['type']='app'
-		all.append(data)
-	for f in block['directories']:
-		data = {}
-		data['value']=f
-		data['type']='directory'
-		all.append(data)
-	for f in block['files']:
-		data = {}
-		data['value']=f
-		data['type']='file'
-		all.append(data)
+	if block.has_key("apps"):
+		for f in block['apps']:
+			data = {}
+			data['value']=f
+			data['type']='app'
+			all.append(data)
+	if block.has_key("directories"):
+		for f in block['directories']:
+			data = {}
+			data['value']=f
+			data['type']='directory'
+			all.append(data)
+	if block.has_key("files"):
+		for f in block['files']:
+			data = {}
+			data['value']=f
+			data['type']='file'
+			all.append(data)
 	return all
 def removeFromDockApps(a):
 	conf = get()
 	dlist = conf["dock-apps"]
-	if a in dlist:
-		dlist = dlist.remove(a)
+	dlist = [x for x in dlist if x != a]
 	conf["dock-apps"]=dlist
 	lastDict = check_dict(conf)
 	

@@ -3,13 +3,13 @@ Section: devel
 Priority: extra
 Maintainer: Mark Spurgeon <markspurgeon96@hotmail.com>
 Build-Depends: debhelper (>= 8.0.0)
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: <insert the upstream URL, if relevant>
 #Vcs-Git: git://git.debian.org/collab-maint/ducklauncher.git
 #Vcs-Browser: http://git.debian.org/?p=collab-maint/ducklauncher.git;a=summary
 
 Package: duck-launcher
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},python, python-pyside, python-xlib, python-wnck, python-gtk2,python-simplejson
+Depends: ${shlibs:Depends}, ${misc:Depends},xterm,python, python-dbus, python-pyside, python-xlib, python-wnck, python-gtk2,python-simplejson, python-xdg, python-numpy, python-kivy
 Description: Duck App Launcher
  The App Launcher made for you ;)

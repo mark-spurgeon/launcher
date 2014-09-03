@@ -301,7 +301,6 @@ class Window(QtGui.QDialog):
 		hbox.addLayout(button_line)
 		tabs.addTab(tab3,"Star")
 		#
-		tabs.setStyleSheet("background-color: rgb(245, 245, 245);\n;")
 		tabs.show()
 		vbox.addWidget(tabs)
 		close = QtGui.QPushButton("Save settings and close")

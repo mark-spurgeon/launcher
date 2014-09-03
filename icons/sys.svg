@@ -7,72 +7,12 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64px"
-   height="64px"
-   id="svg2985"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 2">
+   width="64"
+   height="64"
+   id="svg2985">
   <defs
-     id="defs2987">
-    <filter
-       inkscape:collect="always"
-       id="filter3855"
-       x="-0.15430599"
-       width="1.308612"
-       y="-0.15430599"
-       height="1.308612">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.72888043"
-         id="feGaussianBlur3857" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3859"
-       x="-0.15430599"
-       width="1.308612"
-       y="-0.15430599"
-       height="1.308612">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.72888043"
-         id="feGaussianBlur3861" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3863"
-       x="-0.15430599"
-       width="1.308612"
-       y="-0.15430599"
-       height="1.308612">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.72888043"
-         id="feGaussianBlur3865" />
-    </filter>
-  </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="7.7781746"
-     inkscape:cx="34.331625"
-     inkscape:cy="22.879969"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:document-units="px"
-     inkscape:grid-bbox="true"
-     inkscape:window-width="1236"
-     inkscape:window-height="977"
-     inkscape:window-x="44"
-     inkscape:window-y="22"
-     inkscape:window-maximized="1" />
+     id="defs2987" />
   <metadata
      id="metadata2990">
     <rdf:RDF>
@@ -86,61 +26,46 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="bg">
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3855);opacity:0.5"
-       id="rect3761-8"
-       width="11.33665"
-       height="11.33665"
-       x="-37.141411"
-       y="8.268631"
-       transform="matrix(0,-1,1,0,0,0)" />
-    <rect
-       y="26.123938"
-       x="-37.141411"
-       height="11.33665"
-       width="11.33665"
-       id="rect3763-7"
-       style="fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3859);opacity:0.5"
-       transform="matrix(0,-1,1,0,0,0)" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3863);opacity:0.5"
-       id="rect3768-2"
-       width="11.33665"
-       height="11.33665"
-       x="-37.141411"
-       y="43.905766"
-       transform="matrix(0,-1,1,0,0,0)" />
+     id="layer2">
+    <path
+       d="m 8.28125,24.25 a 1.5494783,1.5494783 0 0 0 -1.5625,1.5625 l 0,11.34375 a 1.5494783,1.5494783 0 0 0 1.5625,1.5625 l 11.3125,0 a 1.5494783,1.5494783 0 0 0 1.5625,-1.5625 l 0,-11.34375 A 1.5494783,1.5494783 0 0 0 19.59375,24.25 l -11.3125,0 z m 17.84375,0 a 1.5494783,1.5494783 0 0 0 -1.5625,1.5625 l 0,11.34375 a 1.5494783,1.5494783 0 0 0 1.5625,1.5625 l 11.34375,0 a 1.5494783,1.5494783 0 0 0 1.5625,-1.5625 l 0,-11.34375 A 1.5494783,1.5494783 0 0 0 37.46875,24.25 l -11.34375,0 z m 17.78125,0 a 1.5494783,1.5494783 0 0 0 -1.5625,1.5625 l 0,11.34375 a 1.5494783,1.5494783 0 0 0 1.5625,1.5625 l 11.34375,0 a 1.5494783,1.5494783 0 0 0 1.5625,-1.5625 l 0,-11.34375 A 1.5494783,1.5494783 0 0 0 55.25,24.25 l -11.34375,0 z"
+       id="path3764"
+       style="opacity:0.05;fill:#000000;fill-opacity:1;stroke:none" />
+    <path
+       d="m 8.09375,24.8125 a 1.0139654,1.0139654 0 0 0 -0.8125,1 l 0,11.34375 a 1.0139654,1.0139654 0 0 0 1,1 l 11.3125,0 a 1.0139654,1.0139654 0 0 0 1,-1 l 0,-11.34375 a 1.0139654,1.0139654 0 0 0 -1,-1 l -11.3125,0 a 1.0139654,1.0139654 0 0 0 -0.1875,0 z m 17.84375,0 a 1.0139654,1.0139654 0 0 0 -0.8125,1 l 0,11.34375 a 1.0139654,1.0139654 0 0 0 1,1 l 11.34375,0 a 1.0139654,1.0139654 0 0 0 1,-1 l 0,-11.34375 a 1.0139654,1.0139654 0 0 0 -1,-1 l -11.34375,0 a 1.0139654,1.0139654 0 0 0 -0.1875,0 z m 17.78125,0 a 1.0139654,1.0139654 0 0 0 -0.8125,1 l 0,11.34375 a 1.0139654,1.0139654 0 0 0 1,1 l 11.34375,0 a 1.0139654,1.0139654 0 0 0 1,-1 l 0,-11.34375 a 1.0139654,1.0139654 0 0 0 -1,-1 l -11.34375,0 a 1.0139654,1.0139654 0 0 0 -0.1875,0 z"
+       id="path3766"
+       style="opacity:0.1;fill:#000000;fill-opacity:1;stroke:none" />
+    <path
+       d="m 8.28125,25.3125 a 0.48538069,0.48538069 0 0 0 -0.5,0.5 l 0,11.34375 a 0.48538069,0.48538069 0 0 0 0.5,0.5 l 11.3125,0 a 0.48538069,0.48538069 0 0 0 0.5,-0.5 l 0,-11.34375 a 0.48538069,0.48538069 0 0 0 -0.5,-0.5 l -11.3125,0 z m 17.84375,0 a 0.48538069,0.48538069 0 0 0 -0.5,0.5 l 0,11.34375 a 0.48538069,0.48538069 0 0 0 0.5,0.5 l 11.34375,0 a 0.48538069,0.48538069 0 0 0 0.5,-0.5 l 0,-11.34375 a 0.48538069,0.48538069 0 0 0 -0.5,-0.5 l -11.34375,0 z m 17.78125,0 a 0.48538069,0.48538069 0 0 0 -0.5,0.5 l 0,11.34375 a 0.48538069,0.48538069 0 0 0 0.5,0.5 l 11.34375,0 a 0.48538069,0.48538069 0 0 0 0.5,-0.5 l 0,-11.34375 a 0.48538069,0.48538069 0 0 0 -0.5,-0.5 l -11.34375,0 z"
+       id="path3768"
+       style="opacity:0.2;fill:#000000;fill-opacity:1;stroke:none" />
   </g>
   <g
      id="layer1"
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer">
+     style="display:inline">
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       id="rect3761"
        width="11.33665"
        height="11.33665"
        x="-37.2057"
        y="8.2503586"
-       transform="matrix(0,-1,1,0,0,0)" />
+       transform="matrix(0,-1,1,0,0,0)"
+       id="rect3761"
+       style="fill:#ffffff;fill-opacity:1;stroke:none" />
     <rect
-       y="26.105665"
-       x="-37.2057"
-       height="11.33665"
        width="11.33665"
+       height="11.33665"
+       x="-37.2057"
+       y="26.105665"
+       transform="matrix(0,-1,1,0,0,0)"
        id="rect3763"
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       transform="matrix(0,-1,1,0,0,0)" />
+       style="fill:#ffffff;fill-opacity:1;stroke:none" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       id="rect3768"
        width="11.33665"
        height="11.33665"
        x="-37.2057"
        y="43.887493"
-       transform="matrix(0,-1,1,0,0,0)" />
+       transform="matrix(0,-1,1,0,0,0)"
+       id="rect3768"
+       style="fill:#ffffff;fill-opacity:1;stroke:none" />
   </g>
 </svg>
