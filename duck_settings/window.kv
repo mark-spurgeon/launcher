@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <TextInput>:
     canvas.before:
         Color:
@@ -16,6 +17,8 @@
             rgba: (.46,.36,.16,1)
 
 
+=======
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 <Slider>:
 	padding:10
 	min:0
@@ -42,7 +45,10 @@
 			pos:self.value_pos[0]-10,self.center_y-12
 			size:20,20
 <ColorPicker_Input@TextInput>
+<<<<<<< HEAD
 	disabled:False
+=======
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	multiline: False	
 	mroot: None
 	padding: sp(5)
@@ -237,10 +243,16 @@
 					height:30
 					color:[.4,.4,.4,1]
 				Slider:
+<<<<<<< HEAD
 					value:app.animation_speed
 					min:1
 					max:10
 					on_value:app.changeAnimationSpeed(self.value)
+=======
+				Label:
+					text:"Won't change anything"
+					color:[.95,.3,.3,1]
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 			BoxLayout:
 				padding:10
 				orientation:"vertical"
@@ -265,11 +277,17 @@
 					size_hint_y:None
 					height:30
 					color:[.4,.4,.4,1]
+<<<<<<< HEAD
 				TextInput:
 					multiline:False
 					text:app.font
 					color:[.9,.1,.1,1]
 					on_text:app.changeFont(self.text)
+=======
+				Label:
+					text:"Not Implemented Yet"
+					color:[.9,.1,.1,1]
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 <SecondScreen>:
 	name:'second'
 	canvas:
@@ -314,8 +332,12 @@
 				padding:5
 				orientation:"vertical"
 				size_hint_x:None
+<<<<<<< HEAD
 				width:650
 				pos:(root.width/2-self.width/2,self.pos[1])
+=======
+				width:300
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 				Label:
 					canvas.before:
 						Color:
@@ -335,6 +357,11 @@
 				ScrollView:
 					padding:(20,20)
 					DockAppsList:
+<<<<<<< HEAD
+=======
+			Button:	
+				text:"WARNING: THIS ZONE IS UNDER CONSTRUCTION."
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 <ThirdScreen>:
 	name:'third'
 

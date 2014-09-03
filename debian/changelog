@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 duck-launcher (0.67-precise3) precise; urgency=high
 
   *Launcher updates instantly on settings changes
@@ -10,3 +11,12 @@ duck-launcher (0.67-precise3) precise; urgency=high
   *Options on right click of apps on the dock (open/remove)
   *Log out works on xfce desktop
  -- Mark Spurgeon <markspurgeon96@hotmail.com> Tue, 2 September 2014 10:06:37 +0100
+=======
+duck-launcher (0.66.5-trusty1) trusty; urgency=high
+
+  *Many, many improvements:
+    - ui improvement
+    - new settings
+    - icons do show on the open-windows thing
+ -- Mark Spurgeon <markspurgeon96@hotmail.com>  Mon, 14 July 2014 10:06:37 +0100
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387

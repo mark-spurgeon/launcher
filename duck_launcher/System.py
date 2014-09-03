@@ -25,6 +25,7 @@ import subprocess
 import os
 import Config
 def sysAction(what):
+<<<<<<< HEAD
 	if what=="logout":
 		desktop=os.environ.get("XDG_CURRENT_DESKTOP")
 		if "Duck" or "XFCE" in desktop:
@@ -62,6 +63,37 @@ def sysAction(what):
 					bus_object.Stop(0, dbus_interface="org.freedesktop.ConsoleKit.Manager") 
 				else:print("Not supported yet.")
 			except: print("Tried to {}, but didn't work, please report.".format(what))
+=======
+	platform=Config.get()["init-manager"]
+	import dbus 
+	bus = dbus.SystemBus()
+	if platform=="systemd":
+		try:
+			#For systemd service management
+			bus_object = bus.get_object("org.freedesktop.login1", "/org/freedesktop/login1") 
+			if what=="sleep":
+				bus_object.Suspend(0, dbus_interface="org.freedesktop.login1.Manager") 
+			elif what=="restart":
+				bus_object.Reboot(0, dbus_interface="org.freedesktop.login1.Manager") 
+			elif what=="shutdown":
+				bus_object.PowerOff(0, dbus_interface="org.freedesktop.login1.Manager") 
+			else:print("Not supported yet.")
+		except:print("Tried to {}, but didn't work, please report.".format(what))
+	elif platform=="upstart":
+		#For upstart service management
+		try:
+			if what=="sleep":
+				bus_object = bus.get_object("org.freedesktop.UPower", " /org/freedesktop/UPower") 
+				bus_object.Suspend(0, dbus_interface="org.freedesktop.UPower") 
+			elif what=="restart":
+				bus_object = bus.get_object("org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager") 
+				bus_object.Restart(0, dbus_interface="org.freedesktop.ConsoleKit.Manager") 
+			elif what=="shutdown":
+				bus_object = bus.get_object("org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager") 
+				bus_object.Stop(0, dbus_interface="org.freedesktop.ConsoleKit.Manager") 
+			else:print("Not supported yet.")
+		except: print("Tried to {}, but didn't work, please report.".format(what))
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 class AreYouSure(QtGui.QMainWindow):
 	def __init__(self):
 		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.FramelessWindowHint)
@@ -85,7 +117,18 @@ class AreYouSure(QtGui.QMainWindow):
 		qp.setRenderHint(QtGui.QPainter.Antialiasing)
 		qp.setPen(QtGui.QColor(250,250,250,0))
 		qp.setBrush(QtGui.QColor(self.r,self.g,self.b))
+<<<<<<< HEAD
 		qp.drawRoundedRect(QtCore.QRectF(0,0,self.w,self.h),2,2)
+=======
+		qp.setPen(QtGui.QColor(0,0,0,0))
+		qp.drawRoundedRect(QtCore.QRectF(0,0,self.w,self.h),4,4)
+		'''
+		qp.setBrush(QtGui.QColor(20,20,20,10))
+		qp.drawRect(0,self.h-50,self.w/2-6,50)
+		qp.setBrush(QtGui.QColor(20,20,20,20))
+		qp.drawRect(self.w/2+2,self.h-50,self.w/2,50)
+		'''
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		#title
 		if self.drawButtonRect==True and self.buttonRect!=None:
 			qp.setPen(QtGui.QColor(0,0,0,0))
@@ -151,8 +194,11 @@ class Window(QtGui.QMainWindow):
 		self.r=int(Config.get()["r"])
 		self.g=int(Config.get()["g"])
 		self.b=int(Config.get()["b"])
+<<<<<<< HEAD
 		self.buttonRect=None
 		self.drawButtonRect=False
+=======
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.win_len=4
 		self.move(self.size+10,self.height-self.size*1.5-2)
 		self.resize(self.size*self.win_len*1.5,self.size*1.5)
@@ -186,8 +232,16 @@ class Window(QtGui.QMainWindow):
 		#Shutdown
 		sd=QtGui.QIcon("/usr/share/duck-launcher/icons/shutdown.svg")
 		sd.paint(qp, self.size*3*1.3+20,10,self.size,self.size)
+<<<<<<< HEAD
 	def mouseMoveEvent(self,e):
 		self.mousePressEvent(e)
+=======
+		'''
+		#Close window
+		cl=QtGui.QIcon("/usr/share/duck-launcher/icons/close.svg")
+		cl.paint(qp, self.size*4*1.3+20,10,self.size,self.size)
+		'''
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	def mousePressEvent(self,e):
 		x_m,y_m=e.x(),e.y()
 		self.drawButtonRect=False
@@ -229,8 +283,19 @@ class Window(QtGui.QMainWindow):
 			if self.size*3*1.3+20<x_m<self.size*3*1.3+20+self.size:
 				self.sure.state="shutdown"
 				self.sure.show()
+<<<<<<< HEAD
 	def update_all(self,conf):
 		self.size=int(conf['size'])
+=======
+			'''
+			if self.size*4*1.3+20<x_m<self.size*4*1.3+20+self.size:
+				sys.exit()
+			'''
+	def update_all(self):
+		import Config
+		self.size=int(Config.get()['size'])
+		self.height =Xlib.display.Display().screen().root.get_geometry().height
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.move(self.size+10,self.height-self.size*1.5)
 		self.resize(self.size*self.win_len*1.5,self.size*1.5)
 		self.r=int(conf["r"])

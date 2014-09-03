@@ -21,6 +21,7 @@
 import os
 import defaultConfig
 
+<<<<<<< HEAD
 import dbus
 try:
 	import cPickle as pickle
@@ -29,6 +30,23 @@ except:
 	import pickle
 CONFIG={}
 defaultDict=defaultConfig.Dict
+=======
+defaultDict={
+	"r":255,
+	"g":92,
+	"b":36,
+	"r2":40,
+	"g2":40,
+	"b2":40,
+	"alpha":200,
+	"font":"Droid Sans",
+	"size":40,
+	"dock-apps":["Firefox Web Browser"],
+	"icon-size":95,
+	"blocks":[{"name":"Example","apps":["Firefox Web Browser"], "files":[], "directories":[]}],
+	"init-manager":"systemd"
+}
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 def check_dict(d):
 	new_d={}
 	if d.has_key("r"):
@@ -115,16 +133,26 @@ def check_dict(d):
 	if "font" not in d:
 		d["font"]=defaultDict["font"]
 	#Add speed	
+<<<<<<< HEAD
 	if "animation-speed" not in d:
 		d["animation-speed"]=defaultDict["animation-speed"]
+=======
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	
 	if "init-manager" not in d:
 		d["init-manager"]=defaultDict["init-manager"]
 	#
+<<<<<<< HEAD
 	'''
 	create_from_info(new_d)
 	return d
 def create_from_info(dict):
+=======
+	create_from_info(d)
+	return d
+def create_from_info(dict):
+	TEXT=json.dumps(dict,indent=2)
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	HOME = os.path.expanduser("~")
 	dir =os.environ.get('XDG_CONFIG_HOME',os.path.join(HOME,'.config'))
 	cfg= dir+'/duck-launcher.config'
@@ -137,6 +165,7 @@ def get():
 	cfg= dir+'/duck-launcher.config'
 	if "duck-launcher.config" not in os.listdir(dir):
 		create_from_info(defaultDict)
+<<<<<<< HEAD
 	the_file=open(cfg,"rb")
 	try:
 		theDict=pickle.load(the_file)
@@ -148,6 +177,18 @@ def get():
 		else:
 			theDict=defaultDict
 	the_file.close()
+=======
+
+	try:
+		theDict=json.loads(open(cfg).read())
+		if isinstance(theDict["dock-apps"],list):
+			pass
+		else:
+			theDict["dock-apps"]=[]
+	except ValueError:
+		print("[Duck Launcher] Error: ValueError")
+		theDict=defaultDict
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	return check_dict(theDict)
 def get_from_block(block):
 	all=[]
@@ -172,8 +213,13 @@ def get_from_block(block):
 	return all
 def removeFromDockApps(a):
 	conf = get()
+	print "removing"
 	dlist = conf["dock-apps"]
 	dlist = [x for x in dlist if x != a]
+<<<<<<< HEAD
+=======
+	print dlist
+>>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	conf["dock-apps"]=dlist
 	lastDict = check_dict(conf)
 	
