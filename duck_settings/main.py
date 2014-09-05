@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 #########
@@ -18,45 +17,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #########
-=======
 
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 import sys
 import os
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
-<<<<<<< HEAD
 from kivy.uix.filechooser import  FileChooserIconView
 from kivy.uix.textinput import TextInput
 from kivy.uix.listview import ListView, ListItemButton
-=======
-from kivy.uix.filechooser import FileChooserListView, FileChooserIconView
-from kivy.uix.textinput import TextInput
-from kivy.uix.listview import ListView, ListItemButton, ListItemLabel
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 from kivy.adapters.listadapter import ListAdapter
 from kivy.adapters.models import SelectableDataItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
-<<<<<<< HEAD
 #from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
 from kivy.uix.treeview import TreeView,TreeViewNode
 #from kivy.uix.colorpicker import ColorPicker
-=======
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.screenmanager import ScreenManager, Screen, SwapTransition
-from kivy.uix.treeview import TreeView,TreeViewLabel,TreeViewNode
-from kivy.uix.colorpicker import ColorPicker
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 from kivy.properties import (NumericProperty, BoundedNumericProperty,
                              ListProperty, ObjectProperty,
                              ReferenceListProperty, StringProperty,
                              AliasProperty)
 from kivy.clock import Clock
-<<<<<<< HEAD
 #from kivy.graphics import Mesh, InstructionGroup, Color
 from kivy.utils import get_color_from_hex, get_hex_from_color
 from kivy.logger import Logger
@@ -76,20 +59,6 @@ try:
 	sys.path.append(os.path.abspath("/usr/lib/duck_launcher"))
 	import Config as d_cfg
 	import Apps as APPS
-=======
-from kivy.graphics import Mesh, InstructionGroup, Color
-from kivy.utils import get_color_from_hex, get_hex_from_color
-from kivy.logger import Logger
-from math import cos, sin, pi, sqrt, atan
-from colorsys import rgb_to_hsv, hsv_to_rgb
-from kivy.config import Config
-#########
-# Duck Launcher Modules
-#########
-try:
-	from duck_launcher import Config as d_cfg
-	from duck_launcher import Apps as APPS
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 except ImportError:
 	print("[Duck Settings Error/Bug]: Module 'duck_launcher' is not present, this module should be installed.")
 	sys.exit()
@@ -97,7 +66,6 @@ except ImportError:
 # Update Config
 ##############
 def updateConfig(*args):
-<<<<<<< HEAD
 	# Enable glib main loop support
 	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 	# Get the session bus
@@ -201,36 +169,6 @@ def createBlockDicts(tl):
 		the_blocks_list.append(block)
 	return the_blocks_list
 		#print(b[0].text)
-=======
-	conf=d_cfg.get()
-	for arg in args:
-		if arg.has_key('r'):
-			conf["r"]=str(arg["r"])
-		elif arg.has_key('g'):
-			conf["g"]=str(arg["g"])
-		elif arg.has_key('b'):
-			conf["b"]=str(arg["b"])
-		elif arg.has_key('r2'):
-			conf["r2"]=str(arg["r2"])
-		elif arg.has_key('b2'):
-			conf["b2"]=str(arg["b2"])
-		elif arg.has_key('g2'):
-			conf["g2"]=str(arg["g2"])
-		elif arg.has_key('alpha'):
-			conf["alpha"]=str(arg["alpha"])
-		elif arg.has_key("size"):
-			conf["size"]=str(arg["size"])
-		elif arg.has_key("icon-size"):
-			conf["icon-size"]=str(arg["icon-size"])
-		elif arg.has_key("font"):
-			conf["font"]=str(arg["font"])
-		elif arg.has_key("dock-apps"):
-			conf["dock-apps"]=arg["dock-apps"]
-		elif arg.has_key("blocks"):
-			conf["blocks"]=arg["blocks"]
-	d_cfg.check_dict(conf) # Checks and creates a new configuration file
-	#duck_client.update()
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 ##############
 # Kivy Widgets
 #############
@@ -344,10 +282,7 @@ class DockAppsList(ListView):
 				new_list.append(a)
 		#Update
 		updateConfig({'dock-apps':new_list})
-<<<<<<< HEAD
-	
-=======
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
+
 class TreeViewButton(Button, TreeViewNode):
 	def __init__(self, *args, **kwargs):
 		super(TreeViewButton, self).__init__(*args, **kwargs)
@@ -382,32 +317,11 @@ class TreeViewButton(Button, TreeViewNode):
 	def closePopup(self, arg):
 		self.popupWindow.dismiss()
 	def removeItem(self, arg):	
-<<<<<<< HEAD
 		node = self.parentTree.selected_node
 		self.parentTree.remove_node(node)
 		self.popupWindow.dismiss()
 		b = createBlockDicts(self.parentTree.iterate_all_nodes())
 		updateConfig({"blocks":b})
-=======
-		new_blocks=[]
-		for b in d_cfg.get()["blocks"]:
-			block={}
-			block["name"]=b["name"]
-			block["apps"]=[]
-			block["files"]=[]
-			block["directories"]=[]
-			if self.text in b["apps"]:
-				block["apps"]=b["apps"].remove(self.text)
-			if self.text in b["files"]:
-				block["files"]=b["files"].remove(self.text)
-			if self.text in b["directories"]:
-				block["directories"]=b["directories"].remove(self.text)
-			new_blocks.append(b)
-		updateConfig({"blocks":new_blocks})
-		node = self.parentTree.selected_node
-		self.parentTree.remove_node(node)
-		self.popupWindow.dismiss()
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 class AddAppList(ListView):
 	def __init__(self, *args, **kwargs):
 		super(AddAppList, self).__init__(*args, **kwargs)
@@ -527,23 +441,12 @@ class TreeViewBlock(Button, TreeViewNode):
 					content=box1
 					)
 	def onTextChange(self, *args):
-<<<<<<< HEAD
 		for b in pickle.loads(d_cfg.get()['blocks']):
 			if  b["name"] == self.text:
 				b["name"]=args[0].text
 				self.text=args[0].text
 				blocks=createBlockDicts(self.parentTree.iterate_all_nodes())
 				updateConfig({'blocks':blocks})
-=======
-		new_list=[]
-		for b in d_cfg.get()['blocks']:
-			if  b["name"] == self.text:
-				b["name"]=args[0].text
-				self.text=args[0].text
-			new_list.append(b)
-		
-		updateConfig({'blocks':new_list})
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	def appsPopupOpen(self,*args):
 		self.popupWindow.dismiss()
 		self.appsPopup.open()
@@ -556,22 +459,12 @@ class TreeViewBlock(Button, TreeViewNode):
 	def addApp(self, *args):
 		s =   self.app_list.adapter.selection[0].text
 		if s!=None:
-<<<<<<< HEAD
-=======
-			new_blocks=[]
-			for b in d_cfg.get()["blocks"]:	
-				if b["name"]==self.text:
-					b["apps"].append(s)
-				new_blocks.append(b)
-			updateConfig({"blocks" : new_blocks})
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 			#Update
 			node= self.parentTree.selected_node
 			new=TreeViewButton(text=s)
 			new.parentTree=self.parentTree
 			self.parentTree.add_node(new,node)
 			self.appsPopup.dismiss()
-<<<<<<< HEAD
 			blocks= createBlockDicts(self.parentTree.iterate_all_nodes())
 			updateConfig({"blocks":blocks})
 	def addFile(self,*args):
@@ -588,38 +481,12 @@ class TreeViewBlock(Button, TreeViewNode):
 	def addFolder(self,*args):
 		p = self.f2.path
 		if os.path.exists(p):
-=======
-	def addFile(self,*args):
-		new_blocks=[]
-		for b in d_cfg.get()["blocks"]:	
-			if b["name"]==self.text:
-				if str(args[1][0]) not in b["files"]:
-					b["files"].append(str(args[1][0]))
-					#Update Tree
-					node= self.parentTree.selected_node
-					new=TreeViewButton(text=str(args[1][0]))
-					new.parentTree=self.parentTree
-					self.parentTree.add_node(new,node)
-					self.filesPopup.dismiss()
-			new_blocks.append(b)
-		updateConfig({"blocks":new_blocks})
-	def addFolder(self,*args):
-		p = self.f2.path
-		if os.path.exists(p):
-			new_blocks=[]
-			for b in d_cfg.get()["blocks"]:
-				if b["name"]==self.text:
-					b["directories"].append(p)
-				new_blocks.append(b)
-			updateConfig({'blocks':new_blocks})
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 			#Update
 			node= self.parentTree.selected_node
 			new=TreeViewButton(text=p)
 			new.parentTree=self.parentTree
 			self.parentTree.add_node(new,node)
 			self.foldersPopup.dismiss()
-<<<<<<< HEAD
 			blocks= createBlockDicts(self.parentTree.iterate_all_nodes())
 			print blocks
 			updateConfig({"blocks":blocks})
@@ -630,18 +497,6 @@ class TreeViewBlock(Button, TreeViewNode):
 			self.parentTree.remove_node(self)
 			blocks= createBlockDicts(self.parentTree.iterate_all_nodes())
 			updateConfig({"blocks":blocks})
-=======
-	def updateFolders(self,*args):
-		self.folder_label.text = self.f2.path
-	def removeBlock(self,*args):
-		new_blocks=[]
-		for b in d_cfg.get()["blocks"]:
-			if b["name"]!=self.text:
-				new_blocks.append(b)
-		updateConfig({"blocks":new_blocks})
-		try:
-			self.parentTree.remove_node(self)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		except:pass
 		self.popupWindow.dismiss()
 	def click(self,*args):		
@@ -671,23 +526,15 @@ class AddBlockButton(Button):
 		b=TreeViewBlock(text=self.Input.text,is_open=True)
 		b.parentTree=tree
 		tree.add_node(b)
-<<<<<<< HEAD
 		blocks= createBlockDicts(tree.iterate_all_nodes())
 		#Update Blocks
 		updateConfig({"blocks":blocks})
-=======
-		#Update Blocks
-		new_blocks=d_cfg.get()["blocks"]
-		new_blocks.append({'name':self.Input.text, "apps":[],"directories":[],"files":[]})
-		updateConfig({"blocks":new_blocks})
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.addPopup.dismiss()
 class BlocksTree(TreeView):
 	def __init__(self, *args, **kwargs):
 		super(BlocksTree, self).__init__(*args, **kwargs)
 		self.hide_root=True	
 		self.indent_level=100
-<<<<<<< HEAD
 		for b in pickle.loads(d_cfg.get()["blocks"]):
 			if isinstance(b["name"],list):
 				name=''
@@ -716,28 +563,6 @@ class BlocksTree(TreeView):
 					self.add_node(u,t)
 	def callback(self,*args):
 		pass
-=======
-		for b in d_cfg.get()["blocks"]:
-			t = TreeViewBlock(text=b["name"],is_open=True, parent_node="Root")
-			t.parentTree=self
-			self.add_node(t)
-			#tv.add_node(t)
-			for a in b["apps"]:
-				s = TreeViewButton(text=a,parent_node=b["name"])
-				s.parentTree=self
-				self.add_node(s,t)
-			for a in b["directories"]:
-				r = TreeViewButton(text=a, parent_node=b["name"])
-				r.parentTree=self
-				self.add_node(r,t)
-				
-			for a in b["files"]:
-				u  = TreeViewButton(text=a,parent_node=b["name"])
-				u.parentTree=self
-				self.add_node(u,t)
-	def callback(self,*args):
-		print "WELL"
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 class ThirdScreen(Screen):
 	pass
 class SecondScreen(Screen):
@@ -760,11 +585,8 @@ class Window(App):
 	alpha=float(cfg["alpha"])/255
 	launcher_size=int(cfg["size"])
 	icon_size=int(cfg["icon-size"])
-<<<<<<< HEAD
 	font=cfg["font"]
 	animation_speed=float(cfg["animation-speed"])
-=======
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		
 	####
 	def build(self):
@@ -792,7 +614,6 @@ class Window(App):
 	def changeIconSize(self,value):
 		icon_size=int(value)
 		updateConfig({"icon-size":icon_size})
-<<<<<<< HEAD
 	def changeAnimationSpeed(self,value):
 		animation_speed=float(value)
 		updateConfig({"animation-speed":animation_speed})
@@ -828,23 +649,11 @@ class Window(App):
 		d_cfg.check_dict(Dict)
 if __name__=="__main__":
 	Config.set('graphics','width','725')
-=======
-
-	#TODO : font, dock-apps, blocks
-
-
-if __name__=="__main__":
-	Config.set('graphics','width','750')
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	Config.set('graphics','height','600')
 	Config.set('graphics','resizable','0')
 	Config.set('kivy','exit_on_escape','0')
 	Config.set('kivy', 'window_icon', '/usr/share/duck-launcher/icons/duck-settings.png')
-<<<<<<< HEAD
 	Config.set('kivy', 'log_level', 'error')
-=======
-	Config.set('kivy', 'log_level', 'critical')
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	Config.set("input", "mouse", "mouse,disable_multitouch")
 	win = Window()
 	win.title='Duck Launcher Settings'

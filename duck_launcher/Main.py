@@ -28,12 +28,9 @@ import subprocess
 import gc
 import sys
 sys.dont_write_bytecode = True
-<<<<<<< HEAD
-=======
-import math
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 import time
-import math#import Xlib
+import math
+#import Xlib
 #import Xlib.display
 from PySide import QtGui,QtCore
 import Apps
@@ -46,20 +43,13 @@ import System
 import DockAppsOptions
 #########
 #########
-<<<<<<< HEAD
 													
-=======
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 class Settings(QtCore.QThread):
 	def __init__(self,parent=None):
 		QtCore.QThread.__init__(self,parent)
 		self.parent=parent
 	def run(self):	
-<<<<<<< HEAD
 		subprocess.call(["python","/usr/lib/duck_settings/main.py"])
-=======
-		os.system("python /usr/lib/duck_settings/main.py")
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 class Launch(QtCore.QThread):
 	def __init__(self,parent=None):
 		QtCore.QThread.__init__(self,parent)
@@ -112,16 +102,6 @@ class Launcher(QtGui.QMainWindow):
 		self.dock_apps = Apps.find_info(self.conf['dock-apps'])	
 		self.current_text=''
 		self.allApps=Apps.info(self.current_text)
-<<<<<<< HEAD
-=======
-		#Update open windows
-		'''
-		self.timer=QtCore.QTimer()
-		self.timer.setInterval(1000)
-		self.timer.start()
-		self.timer.timeout.connect(self.updateOpenWindows)
-		'''
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		#Open windows window
 		self.open_windows=Window.get_open_windows()
 		self.open_win = Window.open_windows()
@@ -134,11 +114,7 @@ class Launcher(QtGui.QMainWindow):
 		#Fake window
 		self.fakewin = Fakewin(10,10, self)
 		self.fakewin.show()
-<<<<<<< HEAD
 		XlibStuff.fix_window(self.winId(),self.HALF_OPEN_POS+5,0,0,0)
-=======
-		XlibStuff.fix_window(self.fakewin.winId(),self.HALF_OPEN_POS+5,0,0,0)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		#
 	def paintEvent(self,e):
 		qp=QtGui.QPainter()
@@ -164,15 +140,9 @@ class Launcher(QtGui.QMainWindow):
 		##
 		#Draw rect under clicked app
 		if self.drawAppRect==True and self.appRect!=None:
-<<<<<<< HEAD
 			qp.setPen(QtGui.QPen(QtGui.QColor(0,0,0,0),1,QtCore.Qt.SolidLine))
 			qp.setBrush(QtGui.QColor(254,254,255,60))
 			qp.drawRoundedRect(self.appRect,2,2)
-=======
-			qp.setPen(QtGui.QColor(0,0,0,0))
-			qp.setBrush(QtGui.QColor(249,249,251,80))
-			qp.drawRect(self.appRect)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		###
 		if self.current_state == "half_open":
 			qp.setPen(QtGui.QPen(QtGui.QColor(0,0,0,0),1,QtCore.Qt.SolidLine))
@@ -218,11 +188,7 @@ class Launcher(QtGui.QMainWindow):
 		##
 		##
 		if self.current_state=="open":
-<<<<<<< HEAD
 			close=QtGui.QIcon("/usr/share/duck-launcher/icons/remove.svg")
-=======
-			close=QtGui.QIcon("/usr/share/duck-launcher/icons/close.svg")
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 			close.paint(qp,self.pos_x-13,self.s_height-13,13,13)
 			if self.activity=="apps":
 				###page_buttons
@@ -353,11 +319,7 @@ class Launcher(QtGui.QMainWindow):
 						if icon!=None:
 							icon.paint(qp, x_pos+15,y_pos+15, self.ICON_SIZE-50,self.ICON_SIZE-50)
 							rect = QtCore.QRectF(x_pos-10, y_pos+self.ICON_SIZE-30, self.ICON_SIZE, 30)
-<<<<<<< HEAD
 							qp.drawText(rect,QtCore.Qt.TextWordWrap |QtCore.Qt.AlignHCenter,to_write)
-=======
-							txt = qp.drawText(rect,QtCore.Qt.TextWordWrap |QtCore.Qt.AlignHCenter,to_write)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 					#Title
 					qp.setPen(QtGui.QColor(0,0,0,0))
 					qp.setBrush(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b'])))
@@ -380,15 +342,11 @@ class Launcher(QtGui.QMainWindow):
 		#repeat same as press event
 	def mousePressEvent(self,e):
 		x_m,y_m = e.x(),e.y()
-<<<<<<< HEAD
 		self.drawAppRect=False
-=======
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		if self.current_state=="half_open":
 			try:
 				for i,a in enumerate(self.dock_apps):
 					if self.OPEN_STATE_TOP+self.ICO_TOP*i+10<y_m<self.OPEN_STATE_TOP+self.ICO_TOP*(i+1)+10:
-<<<<<<< HEAD
 						self.appRect=QtCore.QRectF(0, self.OPEN_STATE_TOP+self.ICO_TOP*i+7, self.HALF_OPEN_POS+1,self.ICO_TOP)
 						self.drawAppRect=True
 			except KeyError:
@@ -428,12 +386,6 @@ class Launcher(QtGui.QMainWindow):
 					if x_pos-10<x_m<x_pos-10+self.ICON_SIZE and y_pos<y_m<y_pos+self.ICON_SIZE and x_m<self.pos_x-self.SIZE-3:
 						self.appRect=QtCore.QRectF(x_pos-10,y_pos,self.ICON_SIZE,self.ICON_SIZE)						
 						self.drawAppRect=True
-=======
-						self.appRect=QtCore.QRectF(0, self.OPEN_STATE_TOP+self.ICO_TOP*i+8, self.HALF_OPEN_POS+1,self.ICO_TOP)
-						self.drawAppRect=True
-			except KeyError:
-				pass
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.update()
 	def mouseReleaseEvent(self,e):
 		x_m,y_m = e.x(),e.y()
@@ -466,11 +418,7 @@ class Launcher(QtGui.QMainWindow):
 			##set the current state
 			if self.pos_x==self.HALF_OPEN_POS:
 				self.current_state="half_open"
-<<<<<<< HEAD
 				self.update_all(self.conf)
-=======
-				self.update_all()
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 			elif self.pos_x==self.s_width/3:
 				self.current_state="open"
 			else: self.current_state="nothing"
@@ -480,16 +428,11 @@ class Launcher(QtGui.QMainWindow):
 			if self.pos_x-14<x_m<self.pos_x and self.move==False and e.button()==QtCore.Qt.LeftButton:
 				self.close_it()
 				if y_m>self.s_height-13:
-<<<<<<< HEAD
 					print("[Duck Launcher] Saving configuration.")
 					Config.check_dict(self.conf)
 					QtGui.QApplication.processEvents()
 					print("[Duck Launcher] Quitting, Good Bye!")
 					QtGui.qApp.quit()
-=======
-					print("Quiting")
-					sys.exit()
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 			###app events
 			if self.activity == "apps":
 				max_apps=  math.trunc((len(self.allApps)-1)/self.apps_per_page)+1
@@ -710,7 +653,6 @@ class Launcher(QtGui.QMainWindow):
 		self.current_state="half_open"
 		self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 		self.update()
-<<<<<<< HEAD
 		QtGui.QApplication.processEvents()
 	def updateOpenWindows(self):
 		self.open_windows=Window.get_open_windows()
@@ -722,41 +664,19 @@ class Launcher(QtGui.QMainWindow):
 		self.update()
 		QtGui.QApplication.processEvents()
 	def update_all(self,conf):
-=======
-	def updateOpenWindows(self):
-		self.open_windows=Window.get_open_windows()
-		self.update_all()
-	def update_all(self):
-		#All values to update
-		import Config
-		conf=Config.get()
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.conf=conf
 		if self.HALF_OPEN_POS!=int(conf["size"]):
 			self.HALF_OPEN_POS=int(conf['size'])
 			self.current_state="half_open"
 			self.pos_x=int(conf["size"])
-<<<<<<< HEAD
 			self.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+6,self.s_height)
 			self.ICO_TOP=self.HALF_OPEN_POS-5
 			self.OPEN_STATE_TOP=self.ICO_TOP*4+5
-=======
-			self.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+4,self.s_height)
-			self.fakewin.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+4,self.s_height)
-			XlibStuff.fix_window(self.fakewin.winId(),self.HALF_OPEN_POS+5,0,0,0)
-			self.ICO_TOP=self.HALF_OPEN_POS-5
-			self.OPEN_STATE_TOP=self.ICO_TOP*4+5
-		elif self.R!=int(conf['r']) or self.G!=int(conf['g']) or self.B!=int(conf['b']):
-			self.R=int(conf['r'])
-			self.G=int(conf['g'])
-			self.B=int(conf['b'])
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		elif self.ICON_SIZE!=int(conf['icon-size']):
 			self.ICON_SIZE=int(conf['icon-size'])
 			self.apps_per_row = math.trunc(((self.s_width/3)-30)/self.ICON_SIZE)
 			self.apps_per_col = math.trunc(((self.s_height)-30)/self.ICON_SIZE)
 			self.apps_per_page=self.apps_per_col*self.apps_per_row
-<<<<<<< HEAD
 		
 		if self.conf["blocks"]==None:
 			self.conf["blocks"]=[]
@@ -767,13 +687,6 @@ class Launcher(QtGui.QMainWindow):
 		self.open_win.update_all(conf)
 		self.sys_win.update_all(conf)
 		self.dock_options_win.update_all(conf)
-=======
-
-		
-		self.dock_apps = Apps.find_info(conf['dock-apps'])
-		self.open_win.update_all()
-		self.sys_win.update_all()
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.update()
 		QtGui.QApplication.processEvents()
 class Fakewin(QtGui.QMainWindow):
@@ -786,11 +699,7 @@ class Fakewin(QtGui.QMainWindow):
 		self.parent=parent
 		##
 		self.timer=QtCore.QTimer()
-<<<<<<< HEAD
 		self.timer.setInterval(6000)
-=======
-		self.timer.setInterval(1000)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.timer.start()
 		self.timer.timeout.connect(self.parent.updateOpenWindows)
 	def keyPressEvent(self, e):
@@ -843,7 +752,6 @@ class Fakewin(QtGui.QMainWindow):
 		self.parent.update()
 	def quitApp(self):
 		print "quit"
-<<<<<<< HEAD
 
 class DBusWidget(dbus.service.Object):
 	def __init__(self,parent, name, session):
@@ -969,8 +877,6 @@ class DBusWidget(dbus.service.Object):
 		pass
 	'''
 
-=======
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 if __name__ == "__main__":
 	do=True
 

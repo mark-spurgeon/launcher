@@ -29,11 +29,7 @@ def info(filter_):
 	all_apps=glob.glob("/usr/share/applications/*.desktop")
 	for a in glob.glob("/usr/share/applications/kde4/*.desktop"):
 	      all_apps.append(a)
-<<<<<<< HEAD
 	for a in glob.glob("{}/.local/share/applications/*.desktop".format(os.path.expanduser("~"))):
-=======
-	for a in glob.glob("{}/.local/share/applications/*.desktop".format(os.environ.get('~'))):
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	      all_apps.append(a)
 	for f in all_apps:
 		try:

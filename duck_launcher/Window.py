@@ -30,10 +30,6 @@ import Config
 #
 def activateFakewin(id_):
 	w = wnck.window_get(id_)
-<<<<<<< HEAD
-=======
-	print("activate!")
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 	w.activate(gtk.get_current_event_time())
 	
 def close_window(title):
@@ -88,10 +84,7 @@ def get_open_windows():
     						os.stat(home)
 					except:
     						os.mkdir(home)
-<<<<<<< HEAD
 					#print window					
-=======
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 					img.save("{0}/{1}.png".format(home,binascii.hexlify(window["icon"])))
 					windows.append(window)
 	return windows
@@ -113,11 +106,7 @@ class open_windows(QtGui.QMainWindow):
 		self.windows = get_open_windows()
 		self.win_len=len(self.windows)
 		self.move(self.size+10,self.height-self.size*2.4)
-<<<<<<< HEAD
 		self.resize(self.size*self.win_len*1.3+30,self.size*1.6+10)
-=======
-		self.resize(self.size*self.win_len*1.3+20,self.size*1.6)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		##
 		self.timer=QtCore.QTimer()
 		self.timer.setInterval(1000)
@@ -129,11 +118,7 @@ class open_windows(QtGui.QMainWindow):
 		qp.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
 		qp.setPen(QtGui.QColor(int(self.r),int(self.g),int(self.b)))
 		qp.setBrush(QtGui.QColor(int(self.r),int(self.g),int(self.b)))
-<<<<<<< HEAD
 		qp.drawRoundedRect(QtCore.QRectF(10,0,self.size*self.win_len*1.3+10,self.size*1.6),2,2)
-=======
-		qp.drawRoundedRect(QtCore.QRectF(10,0,self.size*self.win_len*1.3+10,self.size*1.6),4,4)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		qp.setPen(QtGui.QColor(250,250,250))
 		qp.setBrush(QtGui.QColor(250,250,250))
 		qp.drawRect(9,0,5,self.size*1.6)
@@ -155,13 +140,8 @@ class open_windows(QtGui.QMainWindow):
     						os.stat(home)
 					except:
     						os.mkdir(home)
-<<<<<<< HEAD
 					if os.path.isfile("{0}/{1}.png".format(home,binascii.hexlify(w["icon"]))):
 						ico = QtGui.QIcon("{0}/{1}.png".format(home,binascii.hexlify(w["icon"])))
-=======
-					if os.path.isfile("{0}/{1}.png".format(home,binascii.hexlify(window["icon"]))):
-						ico = QtGui.QIcon("{0}/{1}.png".format(home,binascii.hexlify(window["icon"])))
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 					else:
 						ico = QtGui.QIcon("/usr/share/duck-launcher/apps.svg")
 			ico.paint(qp,20+self.size*i*1.3, 10, self.size*1.1, self.size*1.1)
@@ -190,25 +170,14 @@ class open_windows(QtGui.QMainWindow):
 	def updateApps(self):
 		self.windows = get_open_windows()
 		self.win_len=len(self.windows)
-<<<<<<< HEAD
 		self.resize(self.size*self.win_len*1.3+30,self.size*1.6+10)
-=======
-		self.resize(self.size*self.win_len*1.3+20,self.size*1.6)
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.update()
 		QtGui.QApplication.processEvents()
 	def update_all(self,conf):
 		self.size=int(conf['size'])
 		self.move(self.size+10,self.height-self.size*2.4)
-<<<<<<< HEAD
 		self.resize(self.size*self.win_len*1.3+20+10,self.size*1.6+10)
 		self.r=int(conf["r"])
 		self.g=int(conf["g"])
 		self.b=int(conf["b"])
-=======
-		self.resize(self.size*self.win_len*1.3+20,self.size*1.6)
-		self.r=int(Config.get()["r"])
-		self.g=int(Config.get()["g"])
-		self.b=int(Config.get()["b"])
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 		self.update()
