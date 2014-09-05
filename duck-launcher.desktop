@@ -3,8 +3,4 @@ Type=Application
 Name=Duck Launcher
 Comment=An application launcher
 Icon=duck-launcher
-<<<<<<< HEAD
 Exec=python /usr/lib/duck_launcher/Main.py
-=======
-Exec=duck-launcher
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
