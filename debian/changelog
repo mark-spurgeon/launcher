@@ -9,7 +9,7 @@ duck-launcher (0.67-precise3) precise; urgency=high
   *Change font in settings
   *Options on right click of apps on the dock (open/remove)
   *Log out works on xfce desktop
- -- Mark Spurgeon <markspurgeon96@hotmail.com> Tue, 2 September 2014 10:06:37 +0100
+ -- Mark Spurgeon <markspurgeon96@hotmail.com>  Tue, 2 September 2014 10:06:37 +0100
 
 duck-launcher (0.66.5-trusty1) trusty; urgency=high
 
