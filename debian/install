@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 duck_launcher/* usr/lib/duck_launcher
-=======
-duck_launcher/* usr/lib/python2.7/duck_launcher
->>>>>>> 86af556d16439afcb5d5a16d03cf98ebf6a5d387
 duck_settings/* usr/lib/duck_settings
 duck-launcher usr/bin
 icons/* usr/share/duck-launcher/icons
