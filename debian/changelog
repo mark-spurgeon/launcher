@@ -1,12 +1,10 @@
-duck-launcher (0.67.5-trusty1) trusty; urgency=high
+duck-launcher (0.68-trusty1) trusty; urgency=high
 
-  *Launcher updates instantly on settings changes
-  *UI improvements 
-  *Local user apps (-> chrome apps,etc..) are displayed
-  *Applications which need to run with a terminal can
-  *Backend changed, so more stability, but it does reset the settings to default
-  *Change animation (closing/opening) speed in settings
-  *Change font in settings
-  *Options on right click of apps on the dock (open/remove)
-  *Log out works on xfce desktop
- -- Mark Spurgeon <markspurgeon96@hotmail.com> Tue, 2 September 2014 10:06:37 +0100
+  *Remade icons.
+  *Icon theme gets updated.
+  *Overall interface improvement.
+  *Files button opens a file manager window (for now).
+  *Move Apps on dock.
+  *New Search plugins (testing stage).
+  *-->`duck-launcher` and `mail` plugins installed by default.
+ -- Mark Spurgeon <markspurgeon96@hotmail.com> Tue, 7 November 2014 10:06:37 +0100

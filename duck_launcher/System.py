@@ -97,17 +97,17 @@ class AreYouSure(QtGui.QMainWindow):
 		qp.setPen(QtGui.QColor(250,250,250))
 		if self.state=="logout":
 			if "XFCE" or "Duck" in os.environ.get("XDG_CURRENT_DESKTOP"):
-				qp.drawText(textRect,QtCore.Qt.AlignCenter,"Are sou sure you want to log out?")
+				qp.drawText(textRect,QtCore.Qt.AlignCenter,"Log out from your computer?")
 			else:
 				qp.drawText(textRect,QtCore.Qt.AlignCenter,"Sorry, logout is not supported yet..")
 			i = QtGui.QIcon("/usr/share/duck-launcher/icons/logout.svg")
 			i.paint(qp, self.w/2-40,self.h/2-60,80,80)
 		if self.state=="restart":
-			qp.drawText(textRect,QtCore.Qt.AlignCenter,"Are sou sure you want to restart?")
+			qp.drawText(textRect,QtCore.Qt.AlignCenter,"Restart your computer?")
 			i = QtGui.QIcon("/usr/share/duck-launcher/icons/restart.svg")
 			i.paint(qp, self.w/2-40,self.h/2-60,80,80)
 		if self.state=="shutdown":
-			qp.drawText(textRect,QtCore.Qt.AlignCenter,"Are you sure you want to shut down?")
+			qp.drawText(textRect,QtCore.Qt.AlignCenter,"Shut down your computer?")
 			i = QtGui.QIcon("/usr/share/duck-launcher/icons/shutdown.svg")
 			i.paint(qp, self.w/2-40,self.h/2-60,80,80)
 		##Yes No

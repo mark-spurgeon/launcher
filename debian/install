@@ -2,6 +2,5 @@ duck_launcher/* usr/lib/duck_launcher
 duck_settings/* usr/lib/duck_settings
 duck-launcher usr/bin
 icons/* usr/share/duck-launcher/icons
-duck-launcher.desktop usr/share/applications
-duck-launcher.desktop etc/xdg/autostart
+plugins/* usr/share/duck-launcher/plugins
 duck-launcher.svg usr/share/icons/hicolor/scalable/apps

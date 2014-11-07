@@ -140,7 +140,7 @@ def get():
 	if os.path.isdir(os.path.join(HOME,".duck-plugins"))==False:
 		if os.path.isdir("/usr/lib/duck_launcher/plugins"):
 			import shutil
-			shutil.copytree("/usr/lib/duck_launcher/plugins",os.path.join(HOME,".duck-plugins"))
+			shutil.copytree("/usr/share/duck-launcher/plugins",os.path.join(HOME,".duck-plugins"))
 	the_file=open(cfg,"rb")
 	try:
 		theDict=pickle.load(the_file)

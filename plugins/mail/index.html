@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Duck</title>
+    <style type="text/css">
+    * {
+      outline:none;
+    }
+    body {
+      margin-left:0;
+      margin-right:0;
+      padding:0;
+      font-family: NamumGothic, Helvetica;
+      font-size:14px;
+      color:white;
+    }
+    p {
+      margin:10px;
+      padding:5px;
+    }
+    textarea {
+      -webkit-transition:background-color 0.3s;
+      resize:none;
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:100px;
+      top:105px;
+      padding:5px;
+
+      border-style:solid;
+      border-width:1px;
+      border-radius:3px;
+      border-color:white;
+      background-color:rgba(120,120,120,0.1);
+      color:white;
+    }
+    textarea:focus {
+      background-color:rgba(150,150,150,0.2);
+    }
+    #who {
+      -webkit-transition:background-color 0.3s;
+      position:absolute;
+      top:40px;
+      left:10px;
+      right:10px;
+      padding:5px;
+      border-style:solid;
+      border-width:1px;
+      border-radius:3px;
+      border-color:white;
+      background-color:rgba(120,120,120,0.1);
+      color:white;
+    }
+    #who:focus {
+      background-color:rgba(150,150,150,0.2);
+    }
+    #send {
+      position:absolute;
+      bottom:40px;
+      right:10px;
+      padding:15px;
+      border-style:solid;
+      border-width:1px;
+      border-radius:3px;
+      border-color:white;
+      color:white;
+      background-color:rgba(1,1,1,0.1);
+
+    }
+    #send:hover {
+      background-color:white;
+      color:black;
+    }
+    </style>
+  </head>
+  <body>
+  <form onsubmit="Duck.submitForm()">
+    <p>Send an e-mail to: </p> <input type="text" name="who" id="who" value="{{who}}" placeholder="someone@example.com"></input></br>
+    <p>Content:</p> <textarea type="text" name="what" ></textarea></br>
+    <input type="submit" id="send" value="Send it!" onclick="alert('Your email will not be sent, it is just a concept for now.')">
+  </form>
+  </body>
+</html>

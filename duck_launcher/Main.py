@@ -90,8 +90,8 @@ class Launcher(QtGui.QMainWindow):
 		self.OPEN_STATE_TOP=self.ICO_TOP*4+5
 		self.SIZE = 14
 		#self.R=int(conf['r'])
-		self.G=int(conf['g'])
-		self.B=int(conf['b'])
+		#self.G=int(conf['g'])
+		#self.B=int(conf['b'])
 		self.ICON_SIZE=int(conf['icon-size'])
 		#Geometry
 		self.setGeometry(0,self.top_pos,self.HALF_OPEN_POS+6,self.s_height)
@@ -104,7 +104,7 @@ class Launcher(QtGui.QMainWindow):
 		self.drawAppRect=False
 		self.files_page_state=0
 		self.Files = Files.getFiles()
-		self.pos_x=self.HALF_OPEN_POS
+		self.pos_x=self.HALF_OPEN_POS-2
 		self.move=False
 		self.current_state="half_open"
 		self.activity="apps"
@@ -127,7 +127,7 @@ class Launcher(QtGui.QMainWindow):
 		self.webview.connect(self.webview, QtCore.SIGNAL("linkClicked(const QUrl&)"), self.web_linkClicked)
 		self.webview.page().mainFrame().javaScriptWindowObjectCleared.connect(self.web_populateJavaScriptWindowObject)
 		self.webview.setHtml("<body style='background:rgb(230,100,80);'><input type='text' placehodler='aaa'></input></body>")
-		self.webview.setGeometry(0,50,self.s_width/3-16,self.s_height-50)
+		self.webview.setGeometry(2,50,self.s_width/3-20,self.s_height-50)
 		self.webview.activateWindow()
 		self.webview.hide()
 		#System window
@@ -138,32 +138,29 @@ class Launcher(QtGui.QMainWindow):
 		XlibStuff.fix_window(self.winId(),self.HALF_OPEN_POS+5,0,0,0)
 		#
 	def paintEvent(self,e):
+
 		qp=QtGui.QPainter(self)
 		qp.fillRect(e.rect(), QtCore.Qt.transparent)
 		qp.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
 		####DRAW
 		qp.setBrush(QtGui.QColor(int(self.conf['r2']),int(self.conf['g2']),int(self.conf['b2']),int(self.conf["alpha"])))
 		qp.drawRect(0,0,self.pos_x+7,self.s_height)
-		qp.setPen(QtGui.QPen(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b'])), 6, QtCore.Qt.SolidLine))
-		qp.drawLine(self.pos_x+5 ,0,self.pos_x+5,self.s_height)
+		qp.setPen(QtGui.QPen(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b'])), 3, QtCore.Qt.SolidLine))
+		qp.drawRect(self.pos_x+5,0,2,self.s_height)
 		if self.current_state!="half_open":
-			qp.setPen(QtGui.QPen(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b']),100), 2, QtCore.Qt.SolidLine))
+			qp.setPen(QtGui.QPen(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b']),30), 2, QtCore.Qt.SolidLine))
 			qp.drawLine(self.pos_x-14,0,self.pos_x-14,self.s_height)
 		qp.setPen(QtGui.QPen(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b'])), 4, QtCore.Qt.SolidLine))
-		r_s=3
-		a=4
-		r = QtCore.QRectF(self.pos_x-7,self.s_height/2,r_s,r_s)
+		qp.setBrush(QtGui.QBrush(QtGui.QColor(int(self.conf['r']),int(self.conf['g']),int(self.conf['b']))))
+		r_s=2
+		a=10
+		r = QtCore.QRectF(self.pos_x-7,self.s_height/2-r_s/2,r_s,r_s)
 		qp.drawEllipse(r)
-		r = QtCore.QRectF(self.pos_x-7,self.s_height/2-r_s*3,r_s,r_s)
+		r = QtCore.QRectF(self.pos_x-7,self.s_height/2-a-r_s/2,r_s,r_s)
 		qp.drawEllipse(r)
-		r = QtCore.QRectF(self.pos_x-7,self.s_height/2+r_s*3,r_s,r_s)
+		r = QtCore.QRectF(self.pos_x-7,self.s_height/2+a-r_s/2,r_s,r_s)
 		qp.drawEllipse(r)
 		##
-		#Draw rect under clicked app
-		if self.drawAppRect==True and self.appRect!=None:
-			qp.setPen(QtGui.QPen(QtGui.QColor(0,0,0,0),1,QtCore.Qt.SolidLine))
-			qp.setBrush(QtGui.QColor(254,254,255,60))
-			qp.drawRoundedRect(self.appRect,2,2)
 		###
 		if self.current_state == "half_open":
 			qp.setPen(QtGui.QPen(QtGui.QColor(0,0,0,0),1,QtCore.Qt.SolidLine))
@@ -172,19 +169,19 @@ class Launcher(QtGui.QMainWindow):
 			rect = QtCore.QRectF(50,0,150,50)
 			####DRAW BUTTONS
 			###Apps
-			ICO_TOP=self.ICO_TOP
+			ICO_TOP=self.HALF_OPEN_POS-5
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/apps.svg")
-			icon.paint(qp,7,ICO_TOP*0+5,ICO_TOP-5,ICO_TOP-5)
+			icon.paint(qp,5,ICO_TOP*0+5,ICO_TOP,ICO_TOP-6)
 			#Files
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/file.svg")
 			##temp_file
-			icon.paint(qp,7,ICO_TOP*1+5,ICO_TOP-5,ICO_TOP-5)
+			icon.paint(qp,5,ICO_TOP*1+5,ICO_TOP,ICO_TOP-6)
 			#Settings
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/settings.svg")
-			icon.paint(qp,7,ICO_TOP*2+5,ICO_TOP-5,ICO_TOP-5)
+			icon.paint(qp,5,ICO_TOP*2+5,ICO_TOP,ICO_TOP-6)
 			#Star
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/star.svg")
-			icon.paint(qp,7,ICO_TOP*3+5,ICO_TOP-5,ICO_TOP-5)
+			icon.paint(qp,5,ICO_TOP*3+5,ICO_TOP,ICO_TOP-6)
 			#####
 			#Dock Apps
 			for i,a in enumerate(self.dock_apps):
@@ -199,10 +196,11 @@ class Launcher(QtGui.QMainWindow):
 			#Open Windows Button
 			qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 2, QtCore.Qt.SolidLine))
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/open-apps.svg")
+			#icon = QtGui.QIcon("test-1.svg")
 			icon.paint(qp,10,self.s_height-ICO_TOP*2-10,ICO_TOP-10,ICO_TOP-10)
-			rect = QtCore.QRectF(10,self.s_height-ICO_TOP*2-10,ICO_TOP-10,ICO_TOP-10)
-			qp.setFont(QtGui.QFont(self.conf["font"],self.HALF_OPEN_POS/3))
-			qp.drawText(rect, QtCore.Qt.AlignCenter, str(len(self.open_windows)))
+			#rect = QtCore.QRectF(10,self.s_height-ICO_TOP*2-10,ICO_TOP-10,ICO_TOP-10)
+			#qp.setFont(QtGui.QFont(self.conf["font"],self.HALF_OPEN_POS/3))
+			#qp.drawText(rect, QtCore.Qt.AlignCenter, str(len(self.open_windows)))
 			#System button
 			icon = QtGui.QIcon("/usr/share/duck-launcher/icons/sys.svg")
 			icon.paint(qp,10,self.s_height-self.HALF_OPEN_POS+8,self.HALF_OPEN_POS-15,self.HALF_OPEN_POS-15)
@@ -215,11 +213,11 @@ class Launcher(QtGui.QMainWindow):
 				#Current Text
 				qp.setPen(QtCore.Qt.NoPen)
 				qp.setFont(QtGui.QFont(self.conf["font"],10))
-				t_rect=QtCore.QRectF(20,20,self.s_width/8,20)
+				t_rect=QtCore.QRectF(20,20,self.s_width-36,20)
 				if self.current_text=='':
 					self.plugin=False
 					qp.setPen(QtGui.QPen(QtGui.QColor(250,250,250), 2, QtCore.Qt.SolidLine))
-					qp.drawText(t_rect, QtCore.Qt.AlignLeft, "Type to search..")
+					qp.drawText(t_rect, QtCore.Qt.AlignLeft, "Type to search")
 				else:
 					if "#" in self.current_text.split(" ")[0]:
 						plugins_list=[]						
@@ -227,8 +225,7 @@ class Launcher(QtGui.QMainWindow):
 							if str(self.current_text.split(" ")[0]).lower().replace("#","") in p:
 								plugins_list.append(p)
 						if plugins_list:
-							self.plugin=True
-							what_in_text=self.current_text.split(" ")[0].replace("#","")
+							what_in_text=str(self.current_text.split(" ")[0].replace("#","")).lower()
 							query_name=plugins_list[0]
 							fm=QtGui.QFontMetrics(QtGui.QFont(self.conf["font"],10))
 							whole_width=0						
@@ -236,8 +233,8 @@ class Launcher(QtGui.QMainWindow):
 								w = int(fm.charWidth("#{}".format(query_name),i))
 								whole_width+=w
 							if query_name==what_in_text:
-								qp.setBrush(QtGui.QColor(int(self.conf["r"]),int(self.conf["g"]),int(self.conf["b"])))
-								qp.drawRect(QtCore.QRectF(18,20,whole_width+4,20))
+								qp.setBrush(QtGui.QColor(int(self.conf["r"]),int(self.conf["g"]),int(self.conf["b"]),150))
+								qp.drawRoundedRect(QtCore.QRectF(19,18,whole_width+4,20), 2,2)
 							else:pass
 							qp.setPen(QtGui.QPen(QtGui.QColor(255,255,255), 2, QtCore.Qt.SolidLine))
 							qp.drawText(t_rect, QtCore.Qt.AlignLeft,self.current_text)
@@ -292,9 +289,9 @@ class Launcher(QtGui.QMainWindow):
 				#Buttons
 				#¼b1_rect=QtCore.QRectF(10,10,30,30)
 				ico = QtGui.QIcon("/usr/share/duck-launcher/icons/home.svg")
-				ico.paint(qp,self.s_width/3-26,10,25,25)
+				ico.paint(qp,self.s_width/3-40-self.SIZE,10,25,25)
 				ico2 = QtGui.QIcon("/usr/share/duck-launcher/icons/back.svg")
-				ico2.paint(qp,self.s_width/3-66,10,25,25)
+				ico2.paint(qp,self.s_width/3-80-self.SIZE,10,25,25)
 				max_files=  math.trunc(len(self.Files.all())/self.apps_per_page)+1
 				for i in range(0, max_files):
 						btn_size = 20
@@ -377,9 +374,14 @@ class Launcher(QtGui.QMainWindow):
 					if isinstance(b["name"],list):
 						b["name"]="".join(b["name"])
 					qp.drawText(QtCore.QRectF(20, h+10,self.s_width/3,200),b['name'])
+		#Draw rect under clicked app
+		if self.drawAppRect==True and self.appRect!=None:
+			qp.setPen(QtGui.QPen(QtGui.QColor(0,0,0,0),1,QtCore.Qt.SolidLine))
+			qp.setBrush(QtGui.QColor(252,252,255,40))
+			qp.drawRoundedRect(self.appRect,2,2)
 	def mouseMoveEvent(self,e):
 		self.mousePressEvent(e)
-		if e.x()>(self.pos_x-self.SIZE):
+		if e.x()>(self.pos_x-self.SIZE-5):
 			if self.current_state=="half_open" and self.s_height/2-20<e.y()<self.s_height/2+20 :
 				self.move=True
 			if self.current_state=="open":
@@ -391,8 +393,22 @@ class Launcher(QtGui.QMainWindow):
 		#repeat same as press event
 	def mousePressEvent(self,e):
 		x_m,y_m = e.x(),e.y()
+
 		self.drawAppRect=False
 		if self.current_state=="half_open":
+			if 0<x_m<self.HALF_OPEN_POS:
+				if y_m<self.ICO_TOP:
+					self.appRect=QtCore.QRectF(0,2, self.HALF_OPEN_POS+4,self.ICO_TOP+3)
+					self.drawAppRect=True
+				if self.ICO_TOP<y_m<self.ICO_TOP*2:
+					self.appRect=QtCore.QRectF(0,self.ICO_TOP+2, self.HALF_OPEN_POS+4,self.ICO_TOP+3)
+					self.drawAppRect=True
+				if self.ICO_TOP*2<y_m<self.ICO_TOP*3:
+					self.appRect=QtCore.QRectF(0,self.ICO_TOP*2+2, self.HALF_OPEN_POS+4,self.ICO_TOP+3)
+					self.drawAppRect=True
+				if self.ICO_TOP*3<y_m<self.ICO_TOP*4:
+					self.appRect=QtCore.QRectF(0,self.ICO_TOP*3+2, self.HALF_OPEN_POS+4,self.ICO_TOP+3)
+					self.drawAppRect=True
 			try:
 				for i,a in enumerate(self.dock_apps):
 					if self.OPEN_STATE_TOP+self.ICO_TOP*i+10<y_m<self.OPEN_STATE_TOP+self.ICO_TOP*(i+1)+10:
@@ -469,9 +485,11 @@ class Launcher(QtGui.QMainWindow):
 				self.update()
 			##set the current state
 			if self.pos_x==self.HALF_OPEN_POS:
+				self.pos_x-=3
 				self.current_state="half_open"
 				self.update_all(self.conf)
 			elif self.pos_x==self.s_width/3:
+				self.pos_x-=3
 				self.current_state="open"
 			else: self.current_state="nothing"
 			if self.plugin==True and self.current_state=='open' and self.activity=='apps':
@@ -489,6 +507,7 @@ class Launcher(QtGui.QMainWindow):
 					QtGui.qApp.quit()
 			###app events
 			if self.activity == "apps" and self.plugin==False:
+
 				max_apps=  math.trunc((len(self.allApps)-1)/self.apps_per_page)+1
 				##Change Page
 				for i in range(0,max_apps):
@@ -587,21 +606,23 @@ class Launcher(QtGui.QMainWindow):
 			##buttons
 			if self.pos_x-self.SIZE<x_m<self.pos_x and self.move==False and self.s_height/2-20<y_m<self.s_height/2+20:
 				self.activity="apps"
+				self.current_text=""
 				self.open_it()
 			if 0<x_m<self.HALF_OPEN_POS:
 				if e.button()==QtCore.Qt.LeftButton:
 					print self.ICO_TOP
 					if y_m<self.ICO_TOP:
-						print "a"
 						self.activity="apps"
 						self.current_text=''
 						self.open_it()
 					if self.ICO_TOP<y_m<self.ICO_TOP*2:
-						print "b"
-						self.activity="files"
-						self.Files.directory=self.Files.default
-						self.files_page_state=0
-						self.open_it()
+						import webbrowser
+						HOME=os.path.expanduser("~")
+						webbrowser.open(HOME)
+						#self.activity="files"
+						#self.Files.directory=self.Files.default
+						#self.files_page_state=0
+						#self.open_it()
 					if self.ICO_TOP*2<y_m<self.ICO_TOP*3:
 						self.activity="settings"
 						Settings(parent=self).start()
@@ -679,7 +700,7 @@ class Launcher(QtGui.QMainWindow):
 		self.sys_win.close()
 		self.open_win.close()
 		self.dock_options_win.close()
-		while self.pos_x<self.s_width/3:
+		while self.pos_x<self.s_width/3-5:
 			self.current_state='nothing'
 			if self.pos_x<self.s_width/7:
 				self.pos_x=self.s_width/7
@@ -688,8 +709,8 @@ class Launcher(QtGui.QMainWindow):
 			self.setGeometry(0,self.top_pos,self.s_width/3+5,self.s_height)
 			self.update()
 			QtGui.QApplication.processEvents()
-		if self.pos_x!=self.s_width/3:
-			self.pos_x=self.s_width/3
+		if self.pos_x!=self.s_width/3-2 :
+			self.pos_x=self.s_width/3-2
 		self.current_state="open"
 		if self.activity=="apps":
 			self.allApps=Apps.info(self.current_text)
@@ -709,9 +730,10 @@ class Launcher(QtGui.QMainWindow):
 			self.current_state="nothing"
 			self.update()
 			QtGui.QApplication.processEvents()
-		if self.pos_x!=self.HALF_OPEN_POS:
-			self.pos_x=self.HALF_OPEN_POS
+		if self.pos_x!=self.HALF_OPEN_POS-2:
+			self.pos_x=self.HALF_OPEN_POS-2
 		self.current_state="half_open"
+		self.setAttribute(QtCore.Qt.WA_X11NetWmWindowTypeDock,True)
 		self.setGeometry(0,self.top_pos,self.pos_x+self.SIZE/2,self.s_height)
 		self.update()
 		QtGui.QApplication.processEvents()
@@ -724,6 +746,7 @@ class Launcher(QtGui.QMainWindow):
 			pass
 		self.update()
 		QtGui.QApplication.processEvents()
+		Config.check_dict(self.conf)
 	def update_all(self,conf):
 		self.conf=conf
 		if self.HALF_OPEN_POS!=int(conf["size"]):
@@ -767,9 +790,6 @@ class Launcher(QtGui.QMainWindow):
 		self.webview.page().mainFrame().addToJavaScriptWindowObject('Duck', self)
 	@QtCore.pyqtSlot()
 	def submitForm(self):
-		home=os.path.expanduser("~")
-		html= Plugins.get(str(self.current_text))
-		plugin_name=html.replace(home,"").replace(".duck-plugins","").replace(".tmp.html","").replace("/","")	
 		elements=[]
 		for e in self.webview.page().mainFrame().findAllElements("*"):
 			el={}
@@ -782,22 +802,35 @@ class Launcher(QtGui.QMainWindow):
 			if val!=None:
 				el["value"]=val
 			elements.append(el)
-		pl=getCurrentPluginModule(plugin_name)
-		try:
-			pl.onFormSubmit(elements)
-		except:
-			print("[Duck Launcher] No 'onFormSubmit()' method present in the plugin.")
+
+
+		if "#" in self.current_text.split(" ")[0]:
+			plugins_list=[]						
+			for p in Plugins.get_plugin_names():
+				if str(self.current_text.split(" ")[0]).lower().replace("#","") in p:
+					plugins_list.append(p)
+			if plugins_list:
+				plugin_name=plugins_list[0]
+				pl=getCurrentPluginModule(plugin_name)
+				try:
+					pl.onFormSubmit(elements)
+				except:
+					print("[Duck Launcher] No 'onFormSubmit()' method present in the plugin.")
 	@QtCore.pyqtSlot(str,str)
 	def sendData(self, thing, value):
 		print "data : " , thing, value
-		home=os.path.expanduser("~")
-		html= Plugins.get(str(self.current_text))
-		plugin_name=html.replace(home,"").replace(".duck-plugins","").replace(".tmp.html","").replace("/","")	
-		pl=getCurrentPluginModule(plugin_name)
-		try:
-			pl.onDataSent(thing, value)
-		except:
-			print("[Duck Launcher] No 'onDataSent()' method present in the plugin.")
+		if "#" in self.current_text.split(" ")[0]:
+			plugins_list=[]						
+			for p in Plugins.get_plugin_names():
+				if str(self.current_text.split(" ")[0]).lower().replace("#","") in p:
+					plugins_list.append(p)
+			if plugins_list:
+				plugin_name=plugins_list[0]	
+				pl=getCurrentPluginModule(plugin_name)
+				try:
+					pl.onDataSent(thing, value)
+				except:
+					print("[Duck Launcher] No 'onDataSent()' method present in the plugin.")
 class Fakewin(QtGui.QMainWindow):
 	def __init__(self,width,height,parent):
 		QtGui.QMainWindow.__init__(self, None,QtCore.Qt.WindowStaysOnBottomHint|QtCore.Qt.FramelessWindowHint)
@@ -813,8 +846,10 @@ class Fakewin(QtGui.QMainWindow):
 		self.timer.timeout.connect(self.parent.updateOpenWindows)
 	def keyPressEvent(self, e):
 		if e.key()==QtCore.Qt.Key_Backspace:
-			self.parent.current_text=self.parent.current_text[:-1]
-			self.parent.app_page_state=0
+			if self.parent.plugin==False:
+				self.parent.current_text=self.parent.current_text[:-1]
+				self.parent.app_page_state=0
+
 		elif e.key()==QtCore.Qt.Key_Return:
 			if len(self.parent.allApps)==1:
 				a=self.parent.allApps[0]
@@ -825,10 +860,14 @@ class Fakewin(QtGui.QMainWindow):
 				self.parent.close_it()
 				self.parent.current_text=''
 				self.parent.allApps=Apps.find_info('')	
-			elif self.parent.plugin==True:
-				html= Plugins.get(str(self.parent.current_text))
+
+			html= Plugins.get(str(self.parent.current_text),color=(self.parent.conf["r"],self.parent.conf["g"],self.parent.conf["b"]),font=self.parent.conf["font"])
+			if html!=None:
 				self.parent.webview.load(QtCore.QUrl(html))
 				self.parent.webview.show()
+				self.parent.plugin=True
+				self.parent.webview.page().mainFrame().setFocus()
+				self.parent.setAttribute(QtCore.Qt.WA_X11NetWmWindowTypeDock,False)
 				self.update()
 		elif e.key()==16777216:
 			self.parent.current_text=""
@@ -837,7 +876,6 @@ class Fakewin(QtGui.QMainWindow):
 		elif e.text()!='':
 			self.parent.current_text+=e.text()
 			self.parent.app_page_state=0
-			
 		else:
 			if e.key()==16777250:
 				if self.parent.current_state=="half_open":
@@ -910,6 +948,7 @@ class DBusWidget(dbus.service.Object):
 		return self.conf["font"]
 	@dbus.service.method("org.duck.Launcher", in_signature='', out_signature='v')
 	def getDockApps(self):
+		print "h"
 		return list(self.conf["dock-apps"])
 	@dbus.service.method("org.duck.Launcher", in_signature='', out_signature='v')
 	def getBlocks(self):

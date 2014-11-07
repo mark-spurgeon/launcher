@@ -17,6 +17,7 @@
 #
 #########
 import os
+import gtk
 from PyQt4.QtGui import QIcon
 images = [
 	"jpg",
@@ -59,6 +60,8 @@ class getFiles():
 		#return [{"type":"folder", "name":"name", "whole_path":"/home/usr/folder"}, ..]
 def getFileIcon(name):
 	#extension
+	icon_theme = gtk.icon_theme_get_default()
+	icon_=icon_theme.lookup_icon(name, 48, 0)
 	ext=name.split('.')[-1:][0]
 	icon=QIcon.fromTheme(name)
 	if not icon.isNull():
@@ -74,9 +77,13 @@ def getFileIcon(name):
 	elif ext in videos:
 		if os.path.isfile(name):
 			return QIcon("/usr/share/duck-launcher/icons/files/file-video.svg")#will be video file icon
+		else:
+			return QIcon("/usr/share/duck-launcher/icons/file.svg")		
 	elif ext in sounds:
 		if os.path.isfile(name):
 			return QIcon("/usr/share/duck-launcher/icons/files/file-sound.svg")#will be sound file icon
+		else:
+			return QIcon("/usr/share/duck-launcher/icons/file.svg")
 	else:
 		return QIcon("/usr/share/duck-launcher/icons/file.svg")
 if __name__=="__main__":

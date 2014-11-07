@@ -52,6 +52,10 @@ def info(filter_):
 				if len(OnlyShowIn)==0 or current_desk in OnlyShowIn:
 					app["name"]=str(_d.DesktopEntry(unicode(f)).getName())
 					e = str(_d.DesktopEntry(unicode(f)).getExec())
+
+					#prevent '"' in exec
+					if e[0] == '"' and e[-1] == '"':
+						e = e[:-1][1:]
 					try:
 						pos= e.index("%")
 						e= e[:pos-1]
@@ -67,16 +71,17 @@ def info(filter_):
 			pass
 	return sorted(appList,key=lambda x:x["name"])
 	APPS=sorted(appList,key=lambda x:x["name"])
-def ico_from_name(name):
+def ico_from_name(name,size="small"):
 	icon_theme = gtk.icon_theme_get_default()
 	icon_=icon_theme.lookup_icon(name, 48, 0)
 	is_in_theme=False
 	if icon_!=None:
-		try:
+		sizes=icon_theme.get_icon_sizes(name)
+		if len(sizes)>0:
 			highest_res= sorted(icon_theme.get_icon_sizes(name))[::-1][0]
 			is_in_theme=True
 			icon=icon_theme.lookup_icon(name, highest_res, 0).get_filename()
-		except:
+		else:
 			icon=icon_theme.lookup_icon(name, 48, 0).get_filename()
 	if is_in_theme==True:
 		return QIcon(icon)
