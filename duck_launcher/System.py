@@ -100,15 +100,15 @@ class AreYouSure(QtGui.QMainWindow):
 				qp.drawText(textRect,QtCore.Qt.AlignCenter,"Log out from your computer?")
 			else:
 				qp.drawText(textRect,QtCore.Qt.AlignCenter,"Sorry, logout is not supported yet..")
-			i = QtGui.QIcon("/usr/share/duck-launcher/icons/logout.svg")
+			i = QtGui.QIcon("/usr/share/duck-launcher/default-theme/logout.svg")
 			i.paint(qp, self.w/2-40,self.h/2-60,80,80)
 		if self.state=="restart":
 			qp.drawText(textRect,QtCore.Qt.AlignCenter,"Restart your computer?")
-			i = QtGui.QIcon("/usr/share/duck-launcher/icons/restart.svg")
+			i = QtGui.QIcon("/usr/share/duck-launcher/default-theme/restart.svg")
 			i.paint(qp, self.w/2-40,self.h/2-60,80,80)
 		if self.state=="shutdown":
 			qp.drawText(textRect,QtCore.Qt.AlignCenter,"Shut down your computer?")
-			i = QtGui.QIcon("/usr/share/duck-launcher/icons/shutdown.svg")
+			i = QtGui.QIcon("/usr/share/duck-launcher/default-theme/shutdown.svg")
 			i.paint(qp, self.w/2-40,self.h/2-60,80,80)
 		##Yes No
 		qp.drawLine(20,self.h-50, self.w-20,self.h-50)	
@@ -150,13 +150,14 @@ class Window(QtGui.QMainWindow):
 		self.size=int(self.conf['size'])
 		d = QtGui.QDesktopWidget()
 		self.height =d.availableGeometry().height()
+		self.top_pos= d.availableGeometry().y()
 		self.r=int(self.conf["r"])
 		self.g=int(self.conf["g"])
 		self.b=int(self.conf["b"])
 		self.buttonRect=None
 		self.drawButtonRect=False
 		self.win_len=4
-		self.move(self.size+10,self.height-self.size*1.5-2)
+		self.move(self.size+10,self.height-self.size*1.5-2+self.top_pos)
 		self.resize(self.size*self.win_len*1.5,self.size*1.5)
 		self.sure=AreYouSure()
 	def paintEvent(self,e):
@@ -170,23 +171,23 @@ class Window(QtGui.QMainWindow):
 		qp.setBrush(QtGui.QColor(250,250,250))
 		qp.drawRect(9,0,5,self.size*1.8)
 		half_height=self.size*1.1
-		icon=QtGui.QIcon("/usr/share/duck-launcher/icons/win.svg")
+		icon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/win.svg")
 		icon.paint(qp, -10,half_height-10, 20,20)
 		if self.drawButtonRect==True and self.buttonRect!=None:
 			qp.setPen(QtGui.QColor(0,0,0,0))
 			qp.setBrush(QtGui.QColor(254,254,255,50))
 			qp.drawRect(self.buttonRect)
 		#Sleep
-		sl=QtGui.QIcon("/usr/share/duck-launcher/icons/sleep.svg")
+		sl=QtGui.QIcon("/usr/share/duck-launcher/default-theme/sleep.svg")
 		sl.paint(qp, 20,10,self.size,self.size)
 		#Log out
-		lo=QtGui.QIcon("/usr/share/duck-launcher/icons/logout.svg")
+		lo=QtGui.QIcon("/usr/share/duck-launcher/default-theme/logout.svg")
 		lo.paint(qp, self.size*1.3+20,10,self.size,self.size)
 		#Restart
-		re=QtGui.QIcon("/usr/share/duck-launcher/icons/restart.svg")
+		re=QtGui.QIcon("/usr/share/duck-launcher/default-theme/restart.svg")
 		re.paint(qp, self.size*2*1.3+20,10,self.size,self.size)
 		#Shutdown
-		sd=QtGui.QIcon("/usr/share/duck-launcher/icons/shutdown.svg")
+		sd=QtGui.QIcon("/usr/share/duck-launcher/default-theme/shutdown.svg")
 		sd.paint(qp, self.size*3*1.3+20,10,self.size,self.size)
 	def mouseMoveEvent(self,e):
 		self.mousePressEvent(e)
@@ -235,7 +236,7 @@ class Window(QtGui.QMainWindow):
 	def update_all(self,conf):
 		self.conf=conf
 		self.size=int(self.conf['size'])
-		self.move(self.size+10,self.height-self.size*1.5)
+		self.move(self.size+10,self.height-self.size*1.5+self.top_pos)
 		self.resize(self.size*self.win_len*1.5,self.size*1.5)
 		self.r=int(self.conf["r"])
 		self.g=int(self.conf["g"])

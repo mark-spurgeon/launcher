@@ -111,7 +111,7 @@ class Window(QtGui.QMainWindow):
 		qp.setPen(QtGui.QColor(255,255,255,255))
 		qp.setBrush(QtGui.QColor(255,255,255,255))
 		qp.drawRect(9,0,5,self.height)
-		icon=QtGui.QIcon("/usr/share/duck-launcher/icons/win.svg")
+		icon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/win.svg")
 		icon.paint(qp, -10,self.size/2-10, 20,20)
 		#
 		qp.setFont(QtGui.QFont(Config.get()["font"],12))
@@ -131,30 +131,30 @@ class Window(QtGui.QMainWindow):
 			o_rect=QtCore.QRectF(50,30,self.width-10,30)
 			qp.setPen(QtGui.QColor(255,255,255,255))
 			qp.drawText(o_rect,QtCore.Qt.AlignVCenter,"Open")
-			removeIcon=QtGui.QIcon("/usr/share/duck-launcher/icons/open.svg")
+			removeIcon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/open.svg")
 			removeIcon.paint(qp, 25,34,20,20)
 			#move
 			r_rect=QtCore.QRectF(50,60,self.width-10,30)
 			qp.drawText(r_rect, QtCore.Qt.AlignVCenter,"Move")
-			removeIcon=QtGui.QIcon("/usr/share/duck-launcher/icons/move.svg")
+			removeIcon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/move.svg")
 			removeIcon.paint(qp, 25,64,20,20)
 
 			#remove
 			r_rect=QtCore.QRectF(50,90,self.width-10,30)
 			qp.drawText(r_rect, QtCore.Qt.AlignVCenter,"Remove")
-			removeIcon=QtGui.QIcon("/usr/share/duck-launcher/icons/remove.svg")
+			removeIcon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/remove.svg")
 			removeIcon.paint(qp, 25,94,20,20)
 		elif self.state=="moving":
 			if self.width<150:
 				self.width=150
 				self.resize(150,self.height)
-			icon=Apps.ico_from_name(self.app["icon"])
+			icon=QtGui.QIcon(Apps.ico_from_name(self.app["icon"]))
 			if icon!=None:
 				w = self.width/2-40
 				icon.paint(qp,w,40,70,70)
-			upicon=QtGui.QIcon("/usr/share/duck-launcher/icons/up.svg")
+			upicon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/up.svg")
 			upicon.paint(qp, self.width/2+35,35,40,40)
-			downicon=QtGui.QIcon("/usr/share/duck-launcher/icons/down.svg")
+			downicon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/down.svg")
 			downicon.paint(qp, self.width/2+35,self.height-45,40,40)
 
 	def mouseMoveEvent(self,e):
@@ -239,7 +239,7 @@ class Window(QtGui.QMainWindow):
 			self.width=whole_width
 			self.update_all(self.conf)
 	def setTopPosition(self,pos):
-		self.y_pos=pos
+		self.y_pos=pos+self.top_pos
 		self.update_all(self.conf)
 	def setApp(self,_dict):
 		self.app=_dict

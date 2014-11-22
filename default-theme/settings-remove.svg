@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="48"
+   height="48"
+   id="svg2985"
+   inkscape:version="0.48.5 r"
+   sodipodi:docname="down.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1147"
+     inkscape:window-height="594"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="9.8333333"
+     inkscape:cx="30.616879"
+     inkscape:cy="22.682107"
+     inkscape:window-x="41"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2985" />
+  <defs
+     id="defs2987" />
+  <metadata
+     id="metadata2990">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="matrix(1.9491041,0,0,1.9491041,-22.770073,-29.128987)"
+     style="fill:#000000;fill-opacity:1">
+    <path
+       style="opacity:0.65863455999999998;fill:#d40000;fill-opacity:1;stroke:none"
+       d="M 14.59375 9.1875 L 9.375 14.375 L 18.65625 23.59375 L 9.15625 32.8125 L 14.4375 37.9375 L 23.875 28.78125 L 23.90625 28.78125 L 33.1875 38.03125 L 38.40625 32.875 L 29.125 23.65625 L 38.625 14.40625 L 33.34375 9.3125 L 23.90625 18.46875 L 23.875 18.46875 L 14.59375 9.1875 z "
+       transform="matrix(0.51305623,0,0,0.51305623,11.682328,14.944808)"
+       id="path3008" />
+  </g>
+  <g
+     style="fill:#000000;fill-opacity:1"
+     transform="matrix(-1.9491041,0,0,-1.9491041,70.548929,76.374856)"
+     id="g2983" />
+</svg>

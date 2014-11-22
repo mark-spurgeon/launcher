@@ -1,10 +1,5 @@
-duck-launcher (0.68-trusty1) trusty; urgency=high
+duck-launcher (0.68.5-trusty1) trusty; urgency=high
 
-  *Remade icons.
-  *Icon theme gets updated.
-  *Overall interface improvement.
-  *Files button opens a file manager window (for now).
-  *Move Apps on dock.
-  *New Search plugins (testing stage).
-  *-->`duck-launcher` and `mail` plugins installed by default.
- -- Mark Spurgeon <markspurgeon96@hotmail.com> Tue, 7 November 2014 10:06:37 +0100
+  * Duck Launcher
+
+ -- Mark Spurgeon <markspurgeon96@hotmail.com>  Fri, 14 Nov 2014 21:27:04 +0100

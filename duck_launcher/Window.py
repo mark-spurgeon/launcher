@@ -124,7 +124,7 @@ class open_windows(QtGui.QMainWindow):
 		qp.setBrush(QtGui.QColor(250,250,250))
 		qp.drawRect(9,0,5,self.size*1.6)
 		half_height=self.size*0.9
-		icon=QtGui.QIcon("/usr/share/duck-launcher/icons/win.svg")
+		icon=QtGui.QIcon("/usr/share/duck-launcher/default-theme/win.svg")
 		icon.paint(qp, -10,half_height-10, 20,20)
 		
 		if self.drawButtonRect==True and self.buttonRect!=None:
@@ -134,17 +134,15 @@ class open_windows(QtGui.QMainWindow):
 		for i,w in enumerate(self.windows):
 			ico = Apps.ico_from_app(w['icon'])
 			if ico==None:
-				ico = Apps.ico_from_app(w["title"])
-				if ico==None:
-					home = os.path.expanduser("~")+"/.duck"
-					try:
-    						os.stat(home)
-					except:
-    						os.mkdir(home)
-					if os.path.isfile("{0}/{1}.png".format(home,binascii.hexlify(w["icon"]))):
-						ico = QtGui.QIcon("{0}/{1}.png".format(home,binascii.hexlify(w["icon"])))
-					else:
-						ico = QtGui.QIcon("/usr/share/duck-launcher/apps.svg")
+				home = os.path.expanduser("~")+"/.duck"
+				try:
+    					os.stat(home)
+				except:
+   						os.mkdir(home)
+				if os.path.isfile("{0}/{1}.png".format(home,binascii.hexlify(w["icon"]))):
+					ico = QtGui.QIcon("{0}/{1}.png".format(home,binascii.hexlify(w["icon"])))
+				else:
+					ico = QtGui.QIcon("/usr/share/duck-launcher/default-theme/apps.svg")
 			ico.paint(qp,20+self.size*i*1.3, 10, self.size*1.1, self.size*1.1)
 	def mousePressEvent(self,e):
 		x_m,y_m=e.x(),e.y()
@@ -176,7 +174,7 @@ class open_windows(QtGui.QMainWindow):
 		QtGui.QApplication.processEvents()
 	def update_all(self,conf):
 		self.size=int(conf['size'])
-		self.move(self.size+10,self.height-self.size*2.4)
+		self.move(self.size+10,self.height-self.size*2.4+self.top_pos)
 		self.resize(self.size*self.win_len*1.3+20+10,self.size*1.6+10)
 		self.r=int(conf["r"])
 		self.g=int(conf["g"])

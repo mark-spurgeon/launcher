@@ -56,6 +56,7 @@
       background-color:rgba(150,150,150,0.2);
     }
     #send {
+      -webkit-transition:color 0.3s, border-color 0.3s;
       position:absolute;
       bottom:40px;
       right:10px;
@@ -69,8 +70,8 @@
 
     }
     #send:hover {
-      background-color:white;
-      color:black;
+    	color:rgb({{color[0]}},{{color[1]}},{{color[2]}});
+    	border-color:rgb({{color[0]}},{{color[1]}},{{color[2]}});
     }
     </style>
   </head>

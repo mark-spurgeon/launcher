@@ -138,7 +138,9 @@ def get():
 	if "duck-launcher.config" not in os.listdir(dir):
 		create_from_info(defaultDict)
 	if os.path.isdir(os.path.join(HOME,".duck-plugins"))==False:
-		if os.path.isdir("/usr/lib/duck_launcher/plugins"):
+		print "a"
+		if os.path.isdir("/usr/share/duck-launcher/plugins"):
+			print "b"
 			import shutil
 			shutil.copytree("/usr/share/duck-launcher/plugins",os.path.join(HOME,".duck-plugins"))
 	the_file=open(cfg,"rb")

@@ -18,74 +18,91 @@
 #########
 import os
 import gtk
+from xdg import IconTheme
 from PyQt4.QtGui import QIcon
+import Apps
+folders = [
+	"downloads",
+	"music",
+	"pictures",
+	"public",
+	"images"
+	]
 images = [
+	"svg",
 	"jpg",
 	"JPG",
 	"png",
-	"svg"
-]
-videos = [
-	"mp4",	
-	"avi"
-]
-sounds = [
-	"mp3",
-	"wav"
-]
-class getFiles():
-	def __init__(self):
-		self.directory=os.getenv("HOME")#varies
-		self.default=os.getenv("HOME")#Doesn't vary
-	def all(self):
-		all=[]
-		for f in os.listdir(self.directory):
+	"ico"
+	]
+def iconFromName(name,size="small"):
+	icon_theme = gtk.icon_theme_get_default()
+	icon_=icon_theme.lookup_icon(name, 48, 0)
+	is_in_theme=False
+	if icon_!=None:
+		sizes=icon_theme.get_icon_sizes(name)
+		if len(sizes)>0:
+			highest_res= sorted(icon_theme.get_icon_sizes(name))[::-1][0]
+			is_in_theme=True
+			icon=icon_theme.lookup_icon(name, highest_res, 0).get_filename()
+		else:
+			icon=icon_theme.lookup_icon(name, 48, 0).get_filename()
+	if is_in_theme==True:
+		return icon
+	elif os.path.isfile(name):
+		return name
+	else:
+		found=False 
+		dir_list=IconTheme.icondirs
+		for d in dir_list:
+			if os.path.isdir(d):
+				for i in os.listdir(d)[::-1]:
+					if i.startswith(name):
+						path=os.path.join(d,i)
+						found=True
+						break
+		if found==True:
+			return path
+		else:
+			return icon_theme.lookup_icon("text-plain", 48, 0).get_filename()
+
+def getFilesFromPath(path):
+	path=str(path)
+	if os.path.isdir(path):
+		stuff=[]
+		for f in os.listdir(path):
 			if f.startswith("."):
 				f=None
 			elif f.endswith("~"):
 				f=None
 			if f!=None:
-				dict={}
-				dict["name"]=f
-				whole_f=os.path.join(self.directory,f)
+				_f={}
+				_f["name"]=f
+				whole_f=os.path.join(path,f)
 				if os.path.exists(whole_f):
 					if os.path.isdir(whole_f):
-						dict["type"]="directory"
+						_f["type"]="directory"
+						if f.lower() in folders:
+							name = str("folder-"+f.lower())
+							_f["icon"] = "file://"+iconFromName(name)
+
+						else:
+							_f["icon"]="file://"+iconFromName("folder")
 					elif os.path.isfile(whole_f):
-						dict["type"]="file"
-					dict["whole_path"]=str(whole_f)
-					all.append(dict)
-				else:print("Path doesn't exist")
-		return all
-		#return [{"type":"folder", "name":"name", "whole_path":"/home/usr/folder"}, ..]
-def getFileIcon(name):
-	#extension
-	icon_theme = gtk.icon_theme_get_default()
-	icon_=icon_theme.lookup_icon(name, 48, 0)
-	ext=name.split('.')[-1:][0]
-	icon=QIcon.fromTheme(name)
-	if not icon.isNull():
-		return icon	
-	elif ext in images:	
-		if os.path.isfile(name):
-			return QIcon(name)
-		'''
-	elif ext in images:	
-		if os.path.isfile(name):
-			return QIcon("/usr/share/duck-launcher/icons/files/file-picture.svg")
-		'''
-	elif ext in videos:
-		if os.path.isfile(name):
-			return QIcon("/usr/share/duck-launcher/icons/files/file-video.svg")#will be video file icon
-		else:
-			return QIcon("/usr/share/duck-launcher/icons/file.svg")		
-	elif ext in sounds:
-		if os.path.isfile(name):
-			return QIcon("/usr/share/duck-launcher/icons/files/file-sound.svg")#will be sound file icon
-		else:
-			return QIcon("/usr/share/duck-launcher/icons/file.svg")
-	else:
-		return QIcon("/usr/share/duck-launcher/icons/file.svg")
+						_f["type"]="file"
+						ext=f.split(".")[-1:][0]
+						print ext
+						if ext in images :
+							_f["icon"]=str(whole_f)
+						else:
+							name="application-"+ext
+							if iconFromName(name)!=None:
+								_f["icon"] = "file://"+iconFromName(name)
+							
+					_f["whole_path"]=str(whole_f)
+				stuff.append(_f)
+
+		return stuff
 if __name__=="__main__":
 	f =getFiles()
 	f.directory="/home/mark"

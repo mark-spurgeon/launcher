@@ -13,6 +13,9 @@ It's supposed to be beautiful while being useful. With the Duck Launcher, all yo
  -Star
 --------
   "Star" is kind of an extension of the file browser and the app launcher: you can choose any application, file or folder   and add it. But these can be separated in blocks. Let's say you're a graphic artist, then you'll add a block named       "Graphics" and add a few apps, like blender and gimp, and a folder where you store your files, and perhaps a file your     working on right know.
+  -Plugins
+---------
+   With plugins, the searching experience pushes its limits. Whereas just searching for apps, you could potentially search for anything, be it from a web service or from some local media. You just need a plugin for what you want to search. Due to the flexibility of the plugin system (as it uses web languages for the user interface), a plugin could even be a simple application.  
   -Customize Duck Launcher
 -------
   With the duck settings, you can customize a lot of things, like your dock apps, the launcher's color, etc...

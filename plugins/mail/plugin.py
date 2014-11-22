@@ -8,7 +8,7 @@ def Search(query, color=None,font=None):
 	home=os.path.expanduser("~")
 	s = str(open("{}/.duck-plugins/mail/index.html".format(home),"r").read())
 	t=Template(s)
-	return t.render(who=query)
+	return t.render(who=query,color=color)
 
 #JS function events
 def onFormSubmit(elements):

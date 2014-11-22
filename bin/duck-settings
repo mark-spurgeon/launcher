@@ -1,0 +1,2 @@
+#! /bin/bash
+python -O /usr/lib/duck_settings/main.py

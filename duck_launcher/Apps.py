@@ -26,6 +26,7 @@ from xdg import IconTheme
 import gtk
 APPS=None
 def info(filter_):
+	global APPS
 	appList=[]
 	a=False
 	all_apps=glob.glob("/usr/share/applications/*.desktop")
@@ -65,7 +66,7 @@ def info(filter_):
 						app["exec"]="xterm -e {}".format(e)
 					else:
 						app["exec"]=e
-					app["icon"]=str(_d.DesktopEntry(unicode(f)).getIcon())	
+					app["icon"]=ico_from_name(str(_d.DesktopEntry(unicode(f)).getIcon()))
 					appList.append(app)
 		except:
 			pass
@@ -84,9 +85,9 @@ def ico_from_name(name,size="small"):
 		else:
 			icon=icon_theme.lookup_icon(name, 48, 0).get_filename()
 	if is_in_theme==True:
-		return QIcon(icon)
+		return str(icon)
 	elif os.path.isfile(name):
-		return QIcon(name)
+		return str(name)
 	else:
 		found=False 
 		dir_list=IconTheme.icondirs
@@ -95,28 +96,28 @@ def ico_from_name(name,size="small"):
 				for i in os.listdir(d)[::-1]:
 					if i.startswith(name):
 						path=os.path.join(d,i)
+						print path
 						found=True
 						break
 		if found==True:
-			return QIcon(path)
+			return str(path)
 		else:
-			return QIcon("/usr/share/duck-launcher/icons/apps.svg")
+			return "/usr/share/duck-launcher/icons/apps.svg"
 def ico_from_app(app_name):
 	global APPS
 	if APPS==None:
-		APPS=info('')
+		APPS = info('')
 	for a in APPS:
 		if app_name.lower() in a['name'].lower():
-			return ico_from_name(a['icon'])
+			return QIcon(a["icon"])
 def find_info(apps):
-	global APPS
+	
+	APPS=info('')
 	a_list=[]
 	if apps!=None:
 		for a in apps:
 			in_apps=False
 			a_dict={}
-			if APPS==None:
-				APPS=info('')
 			for app in APPS:
 				if a in app['name']:
 					in_apps=True
