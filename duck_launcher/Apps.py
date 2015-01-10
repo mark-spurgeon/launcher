@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 #########
-#Copyright (C) 2014  Mark Spurgeon <markspurgeon96@hotmail.com>
+#Copyright (C) 2014  Mark Spurgeon <theduck.dev@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -66,7 +66,8 @@ def info(filter_):
 						app["exec"]="xterm -e {}".format(e)
 					else:
 						app["exec"]=e
-					app["icon"]=ico_from_name(str(_d.DesktopEntry(unicode(f)).getIcon()))
+					app["icon"]=str(_d.DesktopEntry(unicode(f)).getIcon())
+					app["icon_path"]=ico_from_name(str(_d.DesktopEntry(unicode(f)).getIcon()))
 					appList.append(app)
 		except:
 			pass
@@ -96,7 +97,6 @@ def ico_from_name(name,size="small"):
 				for i in os.listdir(d)[::-1]:
 					if i.startswith(name):
 						path=os.path.join(d,i)
-						print path
 						found=True
 						break
 		if found==True:
@@ -109,7 +109,7 @@ def ico_from_app(app_name):
 		APPS = info('')
 	for a in APPS:
 		if app_name.lower() in a['name'].lower():
-			return QIcon(a["icon"])
+			return a["icon_path"]
 def find_info(apps):
 	
 	APPS=info('')

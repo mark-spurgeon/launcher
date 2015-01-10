@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 #########
-#Copyright (C) 2014  Mark Spurgeon <markspurgeon96@hotmail.com>
+#Copyright (C) 2014  Mark Spurgeon <theduck.dev@gmail.com>
 	
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@ Dict={
 	"b2":40,
 	"alpha":200,
 	"font":"Droid Sans",
+	"font-r":255,
+	"font-g":255,
+	"font-b":255,
 	"animation-speed":1.5,
 	"size":40,
 	"dock-apps":["Firefox Web Browser"],

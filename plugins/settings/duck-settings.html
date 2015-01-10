@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Duck</title>
+    <style type="text/css">
+ 	::-webkit-scrollbar {
+		width:6px;
+		height:6px;
+	}
+	::-webkit-scrollbar-track {
+		background-color:transparent;
+		border-radius:2px;
+		margin-top:2px;
+	}
+	::-webkit-scrollbar-thumb {
+		-webkit-transition:background-color 0.3s;
+		background-color:rgba({{color[0]}},{{color[1]}},{{color[2]}},0.4);
+		border-radius:4px;
+	}
+	::-webkit-scrollbar-thumb:active {
+		background-color:rgba({{color[0]}},{{color[1]}},{{color[2]}},1);
+		border-radius:3px;
+	}
+    * {
+    	outline:none;
+    	-webkit-touch-callout: none;
+    	-webkit-user-select: none;
+    	-webkit-user-drag:none;
+    }
+    input[type="text"], textarea {
+     	-webkit-touch-callout: auto;
+    	-webkit-user-select: auto;   	
+    }
+    input[type='range'] {
+        -webkit-appearance: none;
+        margin:10px;
+        background-color: rgb(255,255,255);
+        height: 3px;
+        width:90%;
+        vertical-align: middle;
+    }
+    input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        -webkit-transition:background-color 0.3s, -webkit-transform 0.2s;
+        width: 16px;
+        height: 16px;
+        border-radius: 10px;
+        border-width:1px;
+        border-color: rgb(255,255,255);
+        background-color:rgb(255,255,255);
+    }
+    input[type='range']::-webkit-slider-thumb:active {
+        -webkit-transform:scale(1.3);
+        box-shadow:0px 2px 8px rgba(10,10,10,0.7);
+        }
+    body {
+      margin-left:0;
+      margin-right:0;
+      margin-top:0;
+      padding:0;
+      font-family: "{{font}}", NamumGothic, Helvetica;
+      font-size:14px;
+      background-color:transparent;
+      color:white;
+    }
+    #header {
+    	-webkit-animation: new-anim 0.3s;
+     	position:fixed;
+    	top:0px;
+    	left:0px;
+    	right:0px;
+    	height:50px;
+        margin:0px;
+        padding:0px;
+    	background:rgba(255,255,255,0.02);
+    	border-style:solid;
+    	border-color:transparent;
+    	z-index: 10;
+    }
+    #header-inside {
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        max-width:200px;
+        margin-top:-2px;
+        margin-bottom:-4px;
+        padding:0px;
+    }
+    .header-button {
+        -webkit-transition:background-color 0.2s, border-bottom-color 0.2s;
+        display:table-cell;
+        height:50px;
+        width:50px;
+        margin-left:5px;
+        margin-right:5px;
+        margin-bottom:0px;
+        border-color:transparent;
+        border-bottom-style: solid;
+        border-bottom-width: 3px;
+        border-bottom-color:transparent;
+    }
+    .header-button:hover{
+        background-color: rgba(255,255,255,0.02);
+    }
+    .header-button:active{
+        background-color:rgba(255,255,255,0.05);
+    }
+    .active {
+        border-bottom-color: rgba({{color[0]}},{{color[1]}},{{color[2]}},1);
+
+    }
+    .header-button img {
+        margin-left:9px;
+        margin-top:9px;
+    }
+    #title {
+        -webkit-animation: new-anim 0.5s;
+        position:fixed;
+        top:55px;
+        left:0px;
+        right:0px;
+        height:40px;
+        margin:0px;
+        background-color:rgba(255,255,255,0.05);
+    }
+    #title-content {
+        vertical-align: center;
+
+        margin:6px;
+        font-size:18px;
+    }
+    .page {
+        -webkit-animation: new-anim 0.7s;
+        position:fixed;
+        top:98px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        visibility: hidden;
+        margin:0px;
+        padding:0px;
+        overflow-y:auto;
+    }
+    #page1 {
+        visibility:visible;
+    }
+
+    /* Page 1 : appearance*/
+    #bg-color {
+        position:relative;
+        margin-top:0px;
+
+        background-color:rgba(255,255,255,0.005);
+        height:200px;
+    }
+    #bg-view {
+        position:absolute;
+        display:block;
+        left:0px;
+        top:0px;
+        width:100px;
+        height:200px;
+    }
+    #bg-view div {
+        position:relative;
+        display:block;
+        margin-top:65px;
+        width:70px;
+        height:70px;
+        margin-left:auto;
+        margin-right:auto;
+        background-color:rgb(239,199,29);
+        border-radius:80px;
+        box-shadow:2px 1px 6px rgba(0,0,0,0.5);
+    }
+    #bg-inputs {
+        position:absolute;
+        left:100px;
+        right:0px;
+        height:150px;
+    }
+    #fg-color {
+        position:relative;
+        margin-top:0px;
+        background-color:rgba(255,255,255,0.005);
+        height:150px;
+    }
+    #fg-view {
+        position:absolute;
+        display:block;
+        left:0px;
+        top:0px;
+        width:100px;
+        height:150px;
+    }
+    #fg-view div {
+        position:relative;
+        display:block;
+        margin-top:48px;
+        width:70px;
+        height:70px;
+        margin-left:auto;
+        margin-right:auto;
+        background-color:rgb({{color[0]}},{{color[1]}},{{color[2]}});
+        border-radius:80px;
+        box-shadow:2px 1px 6px rgba(0,0,0,0.5);
+    }
+    #fg-inputs {
+        position:absolute;
+        left:100px;
+        right:0px;
+        height:150px;
+    }
+    @-webkit-keyframes new-anim{
+        from {opacity:0;}
+        to{opacity:1;}
+    }
+    </style>
+    <script type="text/javascript">
+    function appearanceSlide(){
+        var el = document.getElementsByClassName("active");
+        for (var i = 0; i < el.length; i++) {
+            el[i].className="header-button";
+        }
+        var page = document.getElementsByClassName("page");
+        for (var i = 0; i < page.length; i++) {
+            page[i].style.visibility="hidden";
+        }    
+        var t = document.getElementById("title-content");
+        t.innerHTML="Appearance";
+        var d = document.getElementById("appearanceButton");
+        d.className="header-button active";
+        document.getElementById("page1").style.visibility="visible";
+    }
+    function dockSlide(){
+        var ac = document.getElementsByClassName("active");
+        for (var i = 0; i < ac.length; i++) {
+            ac[i].className="header-button";
+        }
+        var page = document.getElementsByClassName("page");
+        for (var i = 0; i < page.length; i++) {
+            page[i].style.visibility="hidden";
+        }        
+        var t = document.getElementById("title-content");
+        t.innerHTML="Dock Applications";
+        var d = document.getElementById("dockButton");
+        d.className="header-button active";
+        document.getElementById("page2").style.visibility="visible";
+
+    }
+    function starSlide(){
+        var el = document.getElementsByClassName("active");
+        for (var i = 0; i < el.length; i++) {
+            el[i].className="header-button";
+        }
+        var page = document.getElementsByClassName("page");
+        for (var i = 0; i < page.length; i++) {
+            page[i].style.visibility="hidden";
+        }    
+        var t = document.getElementById("title-content");
+        t.innerHTML="Favourites";
+        var d = document.getElementById("starButton");
+        d.className="header-button active";
+        document.getElementById("page3").style.visibility="visible";
+    }
+    function pluginsSlide(){
+        var el = document.getElementsByClassName("active");
+        for (var i = 0; i < el.length; i++) {
+            el[i].className="header-button";
+        }
+        var page = document.getElementsByClassName("page");
+        for (var i = 0; i < page.length; i++) {
+            page[i].style.visibility="hidden";
+        }    
+        var t = document.getElementById("title-content");
+        t.innerHTML="Plugins";
+        var d = document.getElementById("pluginsButton");
+        d.className="header-button active";
+        document.getElementById("page4").style.visibility="visible";
+    }
+    </script>
+  </head>
+  <body>
+  <div id="header">
+  <div id="header-inside">
+      <div id="appearanceButton" class="header-button active" onclick="appearanceSlide()"><img src="{{static}}settings_palette.svg" width="32" height="32"></div>
+      <div id = "dockButton" class="header-button" onclick="dockSlide()"><img src="{{static}}settings_dock.svg" width="32" height="32"></div>
+      <div id="starButton" class="header-button" onclick="starSlide()"><img src="{{static}}settings_star.svg" width="32" height="32"></div>
+      <div id="pluginsButton" class="header-button" onclick="pluginsSlide()"><img src="{{static}}settings_plugin.svg" width="32" height="32"></div>
+  </div>
+  </div>
+  <div id="title">
+    <p id="title-content">Appearance</p>
+  </div>
+  <div class="page" id="page1">
+      <div id="bg-color">
+        <p style="font-size:16px;text-align:center;padding-top:10px">Background Color:</p>
+        <div id="bg-view"><div></div></div>
+        <div id="bg-inputs">
+            <input type="range" min="1" max="255"> </input>
+            <input type="range" min="1" max="255"> </input>
+            <input type="range" min="1" max="255"> </input>
+            <p style="font-size:14px;text-align:center;">Transparency:</p>
+            <input type="range" min="1" max="255"> </input>
+        </div>
+      </div>
+      <div id="fg-color">
+        <p style="font-size:16px;text-align:center;padding-top:10px">Foreground Color:</p>
+        <div id="fg-view"><div></div></div>
+        <div id="fg-inputs">
+            <input type="range" min="1" max="255" value="{{color[0]}}"> </input>
+            <input type="range" min="1" max="255" value="{{color[1]}}"> </input>
+            <input type="range" min="1" max="255" value="{{color[2]}}"> </input>
+        </div>
+      </div>
+  </div>
+  <div class="page" id="page2">
+      <p>Appslkdsalklskdl2</p>
+  </div>
+  <div class="page" id="page3">
+      <p>Appslkdsalklskdla3</p>
+  </div>
+  <div class="page" id="page4">
+      <p>Appslkdsalklskdla4</p>
+  </div>
+  </body>
+</html>

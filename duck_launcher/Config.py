@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 #########
-#Copyright (C) 2014  Mark Spurgeon <markspurgeon96@hotmail.com>
+#Copyright (C) 2014  Mark Spurgeon <theduck.dev@gmail.com>
 	
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -85,6 +85,18 @@ def check_dict(d):
 		new_d["font"]=str(d["font"])
 	else:
 		new_d["font"]=str(defaultDict["font"])
+	if d.has_key("font-r"):
+		new_d["font-r"]=int(d["font-r"])
+	else:
+		new_d["font-r"]=int(defaultDict["font-r"])
+	if d.has_key("font-g"):
+		new_d["font-g"]=int(d["font-g"])
+	else:
+		new_d["font-g"]=int(defaultDict["font-g"])
+	if d.has_key("font-b"):
+		new_d["font-b"]=int(d["font-b"])
+	else:
+		new_d["font-b"]=int(defaultDict["font-b"])
 	if d.has_key("init-manager"):
 		new_d["init-manager"]=str(d["init-manager"])
 	else:
@@ -137,12 +149,6 @@ def get():
 	cfg= dir+'/duck-launcher.config'
 	if "duck-launcher.config" not in os.listdir(dir):
 		create_from_info(defaultDict)
-	if os.path.isdir(os.path.join(HOME,".duck-plugins"))==False:
-		print "a"
-		if os.path.isdir("/usr/share/duck-launcher/plugins"):
-			print "b"
-			import shutil
-			shutil.copytree("/usr/share/duck-launcher/plugins",os.path.join(HOME,".duck-plugins"))
 	the_file=open(cfg,"rb")
 	try:
 		theDict=pickle.load(the_file)

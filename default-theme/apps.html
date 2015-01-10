@@ -3,42 +3,42 @@
   <head>
     <title>Duck</title>
     <style type="text/css">
- 	::-webkit-scrollbar {
-		width:3px;
-		height:3px;
-	}
-	::-webkit-scrollbar-track {
-		background-color:transparent;
-		border-radius:2px;
-		margin-top:2px;
-	}
-	::-webkit-scrollbar-thumb {
-		-webkit-transition:background-color 0.3s;
-		background-color:rgba({{color[0]}},{{color[1]}},{{color[2]}},0.4);
-		border-radius:4px;
-	}
-	::-webkit-scrollbar-thumb:active {
-		background-color:rgba({{color[0]}},{{color[1]}},{{color[2]}},1);
-		border-radius:3px;
-	}
+    ::-webkit-scrollbar {
+        width:3px;
+        height:3px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color:transparent;
+        border-radius:2px;
+        margin-top:2px;
+    }
+    ::-webkit-scrollbar-thumb {
+        -webkit-transition:background-color 0.3s;
+        background-color:rgba({{color[0]}},{{color[1]}},{{color[2]}},0.4);
+        border-radius:4px;
+    }
+    ::-webkit-scrollbar-thumb:active {
+        background-color:rgba({{color[0]}},{{color[1]}},{{color[2]}},1);
+        border-radius:3px;
+    }
     * {
-    	outline:none;
-      	-webkit-touch-callout: none;
-    	-webkit-user-select: none;  
-    	-webkit-user-drag: none;
+        outline:none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;  
+        -webkit-user-drag: none;
     }
     input[type="text"], textarea {
-     	-webkit-touch-callout: auto;
-    	-webkit-user-select: auto;   	
+        -webkit-touch-callout: auto;
+        -webkit-user-select: auto;      
     }
     body {
-      	margin-left:0;
-      	margin-right:0;
-      	margin-top:0;
-      	padding:0;
-      	font-family: "{{font}}", NamumGothic, Helvetica;
-      	font-size:14px;
-      	color:white;
+        margin-left:0;
+        margin-right:0;
+        margin-top:0;
+        padding:0;
+        font-family: "{{font}}", NamumGothic, Helvetica;
+        font-size:14px;
+        color:white;
     }
     #icons {
         position:absolute;
@@ -58,76 +58,72 @@
         visibility: hidden;
     }
     .closePageRight {
-        -webkit-animation:closePageRight 0.3s;
+        -webkit-animation:closePageRight 0.2s;
     }
     .closePageLeft {
-        -webkit-animation:closePageLeft 0.3s;
+        -webkit-animation:closePageLeft 0.2s;
     }
     .showPageRight {
-        -webkit-animation:showPageRight 0.3s;
+        -webkit-animation:showPageRight 0.4s;
     }
     .showPageLeft {
-        -webkit-animation:showPageLeft 0.3s;
+        -webkit-animation:showPageLeft 0.4s;
     }
     .app {
-    	-webkit-animation-name:app-anim;
-    	-webkit-animation-duration:0.2s;
-    	-webkit-transition:background-color 0.2s;
-    	margin:5px;
-    	display:block;
-    	width:{{icon_size}}px;
-    	height:{{icon_size}}px;
-    	padding:10px;
-    	float: left;
-    	font-size:10;
+        /*-webkit-animation-name:app-anim;
+        -webkit-animation-duration:0.2s;*/
+        -webkit-transition:background-color 0.2s;
+        margin:5px;
+        display:block;
+        width:{{icon_size}}px;
+        height:{{icon_size}}px;
+        padding:10px;
+        float: left;
+        font-size:10;
     }
     .app:hover {
-    	background-color:rgba(205,205,205,0.1);
+        background-color:rgba(205,205,205,0.1);
     }
     .app:active {
-    	background-color:rgba(205,205,205,0.2);
+        background-color:rgba(205,205,205,0.2);
     }
 
     .app-img {
-    	display:block;
-    	margin-left:auto;
-    	margin-right:auto;
-    	margin-top:0px;
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:0px;
 
     }
     .app-title {
-    	display:block;
-    	overflow:hidden;
-    	height:50px;
-    	text-align:center;
-    	text-shadow:1px 1px rgba(40,40,40,0.4);
+        display:block;
+        overflow:hidden;
+        height:50px;
+        text-align:center;
+        text-shadow:1px 1px rgba(40,40,40,0.4);
     }
     @-webkit-keyframes new-anim {
-    	from {opacity: 0;}
-    	to {opacity: 1;}
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
     @-webkit-keyframes app-anim {
-    	from {opacity: 0;-webkit-transform:translateY(50px);}
-    	to {opacity: 1;-webkit-transform:translateY(0px);}
+        from {opacity: 0;-webkit-transform:translateY(50px);}
+        to {opacity: 1;-webkit-transform:translateY(0px);}
     }
     @-webkit-keyframes closePageRight {
         0% {opacity:1;-webkit-transform:translateX(0px);}
-        60% {opacity:0;-webkit-transform:translateX(-20px);}
-        100% {opacity:0;-webkit-transform:translateX(-20px);}
+        100% {opacity:0;-webkit-transform:translateX(-90px);}
     }
     @-webkit-keyframes closePageLeft {
         0% {opacity:1;-webkit-transform:translateX(0px);}
-        60% {opacity:0;-webkit-transform:translateX(20px);}
-        100% {opacity:0;-webkit-transform:translateX(20px);}
+        100% {opacity:0;-webkit-transform:translateX(90px);}
     }
     @-webkit-keyframes showPageRight {
-        0% {opacity:0; -webkit-transform:translateX(20px);}
-        40% {opacity:0; -webkit-transform:translateX(20px);}
+        0% {opacity:0; -webkit-transform:translateX(90px);}
         100% {opacity:1;-webkit-transform:translateX(0px);}
     }
     @-webkit-keyframes showPageLeft {
-        0% {opacity:0; -webkit-transform:translateX(-20px);}
-        40% {opacity:0; -webkit-transform:translateX(-20px);}
+        0% {opacity:0; -webkit-transform:translateX(-90px);}
         100% {opacity:1;-webkit-transform:translateX(0px);}
     }
     </style>
@@ -138,28 +134,28 @@
     var pages=0;
     var page_state=0;
     function launchApp(b){
-    	Duck._appsLaunch(b);
+        Duck._appsLaunch(b);
     }
     function getApps(){
-    	Duck._appsGetAll();
+        Duck._appsGetAll();
     }
     function changeIconSize(d) {
-    	var appElements = document.getElementsByClassName("app");
-    	for (var i = 0; i<appElements.length; i++) {
-    		appElements[i].style.width=d+"px";
-    		appElements[i].style.height=d+"px";
-    	};
-    	var appImages = document.getElementsByClassName("app-img");
-    	for (var i = 0; i<appElements.length; i++) {
-    		appImages[i].style.width=(d-40)+"px";
-    		appImages[i].style.height=(d-40)+"px";
-    	};
+        var appElements = document.getElementsByClassName("app");
+        for (var i = 0; i<appElements.length; i++) {
+            appElements[i].style.width=d+"px";
+            appElements[i].style.height=d+"px";
+        };
+        var appImages = document.getElementsByClassName("app-img");
+        for (var i = 0; i<appElements.length; i++) {
+            appImages[i].style.width=(d-40)+"px";
+            appImages[i].style.height=(d-40)+"px";
+        };
         icon_size=d;
     }
     function setNewApps(l){
         
-    	var ic = document.getElementById("icons");
-    	var a_per_row = Math.floor(ic.offsetWidth/(icon_size+20));
+        var ic = document.getElementById("icons");
+        var a_per_row = Math.floor(ic.offsetWidth/(icon_size+20));
         var a_per_col=Math.floor(ic.offsetHeight/(icon_size+20));
         var a_per_page=a_per_row*a_per_col;
         pages=Math.ceil(l.length/a_per_page);
@@ -175,30 +171,31 @@
             }
             ic.appendChild(d);
         }
-    	for (var i = 0; i < l.length; i++) {
+        for (var i = 0; i < l.length; i++) {
             var which_page=Math.floor(i/a_per_page);
-    		var d = document.createElement("a");
-    		d.className="app";
-    		d.id=l[i].exec;
+            var d = document.createElement("a");
+            d.className="app";
+            d.id=l[i].exec;
             if (which_page==0){
                 var delay = (i+2)*0.05 + 's';
                 d.style.setProperty("-webkit-animation-duration",delay);
             };
-    		var func="launchApp('"+d.id+"')" ;
-    		d.setAttribute("onclick",func );
-    		var img=document.createElement("img");
-    		img.src="file://"+l[i].icon;
-    		img.width={{icon_size}}-40;
-    		img.type="image/svg+xml";
-    		img.className="app-img";
-    		d.appendChild(img);
-    		var title=document.createElement("p");
-    		title.innerHTML=l[i].name;
-    		title.className="app-title";
-    		d.appendChild(title);
-    		document.getElementById("page-"+which_page).appendChild(d);
-    	};
-    	ic.scrollTo(0,0);
+            var func="launchApp('"+d.id+"')" ;
+            d.setAttribute("onclick",func );
+            var img=document.createElement("object");
+            img.data=l[i].icon_path;
+            img.width={{icon_size}}-40;
+            img.height={{icon_size}}-40;
+            img.type="duck/image";
+            img.className="app-img";
+            d.appendChild(img);
+            var title=document.createElement("p");
+            title.innerHTML=l[i].name;
+            title.className="app-title";
+            d.appendChild(title);
+            document.getElementById("page-"+which_page).appendChild(d);
+        };
+        ic.scrollTo(0,0);
     }
     /*window.addEventListener("mousewheel", mouseWheelHandler, false);*/
     function mouseWheelHandler(){
@@ -211,11 +208,12 @@
                     if (pageElements[i].id==("page-"+page_state)){
 
                         pageElements[i].style.visibility="visible";
-                        pageElements[i].className="page showPageRight";
-                        pageElements[i].addEventListener("webkitAnimationEnd", showPage, false);
+                        /*pageElements[i].className="page showPageRight";
+                        pageElements[i].addEventListener("webkitAnimationEnd", showPage, false);*/
                     } else if (pageElements[i].id==("page-"+(page_state-1))) {
-                        pageElements[i].className="page closePageRight";
-                        pageElements[i].addEventListener("webkitAnimationEnd", closePage, false);
+                        /*pageElements[i].className="page closePageRight";
+                        pageElements[i].addEventListener("webkitAnimationEnd", closePage, false);*/
+                        pageElements[i].style.visibility="hidden";
                     } else {
                         pageElements[i].className="page";
                         pageElements[i].style.visibility="hidden";
@@ -231,11 +229,13 @@
                 for (var i = 0; i<pageElements.length; i++) {
                     if (pageElements[i].id==("page-"+page_state)){
                         pageElements[i].style.visibility="visible";
-                        pageElements[i].className="page showPageLeft";
-                        pageElements[i].addEventListener("webkitAnimationEnd", showPage, false);
+                        /*pageElements[i].className="page showPageLeft";
+                        pageElements[i].addEventListener("webkitAnimationEnd", showPage, false);*/
+
                     } else if (pageElements[i].id==("page-"+(page_state+1))){
-                        pageElements[i].className="page closePageLeft";
-                        pageElements[i].addEventListener("webkitAnimationEnd", closePage, false);
+                        /*pageElements[i].className="page closePageLeft";
+                        pageElements[i].addEventListener("webkitAnimationEnd", closePage, false);*/
+                        pageElements[i].style.visibility="hidden"
                     } else {
                         pageElements[i].className="page";
                         pageElements[i].style.visibility="hidden";

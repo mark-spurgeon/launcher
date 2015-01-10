@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #########
-#Copyright (C) 2014  Mark Spurgeon <markspurgeon96@hotmail.com>
+#Copyright (C) 2014  Mark Spurgeon <theduck.dev@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ folders = [
 	"downloads",
 	"music",
 	"pictures",
-	"public",
 	"images"
 	]
 images = [
@@ -69,7 +68,8 @@ def iconFromName(name,size="small"):
 def getFilesFromPath(path):
 	path=str(path)
 	if os.path.isdir(path):
-		stuff=[]
+		folders=[]
+		files=[]
 		for f in os.listdir(path):
 			if f.startswith("."):
 				f=None
@@ -80,6 +80,7 @@ def getFilesFromPath(path):
 				_f["name"]=f
 				whole_f=os.path.join(path,f)
 				if os.path.exists(whole_f):
+					_f["whole_path"]=str(whole_f)
 					if os.path.isdir(whole_f):
 						_f["type"]="directory"
 						if f.lower() in folders:
@@ -88,20 +89,17 @@ def getFilesFromPath(path):
 
 						else:
 							_f["icon"]="file://"+iconFromName("folder")
+						folders.append(_f)
 					elif os.path.isfile(whole_f):
 						_f["type"]="file"
 						ext=f.split(".")[-1:][0]
-						print ext
-						if ext in images :
-							_f["icon"]=str(whole_f)
-						else:
-							name="application-"+ext
-							if iconFromName(name)!=None:
-								_f["icon"] = "file://"+iconFromName(name)
+						name="application-"+ext
+						if iconFromName(name)!=None:
+							_f["icon"] = "file://"+iconFromName(name)
 							
-					_f["whole_path"]=str(whole_f)
-				stuff.append(_f)
+						files.append(_f)
 
+		stuff=folders+files
 		return stuff
 if __name__=="__main__":
 	f =getFiles()

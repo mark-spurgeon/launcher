@@ -1,0 +1,750 @@
+<html>
+<head>
+	<style type="text/css">
+    *{outline:none;}
+    img, p, h1,h2,input{
+   		-webkit-touch-callout: none;
+    	-webkit-user-select: none;
+    	-webkit-user-drag:none;
+    	outline:none;
+    }
+    p, h1, h2 {cursor:default;}
+	input[type="text"]{-webkit-touch-callout: inherit;-webkit-user-select: inherit;}
+	body {
+		outline:none;
+		font-family: Droid Sans, Sans;
+		font-size:14px;
+		color:rgb(80,80,80);
+		background-color: rgb(245,245,245)
+	}
+	input[type='range'] {
+		-webkit-appearance: none;
+		margin:10px;
+		background-color: rgb(80,80,80);
+		height: 3px;
+		width:90%;
+		vertical-align: middle;
+	}
+	input[type='range']::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		-webkit-transition:background-color 0.3s, -webkit-transform 0.2s;
+   	 	width: 16px;
+    	height: 16px;
+    	border-radius: 10px;
+    	border-width:1px;
+    	border-color: rgb(80,80,80);
+    	background-color:rgb(80,80,80);
+    }
+	input[type='range']::-webkit-slider-thumb:active {
+		-webkit-transform:scale(1.3);
+    	border-color: rgb(250,140,50);
+    	box-shadow:2px 2px 8px rgba(10,10,10,0.4);
+		}
+	input[type='submit'] {
+		color:white;
+		background-color:rgb(80,80,80);
+		border-style:solid;
+		border-top-color:rgb(250,140,50);
+		border-width:0px;
+		border-top-width:3px;
+		margin:4px;
+		padding:8px;
+		padding-top:6px;
+		border-radius:2px;
+		font-size:14px;
+	}
+	input[type='submit']:active {
+		background-color:rgb(70,70,70);
+	}
+	select {
+		-webkit-appearance: none;
+		background: url({{static_url}}settings-menu-down.jpg) no-repeat right center;
+		width:90%;
+		padding:6px;
+		margin:10px;
+		border-style:solid;
+		border-width:1px;
+		border-radius:3px;
+		border-color:rgba(80,80,80,0.8);
+		box-shadow:0px -1px 0px rgba(80,80,80,0.8);
+
+	}
+
+	::-webkit-scrollbar {
+		width:6px;
+		height:6px;
+	}
+	::-webkit-scrollbar-track {
+		background-color:transparent;
+		border-radius:2px;
+		margin-top:2px;
+	}
+	::-webkit-scrollbar-thumb {
+		-webkit-transition:background-color 0.3s;
+		background-color:rgba(80,80,80,0.4);
+		border-radius:4px;
+	}
+	::-webkit-scrollbar-thumb:active {
+		background-color:rgba(80,80,80,1);
+		border-radius:3px;
+	}
+
+	#header {
+		-webkit-transition:width 0.3s;
+		overflow:hidden;
+		position:fixed;
+		top:0px;
+		left:0px;
+		bottom:0px;
+		width:48px;
+
+		background-color:rgb(60,60,62);
+		z-index:10;
+	}
+	#header:hover {
+		width:200px;
+		box-shadow:1px 0px 40px rgb(0,0,0);
+	}
+	#header ul {
+		display:inline;
+		overflow:hidden;
+	}
+	.link-all {
+		-webkit-transition:background-color 0.2s;
+		position:relative;
+		margin-top:10px;
+		height:50px;
+		width:200px;
+		color:white;
+		overflow:hidden;
+		cursor:pointer;
+	}
+	.link-all:hover {
+		background-color:rgba(0,0,0,0.2);
+	}
+	.link {
+		position:absolute;
+		text-decoration:none;
+		font-size:14px;
+		vertical-align: middle;
+		top:0px;
+		left:50px;
+		right:0px;
+		height:48px;
+		line-height:48px;
+		color:white;
+	}
+	.link-all img {
+		position:absolute;
+		top:8px;
+		left:8px;
+		width:32px;
+		height:32px;
+		border-color:transparent;
+	}
+
+	#slide1 {
+
+		position:absolute;
+		top:5px;
+		left:58px;
+		right:5px;
+		bottom:0px;
+		min-width: 300px;
+		min-height: 300px;
+		visibility: normal;
+		overflow: scroll;
+		z-index:4;
+	}
+	#slide2, #slide3, #slide4 {
+		position:absolute;
+		top:5px;
+		left:58px;
+		right:5px;
+		bottom:0px;
+		padding:0px;
+		min-width: 300px;
+		min-height: 300px;
+		visibility:hidden;
+		overflow-y: scroll;
+		overflow-x:hidden;
+		z-index:4;
+	}
+	/*Slide 1*/
+	 #fground {
+	 	float:left;
+	 	margin-left:0px;
+	 	margin-right:0px;
+	 	padding:0px;
+	 	width:50%;
+	 }
+	 #fcolor {
+	 	display:block;
+	 	margin-left:auto;
+	 	margin-right:auto;
+	 	margin-bottom:15px;
+	 	width:48px;
+	 	height:48px;
+	 	border-radius:30px;
+	 	background-color:rgb({{cfg["r1"]}},{{cfg["g1"]}},{{cfg["b1"]}});
+	 	box-shadow:2px 1px 6px rgba(0,0,0,0.5);
+	 }
+	 #bground {
+	 	float:right;
+	 	margin-left:0px;
+	 	margin-right:0px;
+	 	padding:0px;
+	 	width:50%;
+	 }
+	 #bcolor {
+	 	display:block;
+	 	margin-left:auto;
+	 	margin-right:auto;
+	 	margin-bottom:15px;
+	 	width:48px;
+	 	height:48px;
+	 	border-radius:30px;
+	 	background-color:rgb({{cfg["r2"]}},{{cfg["g2"]}},{{cfg["b2"]}});
+	 	box-shadow:2px 1px 6px rgba(0,0,0,0.5);
+	 }
+	 #sliders1 {
+	 	float:left;
+	 	margin-left:0px;
+	 	margin-right:0px;
+	 	padding:0px;
+	 	width:49%;
+	 }
+	 #sliders2 {
+	 	float:right;
+	 	margin-left:0px;
+	 	margin-right:0px;
+	 	padding:0px;
+	 	width:49%;
+	 }
+	 #red1::-webkit-slider-thumb:active, #red2::-webkit-slider-thumb:active {
+	 	background-color:rgb(240,80,80);
+	 }
+	 #green1::-webkit-slider-thumb:active, #green2::-webkit-slider-thumb:active {
+	 	background-color:rgb(50,200,50);
+	 }
+	 #blue1::-webkit-slider-thumb:active, #blue2::-webkit-slider-thumb:active {
+	 	background-color:rgb(100,100,255);
+	 }
+	 /*Slide 2*/
+	 #dock-apps {
+	 	-webkit-transition:height 1s;
+	 	display:block;
+	 	margin-top:10px;
+	 	margin-left:auto;
+	 	margin-right:auto;
+	 	margin-bottom:50px;
+	 	vertical-align: center;
+	 	width:60%;
+	 	min-width:300px;
+	 	min-height:200px;
+	 	-webkit-touch-callout: none;
+    	-webkit-user-select: none;
+    	cursor:default;
+    	border-style:solid;
+    	border-radius:3px;
+    	border-width:2px;
+    	border-color:transparent;
+    	box-shadow:0px 1px 6px rgba(60,60,60,0.6);
+	 }
+	 #dock-apps-title {
+	 	text-align:center;
+	 	padding:10px;
+	 	background-color:rgb(255,255,255);
+	 	border-width:2px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	border-bottom-color:rgb(200,200,200);
+	 }
+	 #dock-apps-add {
+	 	-webkit-transition:background-color 0.3s;
+	 	padding:5px;
+	 	background-color:rgb(255,255,255);
+	 	border-width:2px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	border-top-color:rgb(200,200,200);	 	
+	 }
+	 #dock-apps-add:hover {
+	 	background-color:rgba(100,100,100,0.15);
+	 }
+	 #dock-apps-add button {
+	 	display:block;
+	 	margin-left:auto;
+	 	margin-right:auto;
+	 	margin-top:0px;
+	 	margin-bottom:0px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	background-color:transparent;
+	 	cursor:pointer;
+
+	 }
+	 .app {
+	 	-webkit-transition:background-color 0.1s;
+	 	padding-left:10px;
+	 	padding-right:10px;
+	 	padding-top:5px;
+	 	padding-bottom:15px;
+	 	line-height: 20px;
+	 	background-color:rgb(235,235,236);
+	 }
+	 .new-item {
+	 	-webkit-animation: new-dock-app .3s linear forwards;
+	 }
+	 .remove-item {
+	 	-webkit-animation: remove-dock-app .2s linear forwards;
+	 }
+	 .app button {
+	 	margin-left:-2px;
+	 	margin-right:-2px;
+	 	margin-top:0px;
+	 	float:right;
+	 	cursor:pointer;
+	 	border-color:transparent;
+	 	background-color:transparent;
+	 }
+	 .app button:active {
+	 	background-color:rgba(10,10,10,0.1);
+	 }
+	 .app:hover {
+	 	background-color:rgba(20,20,20,0.1);
+	 }
+
+	 #apps-list {
+	 	-webkit-transition:opacity 0.6s;
+	 	position:fixed;
+	 	left:60px;
+	 	right:60px;
+	 	top:100px;
+	 	bottom:60px;
+	 	padding:10px;
+	 	background-color:rgb(255,255,255);
+	 	border-radius:4px;
+	 	border-style:solid;
+	 	border-width:2px;
+	 	border-color:transparent;
+	 	box-shadow: 1px 2px 15px rgba(0,0,0,0.6);
+	 	visibility: hidden;
+	 	opacity:0;
+	 	overflow: scroll;
+	 }
+	 #apps-list-header {
+	 	position:fixed;
+	 	top:102px;
+	 	left:65px;
+	 	right:68px;
+	 	height:40px;
+	 	background-color:rgb(255,255,255);
+
+	 }
+	 #apps-list-close {
+	 	position:fixed;
+	 	top:105px;
+	 	right:68px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	background-color:rgb(255,255,255);
+	 	cursor:pointer;
+	 }
+	 #apps-list-close:hover{
+	 	background-color:rgb(205,205,205);
+	 }
+	 .apps-list-app {
+	 	display: hidden;
+	 	margin:5px;
+	 	margin-left:5px;
+	 	padding:5px;
+	 	height:30px;
+	 	width: 100%;
+	 	-webkit-touch-callout: none;
+    	-webkit-user-select: none;
+	 }
+	 .apps-list-app:hover {
+	 	background-color: rgba(20,20,20,0.2);
+
+	 }
+	 .apps-list-icon {
+	 	margin:0px;
+	 	margin-top:-5px;
+	 	width:29px;
+	 	height:29px;
+	 	float:left;
+	 }
+	 .apps-list-name{
+	 	color:rgb(60,60,60);
+	 	margin:6px;
+	 	margin-left:50px;
+	 	vertical-align:middle;
+
+	 }
+	 /*slide3*/
+	 .block {
+	 	display:block;
+	 	margin-top:10px;
+	 	margin-left:auto;
+	 	margin-right:auto;
+	 	margin-bottom:10px;
+	 	vertical-align: center;
+	 	width:90%;
+	 	min-width:300px;
+	 	min-height:200px;
+	 	border-style:solid;
+    	border-radius:3px;
+    	border-width:2px;
+    	border-color:transparent;
+    	box-shadow:0px 1px 6px rgba(60,60,60,0.6);
+	 }
+	 .block-title {
+	 	margin:0px;
+	 	height:40px;
+	 	
+	 	font-size:14px;
+	 	font-weight:bold;
+	 	background-color:rgb(255,255,255);
+	 	border-width:2px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	border-bottom-color:rgb(200,200,200);
+
+	 }
+	 .block-title-t {
+	 	position:relative;
+	 	-webkit-transition:background-color 0.2s;
+	 	margin:0px;
+	 	margin-top:1px;
+	 	border-width:1px;
+	 	border-style:solid;
+	 	border-color:rgb(200,200,200);
+	 	line-height: 32px;
+	 	background:url(/media/mark/Storage/python/Launcher/current/duck_settings/edit.svg) no-repeat right top; 
+	 }
+	 .block-title-t:focus {
+	 	background-color:rgb(230,230,230);
+	 }
+	 .block-title-edit{
+	 	position: absolute;
+	 	right:2px;
+	 	top:2px;
+	 	bottom:2px;
+	 	background-color: rgb(100,100,100);
+	 }
+	 .block-app {
+	 	margin-left:5px;
+	 	border-width:2px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	border-bottom-color:rgba(240,130,50,0.4);
+
+	 }
+	 .block-app:hover {
+	 	background-color:rgba(20,20,20,0.1);
+	 }
+	 .block-folder {
+	 	margin-left:5px;
+	 	border-width:2px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	border-bottom-color:rgba(130,240,130,0.4);
+	 	overflow: hidden;
+	 }
+	 .block-folder:hover {	
+	 	background-color:rgba(20,20,20,0.1);
+	 }
+	 .block-file {
+	 	margin-left:5px;
+	 	border-width:2px;
+	 	border-style:solid;
+	 	border-color:transparent;
+	 	border-bottom-color:rgba(130,130,240,0.4);
+	 	overflow: hidden;
+	 }
+	 .block-file:hover {	
+	 	background-color:rgba(20,20,20,0.1);
+	 }
+
+
+
+
+	 @-webkit-keyframes new-dock-app{
+	 	from {
+	 		opacity:0;
+	 		-webkit-transform: translateY(-40px);
+	 	}
+	 	to {
+	 		opacity:1;
+	 		-webkit-transform: translateY(0px);
+	 	}
+	 }
+	 @-webkit-keyframes remove-dock-app{
+	 	from {
+	 		opacity:1;
+	 		-webkit-transform:translateX(0px);
+	 	}
+	 	to {
+	 		opacity:0;
+	 		-webkit-transform:translateX(+300px);
+	 	}
+	 }
+
+	 /*Slide 3*/
+	 /*Slide 4*/
+	</style>
+	<script type="text/javascript">
+	/*Slide 1 functions*/
+	function changeFColor(obj, value){
+		if (obj=="red1"){
+			var d = document.getElementById("fcolor")
+			var rgb = window.getComputedStyle(d,null).getPropertyValue("background-color");
+			var matches = rgb.match(/(\d+), (\d+), (\d+)/);
+			var newRgb="rgb("+value+", "+matches[2]+", "+matches[3]+")";
+			document.getElementById("fcolor").style.backgroundColor=newRgb;
+			duck.change("red1",value);
+		};
+		if (obj=="green1"){
+			var d = document.getElementById("fcolor")
+			var rgb = window.getComputedStyle(d,null).getPropertyValue("background-color");
+			var matches = rgb.match(/(\d+), (\d+), (\d+)/);
+			var newRgb="rgb("+matches[1]+", "+value+", "+matches[3]+")";
+			document.getElementById("fcolor").style.backgroundColor=newRgb;
+			duck.change("green1",value);
+		};
+		if (obj=="blue1"){
+			var d = document.getElementById("fcolor")
+			var rgb = window.getComputedStyle(d,null).getPropertyValue("background-color");
+			var matches = rgb.match(/(\d+), (\d+), (\d+)/);
+			var newRgb="rgb("+matches[1]+", "+matches[2]+", "+value+")";
+			document.getElementById("fcolor").style.backgroundColor=newRgb;
+			duck.change("blue1",value);
+		};
+	};
+	function changeBColor(obj, value){
+		if (obj=="red2"){
+			var d = document.getElementById("bcolor")
+			var rgb = window.getComputedStyle(d,null).getPropertyValue("background-color");
+			var matches = rgb.match(/(\d+), (\d+), (\d+)/);
+			var newRgb="rgb("+value+", "+matches[2]+", "+matches[3]+")";
+			document.getElementById("bcolor").style.backgroundColor=newRgb;
+			duck.change("red2",value);
+		};
+		if (obj=="green2"){
+			var d = document.getElementById("bcolor")
+			var rgb = window.getComputedStyle(d,null).getPropertyValue("background-color");
+			var matches = rgb.match(/(\d+), (\d+), (\d+)/);
+			var newRgb="rgb("+matches[1]+", "+value+", "+matches[3]+")";
+			document.getElementById("bcolor").style.backgroundColor=newRgb;
+			duck.change("green2",value);
+		};
+		if (obj=="blue2"){
+			var d = document.getElementById("bcolor")
+			var rgb = window.getComputedStyle(d,null).getPropertyValue("background-color");
+			var matches = rgb.match(/(\d+), (\d+), (\d+)/);
+			var newRgb="rgb("+matches[1]+", "+matches[2]+", "+value+")";
+			document.getElementById("bcolor").style.backgroundColor=newRgb;
+			duck.change("blue2",value);
+		};
+	};
+	/*Slide 2 functions*/
+	function appListVisible() {
+		document.getElementById("apps-list").style.visibility="visible";
+		document.getElementById("apps-list").style.opacity=1;
+	}
+	function appListHidden() {
+
+		document.getElementById("apps-list").style.opacity=0;
+		document.getElementById("apps-list").style.visibility="hidden";
+	}
+	function addDockApp(a) {
+		if (document.getElementById("app:"+a)){
+			document.getElementById("apps-list").style.visibility="hidden";
+		} else {
+			var d = document.getElementById("dock-apps-list");
+			d.innerHTML=d.innerHTML+"<div id='app:"+a+"' class='app new-item'>"+a+"<button class='dock-remove' onclick=\"removeDockApp('"+a+"');\" ><img src='{{static_url}}settings-remove.svg' height=18></button><button class='dock-move-up' onclick=\"moveDockAppUp('"+a+"')\" ><img src='{{static_url}}settings-up.svg' height=18></button><button  class='dock-move-down' onclick=\"moveDockAppDown('"+a+"')\" ><img src='{{static_url}}settings-down.svg' height=18></button></div>";
+
+			document.getElementById("apps-list").style.visibility="hidden";
+			document.getElementsByClassName("app new-item")[0].addEventListener("webkitAnimationEnd", DockAddAnimationEnd, false);
+			duck.change('dock-add-app',a);
+
+		};
+	};
+	function DockAddAnimationEnd() {
+		var d = document.getElementsByClassName("app new-item");
+		d[0].className="app";
+	}
+	function removeDockApp(a) {
+		duck.change('dock-remove-app',a);
+		var d = document.getElementById("app:"+a);
+
+		d.className="app remove-item";
+		d.addEventListener("webkitAnimationEnd", DockRemoveAnimationEnd, false);
+	}
+	function DockRemoveAnimationEnd() {
+		var d = document.getElementsByClassName("app remove-item");
+		d[0].remove();
+	}
+	function moveDockAppUp(a) {
+		duck.change('dock-move-up',a);
+		var id=-1
+		var d = document.getElementById("app:"+a);
+		var parent= document.getElementById("dock-apps-list");
+		for (i = 0; i < parent.children.length; i++) {
+			if (parent.children[i].id=="app:"+a){
+				id=i
+			};
+		};
+		if (id>0){
+			parent.insertBefore(d, parent.children[id-1] );
+		};
+	}
+	function moveDockAppDown(a)  {
+		duck.change('dock-move-down',a)
+		var id=-1
+		var d = document.getElementById("app:"+a);
+		/*d.remove();*/
+		var parent= document.getElementById("dock-apps-list");
+		for (i = 0; i < parent.children.length; i++) {
+			if (parent.children[i].id=="app:"+a){
+				id=i
+			};
+		};
+		if (id<parent.children.length){
+			parent.insertBefore(d, parent.children[id+2] );
+		}
+	}
+	/*Header function*/
+	function setSlide(val) {
+		var s1 = document.getElementById("slide1").style;
+		var s2 = document.getElementById("slide2").style;
+		var s3 = document.getElementById("slide3").style;
+		var s4 = document.getElementById("slide4").style;
+		if (val=="slide1"){
+			s1.visibility="visible";
+			s2.visibility="hidden";
+			s3.visibility="hidden";
+			s4.visibility="hidden";
+		};
+		if (val=="slide2"){
+			s1.visibility="hidden";
+			s2.visibility="visible";
+			s3.visibility="hidden";
+			s4.visibility="hidden";
+		};
+		if (val=="slide3"){
+			s1.visibility="hidden";
+			s2.visibility="hidden";
+			s3.visibility="visible";
+			s4.visibility="hidden";
+		};
+		if (val=="slide4"){
+			s1.visibility="hidden";
+			s2.visibility="hidden";
+			s3.visibility="hidden";
+			s4.visibility="visible";
+		};
+	};
+	</script>
+</head>
+<body>
+<div id="header">
+	<ul>
+		<li id="selected" class="link-all" onclick="setSlide('slide1');"> <img src="{{static_url}}settings_palette_24px.svg"> <a class="link" href="NONE" >Appearance</a> </li>
+		<li class="link-all" onclick="setSlide('slide2');" > <img src="{{static_url}}settings_format_list_bulleted_24px.svg"> <a class="link" href="NONE">Dock Applications</a></li>
+		<li class="link-all" onclick="setSlide('slide3');"> <img src="{{static_url}}settings_star_24px.svg"> <a class="link" href="NONE">Star</a></li>
+		<li class="link-all" onclick="setSlide('slide4');"> <img src="{{static_url}}settings_plugin_24px.svg"><a class="link" href="NONE">Plugins</a></li>
+	</ul>
+</div>
+
+
+<div id="slide1">
+
+<div style="height:250px;border-bottom:solid;border-width:1px;border-bottom-color:rgb(80,80,80);">
+<div id="fground">
+<p style="text-align:center;">Foreground color:</p>
+<div id="fcolor"></div>
+<div><input type="range" min=0 max=255 value={{cfg["r1"]}} id="red1" onChange="changeFColor('red1',this.value)"/></div>
+<div><input type="range" min=0 max=255 value={{cfg["g1"]}} id ="green1" onChange="changeFColor('green1',this.value)"/></div>
+<div><input type="range" min=0 max=255 value={{cfg["b1"]}} id="blue1" onChange="changeFColor('blue1',this.value)"/></div>
+</div>
+<div id="bground">
+<p style="text-align:center;">Background color:</p>
+<div id="bcolor"></div>
+<div><input type="range" min=0 max=255 value={{cfg["r2"]}} id="red2" onChange="changeBColor('red2',this.value)"/></div>
+<div><input type="range" min=0 max=255 value={{cfg["g2"]}} id ="green2" onChange="changeBColor('green2',this.value)"/></div>
+<div><input type="range" min=0 max=255 value={{cfg["b2"]}} id="blue2" onChange="changeBColor('blue2',this.value)"/></div>
+<div><p style="text-align:center;font-size:12px;">Transparency:</p></div>
+<div><input  type="range" min=0 max=255 value={{cfg["alpha"]}} id="alpha" onChange="duck.change('alpha',this.value)"/></div>
+</div>
+</div>
+<div id="sliders1">
+<p style="text-align:center;">Launcher Size:</p>
+<div><input  type="range" min=10 max=100 value={{cfg["size"]}} id="size" onChange="duck.change('size',this.value)"/></div>
+<p style="text-align:center;">Animation Speed:</p>
+<div><input  type="range" min=1.5 max=10 step=0.1 value={{cfg["speed"]}} id="speed" onChange="duck.change('speed',this.value)"/></div>
+</div>
+<div id="sliders2">
+<p style="text-align:center;">Icon Size:</p>
+<div><input  type="range" min=0 max=255 value={{cfg["icon-size"]}} id="iconSize" onChange="duck.change('icon-size',this.value)"/></div>
+<p style="text-align:center;">Font:</p>
+<select onchange="if (this.selectedIndex) duck.change('font',this.options[selectedIndex].value);">
+	<option value="{{cfg["font"]}}">{{cfg["font"]}}</option>
+	{% for f in fonts %}
+	<option value="{{f}}">{{f}}</option>
+	
+	{% endfor %}
+</select>
+</div>
+</div>
+
+<div id="slide2">
+	<div id="dock-apps" >
+		<div id="dock-apps-title">Dock Applications</div>
+		<div id="dock-apps-list">
+		{% for d in cfg["dock-apps"]%}
+			<div id="app:{{d}}" class="app"  >
+			{{d}}
+			<button class='dock-remove' onclick="removeDockApp('{{d}}');" ><img src='{{static_url}}settings-remove.svg' height=18></button>
+			<button class="dock-move-up"  onclick="moveDockAppUp('{{d}}')"><img src="{{static_url}}settings-up.svg" height=18></button>
+			<button class="dock-move-down" onclick="moveDockAppDown('{{d}}')" ><img src="{{static_url}}settings-down.svg" height=18></button>
+			</div>		
+		{% endfor %}
+		</div>
+		<div id="dock-apps-add" onclick="appListVisible()"><button ><img src="{{static_url}}settings-add.svg" height=48></button></div>
+	</div>
+	<div id="apps-list">
+		<div id="apps-list-header"><h2 style="font-size:16px;text-align:center;">Choose an application:</h2><button id="apps-list-close" onclick="appListHidden()"><img src="{{static_url}}settings-close.svg" width=24></button></div>
+		<div style="overflow:hidden;margin-top:50px;">
+			{%for a in apps%}
+				<div class="apps-list-app" onclick="addDockApp('{{a['name']}}')">
+					<div>
+					<img src="file://{{a['icon']}}" class="apps-list-icon">
+					<p class="apps-list-name">{{a["name"]}}</p>
+					</div>
+				</div>
+			
+			{%endfor%}
+		</div>	
+	</div>
+</div>
+<div id="slide3">
+{% for b in cfg.blocks%}
+	<div class="block">
+	<div class="block-title"><input type="text" class="block-title-t" multiline="false" value="{{b.name}}"><img src="/media/mark/Storage/python/Launcher/current/duck_settings/edit.svg" class="block-title-edit"></input></div>
+	{% for a in b.apps%}
+		<div class="block-app"><p>{{a}}</p></div>
+	{% endfor %}
+	{% for d in b.directories%}
+		<div class="block-folder"><p>{{d}}</p></div>
+	{% endfor %}
+	{% for f in b.files%}
+		<div class="block-file"><p>{{f}}</p></div>
+	{% endfor %}
+	</div>
+{% endfor%}
+</div>
+<div id="slide4"><p>Mal</p></div>
+</body>
+</html>

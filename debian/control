@@ -1,5 +1,5 @@
 Source: duck-launcher
-Maintainer: Mark Spurgeon <markspurgeon96@hotmail.com>
+Maintainer: Mark Spurgeon <theduck.dev@gmail.com>
 Section: python
 Priority: optional
 Build-Depends:debhelper (>= 7.4.3)
@@ -7,6 +7,6 @@ Standards-Version: 3.9.1
 
 Package: duck-launcher
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}
-Description: An application launcher for linux
+Depends: ${misc:Depends}, ${python:Depends},xterm, python, python-dbus, python-qt4, python-xlib, python-wnck, python-gtk2, python-xdg, python-numpy,python-pil, python-jinja2, python-support, python-notify2, python-simplejson, subversion
+Description: Duck Launcher - A very special application launcher
 

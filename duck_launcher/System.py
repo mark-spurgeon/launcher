@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 #########
-#Copyright (C) 2014  Mark Spurgeon <markspurgeon96@hotmail.com>
+#Copyright (C) 2014  Mark Spurgeon <theduck.dev@gmail.com>
 	
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,13 @@ def sysAction(what):
 			try:	
 				subprocess.call(["xfce4-session-logout","--logout"])
 			except:
-				print("Could not logout, missing binary 'xfce4-session-logout'")
+				print("Could not logout, missing command 'xfce4-session-logout'")
+		if "GNOME" or "X-Cinnamon" in desktop:
+			try:	
+				subprocess.call(["gnome-session-quit","--logout"])
+			except:
+				print("Could not logout, missing command 'gnome-session-logout'")
+
 	else:
 		platform=Config.get()["init-manager"]
 		import dbus 

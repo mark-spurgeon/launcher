@@ -14,7 +14,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.5 r"
-   sodipodi:docname="files-proto.svg">
+   sodipodi:docname="file.svg">
   <defs
      id="defs2987">
     <linearGradient
@@ -37,19 +37,23 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6568542"
-     inkscape:cx="58.516711"
-     inkscape:cy="23.773847"
-     inkscape:current-layer="layer4"
+     inkscape:cx="26.561352"
+     inkscape:cy="44.197644"
+     inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1232"
-     inkscape:window-height="974"
-     inkscape:window-x="48"
-     inkscape:window-y="25"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1237"
+     inkscape:window-height="994"
+     inkscape:window-x="41"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2999" />
+  </sodipodi:namedview>
   <metadata
      id="metadata2990">
     <rdf:RDF>
@@ -65,39 +69,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer4"
-     inkscape:label="Layer">
-    <g
-       id="layer1-6-3"
-       style="fill:#000000;fill-opacity:1;display:inline"
-       transform="translate(1.1658679,-0.29115407)">
-      <path
-         sodipodi:type="inkscape:offset"
-         inkscape:radius="1.5625781"
-         inkscape:original="M 40.625 1.90625 L 10.1875 1.96875 L 10.3125 63.125 L 52.21875 63.125 L 52.21875 14.96875 L 40.625 1.90625 z "
-         style="opacity:0.1;fill:#000000;fill-opacity:1;stroke:none"
-         id="path3948"
-         d="M 40.625,0.34375 10.1875,0.40625 A 1.5627343,1.5627343 0 0 0 8.625,1.96875 L 8.75,63.125 a 1.5627343,1.5627343 0 0 0 1.5625,1.5625 l 41.90625,0 a 1.5627343,1.5627343 0 0 0 1.5625,-1.5625 l 0,-48.15625 A 1.5627343,1.5627343 0 0 0 53.375,13.9375 L 41.78125,0.875 A 1.5627343,1.5627343 0 0 0 40.625,0.34375 z" />
-      <path
-         sodipodi:type="inkscape:offset"
-         inkscape:radius="1.0938439"
-         inkscape:original="M 40.625 1.90625 L 10.1875 1.96875 L 10.3125 63.125 L 52.21875 63.125 L 52.21875 14.96875 L 40.625 1.90625 z "
-         style="opacity:0.2;fill:#000000;fill-opacity:1;stroke:none"
-         id="path3944"
-         d="M 40.625,0.8125 10.1875,0.875 A 1.0939533,1.0939533 0 0 0 9.09375,1.96875 l 0.125,61.15625 a 1.0939533,1.0939533 0 0 0 1.09375,1.09375 l 41.90625,0 A 1.0939533,1.0939533 0 0 0 53.3125,63.125 l 0,-48.15625 A 1.0939533,1.0939533 0 0 0 53.03125,14.25 L 41.4375,1.1875 A 1.0939533,1.0939533 0 0 0 40.625,0.8125 z" />
-      <path
-         sodipodi:type="inkscape:offset"
-         inkscape:radius="0.67216235"
-         inkscape:original="M 40.625 1.90625 L 10.1875 1.96875 L 10.3125 63.125 L 52.21875 63.125 L 52.21875 14.96875 L 40.625 1.90625 z "
-         style="opacity:0.3;fill:#000000;fill-opacity:1;stroke:none"
-         id="path3942"
-         d="M 40.625,1.21875 10.1875,1.28125 A 0.67222957,0.67222957 0 0 0 9.5,1.96875 L 9.625,63.125 a 0.67222957,0.67222957 0 0 0 0.6875,0.6875 l 41.90625,0 a 0.67222957,0.67222957 0 0 0 0.6875,-0.6875 l 0,-48.15625 a 0.67222957,0.67222957 0 0 0 -0.1875,-0.4375 L 41.125,1.46875 a 0.67222957,0.67222957 0 0 0 -0.5,-0.25 z" />
-      <path
-         d="m 52.470849,62.239272 0,0.941593 -41.933473,0 0,-0.811074 0.09322,0.652589 41.709728,-0.05594 z"
-         id="path4570-1"
-         style="fill:#000000;fill-opacity:1;stroke:none"
-         inkscape:connector-curvature="0" />
-    </g>
-  </g>
+     inkscape:label="Layer" />
   <g
      id="layer1"
      inkscape:label="Layer 1"
@@ -107,41 +79,23 @@
        id="layer3"
        style="fill:#000000;fill-opacity:1;display:inline"
        transform="translate(1.1075552,-0.44258387)" />
-    <g
-       id="layer1-6"
-       style="fill:#ffffff;fill-opacity:1;display:inline"
-       transform="translate(1.1075552,-0.44258387)">
-      <path
-         d="m 10.197415,1.9541811 30.429316,-0.052738 11.602165,13.0788039 0,48.148985 -41.926007,0 z"
-         id="path4051"
-         style="fill:#ffffff;fill-opacity:1;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         d="m 52.470849,62.239272 0,0.941593 -41.933473,0 0,-0.811074 0.09322,0.652589 41.709728,-0.05594 z"
-         id="path4570"
-         style="fill:#ffffff;fill-opacity:1;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         inkscape:connector-curvature="0"
-         style="fill:#ffffff;fill-opacity:1;stroke:none"
-         id="path3862"
-         d="m 10.197415,1.9541811 30.429316,-0.052738 11.602165,13.0788039 0,48.148985 -41.926007,0 z" />
-      <path
-         d="m 10.197415,1.9541811 30.476191,-0.052738 11.55529,13.0788039 0,48.148985 -41.926007,0 z"
-         id="path3864"
-         style="fill:#ffffff;fill-opacity:1;stroke:none"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="cccccc" />
-    </g>
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path4051"
+       d="M 11,3.0426079 43,3 55,16 55,59 11.110414,59 z"
+       sodipodi:nodetypes="cccccc" />
     <path
        style="fill:#b3b3b3;fill-opacity:1;stroke:none"
-       d="m 53.335903,14.539336 -11.682203,0 11.682203,11.682203 z"
+       d="M 55,16 43,16 55,27 z"
        id="path3768"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
     <path
        style="fill:#e6e6e6;fill-opacity:1;stroke:none"
-       d="m 41.676308,14.539336 11.66127,0 L 41.760202,1.4398831 z"
+       d="M 43,16 55,16 43,3 z"
        id="path3778"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>

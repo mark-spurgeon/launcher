@@ -1,5 +1,9 @@
-duck-launcher (0.68.5-trusty1) trusty; urgency=high
+duck-launcher (0.68.6-trusty1) trusty; urgency=high
 
-  * Duck Launcher
-
- -- Mark Spurgeon <markspurgeon96@hotmail.com>  Fri, 14 Nov 2014 21:27:04 +0100
+  * -Plugin system re-thinked and refined.
+    -Install, update, or remove plugins by typing '#plugins' in the app menu.
+    -File browser is now a plugin.
+    -Refined design.
+    -Log out should work in GNOME and Cinnamon.
+    -Windows are controlled directly on the dock.
+ -- Mark Spurgeon <theduck.dev@gmail.com>  Sat, 10 Jan 2015 21:27:04 +0100

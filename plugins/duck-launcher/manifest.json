@@ -1,0 +1,10 @@
+{
+	"name":"Duck Launcher Example Plugin",
+	"version":"0.1",
+	"author":"Mark Spurgeon <theduck.dev@gmail.com>",
+	"modules":[
+	"Jinja2"
+	],
+	"background-color":"#426293",
+	"foreground-color":"#ffffff"
+}

@@ -1,0 +1,129 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+#########
+#Copyright (C) 2014  Mark Spurgeon <theduck.dev@gmail.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#########
+import sys
+import os
+sys.dont_write_bytecode = True
+sys.path.append('/media/mark/Storage/python/Launcher/current/duck_launcher/')
+import Plugins
+import subprocess
+import shutil
+import pip
+import json
+import urllib2
+def check_files(p):
+	ok=True
+	pl=os.path.join(absPath,"plugin.py")
+	ma=os.path.join(absPath,"manifest.json")
+	lo=os.path.join(absPath,"logo.svg")
+	if os.path.isfile(pl)==False:
+		print "Critical: there is no 'plugin.py' file in the plugin's directory."
+		ok=False
+	if os.path.isfile(ma)==False:
+		print "Critical: there is no 'manifest.json' file in the plugin's directory."
+		ok=False
+	if os.path.isfile(lo)==False:
+		print "Warning: there is no 'logo.svg' file in the plugin's directory."
+	return ok
+def check_info(d):
+	ok=True
+	if d.has_key("name"):
+		print "Name= {} [ok]".format(d["name"])
+	else:
+		print "Critical: no name [bad]"
+		ok=False
+	if d.has_key("version"):
+		print "Version= {} [ok]".format(d["version"])
+	else:
+		print "Critical: no version [bad]"
+		ok=False
+	if d.has_key("author"):
+		print "Author= {} [ok]".format(d["author"])
+	else:
+		print "Critical: no author [bad]"
+		ok=False
+	if d.has_key("foreground-color"):
+		print "ForegroundColor= {} [ok]".format(d["foreground-color"])
+	else:
+		print "Warning: no foreground color [er..ok]"
+		ok=False
+	if d.has_key("background-color"):
+		print "BackgroundColor= {} [ok]".format(d["background-color"])
+	else:
+		print "Warning: no background color [er..ok]"
+		ok=False
+	if d.has_key("modules"):
+		print "Modules= {} [ok]".format(d["modules"])
+	else:
+		print "Warning: no modules are to be installed [ok]"
+		ok=False
+
+	return ok
+if __name__=="__main__":
+	if sys.argv[1]=="install" and sys.argv[2]=="--local":
+		if os.path.isdir(sys.argv[3]):
+			absPath = os.path.abspath(sys.argv[3])
+			#check if all required files are there
+			c_f = check_files(absPath)
+			if c_f==True:
+				#info
+				i_f=os.path.join(absPath,"manifest.json")
+				if os.path.isfile(i_f):
+					i_s=open(i_f,"r")
+					info = json.loads(i_s.read())
+					c = check_info(info)
+					if c==True:
+						pluginName=absPath.split("/")[-1]
+						destination=os.path.join("/usr/share/duck-launcher/plugins/",pluginName)
+						#copy plugin to the apropriate directory
+						try:
+							shutil.rmtree(destination)
+							shutil.copytree(absPath,destination)
+						except OSError:
+							print "Error: somehow the plugin could not be copied to '{}'".format(destination)
+						#install modules
+						for m in info["modules"]:
+							pip.main(["install",m])
+					else:
+						print "Error: Missing information in 'manifest.json'"
+				else:
+					print "Error..."
+			else:
+				print "Error: some required files are not there"
+		else:
+			print "Error : '{}' is not a directory"
+	elif sys.argv[1]=="install" and sys.argv[2]=="--repo":
+		pluginName=sys.argv[3]
+		rep=Plugins.Repo()
+		pl=rep.getPluginInfo(pluginName)
+		if pl!=None:
+			path_to_download= "https://github.com/the-duck/launcher-plugins/trunk/{}".format(pluginName)
+			destination=os.path.join("/usr/share/duck-launcher/plugins/",pluginName)
+			subprocess.call(["svn","export","--force",path_to_download,destination])
+	elif sys.argv[1]=="remove":
+		pluginName=sys.argv[2]
+		if pluginName!="settings" and pluginName!="files" and pluginName!="plugins":
+
+			path=os.path.join("/usr/share/duck-launcher/plugins",pluginName)
+			if os.path.isdir(path):
+				shutil.rmtree(path)
+			else:
+				print "This plugin, if it exists, is not installed."
+		else:
+			print "The plugin '{}' cannot be removed.".format(pluginName)
