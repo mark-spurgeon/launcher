@@ -1,3 +1,5 @@
+    _I no longer work on this project, and I'm not likely to working on it anytime soon. If anyone would like to maintain it, please contact me at theduck.dev@gmail.com_
+
 Duck Launcher
 ========
 
